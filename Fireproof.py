@@ -3,7 +3,6 @@
 import MySQLdb as mdb
 import sys
 from User import *
-#from Crypto.Cipher import AES
 
 
 def main():
@@ -12,6 +11,7 @@ def main():
 	masterpassword = sys.argv[2]
 	
 	account = MasterAccount(masterusername,masterpassword,0)
-	return MasterAccount.insertMasterAccount(account)
+	MasterAccount.insertMasterAccount(account)
+	MasterAccount.retrieveMasterAccount(account)
 
 main()
