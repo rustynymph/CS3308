@@ -1,3 +1,8 @@
+#!/usr/bin/python
+
+import MySQLdb as mdb
+import sys
+
 class masterAccount:
 	def __init__(self,username,password,idNum):
 		self.username = username
@@ -5,7 +10,6 @@ class masterAccount:
 		self.idNum = idNum
 	
 	def createMasterAccount(self):
-		print("hi")
 		con = mdb.connect('localhost','testuser','testAnnie','Fireproof');
 
 		with con:

@@ -10,7 +10,8 @@ def main():
 
 	masterusername = sys.argv[1]
 	masterpassword = sys.argv[2]
-		
-	return masterAccount(masterusername,masterpassword,0)
+	
+	account = masterAccount(masterusername,masterpassword,0)
+	return masterAccount.createMasterAccount(account)
 
 main()
