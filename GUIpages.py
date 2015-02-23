@@ -6,14 +6,14 @@ from MasterAccount import *
 from FireproofFunctions import *
 
 class Page(Frame):
-	def __init__(self, *args, **kwargs):
-		Frame.__init__(self, *args, **kwargs)
+	def __init__(self, root):
+		Frame.__init__(self, root)
 	def show(self):
 		self.lift()
 
 class LoginPage(Page):
-	def __init__(self, *args, **kwargs):
-		Frame.__init__(self, *args, **kwargs)
+	def __init__(self, root):
+		Frame.__init__(self, root)
 		
 		userForm = Label(root,text="Username")
 		userForm.place(bordermode=OUTSIDE,x=60,y=140)
@@ -27,12 +27,16 @@ class LoginPage(Page):
 		passVar = Entry(root,bd=5,show="*")
 		passVar.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		Enter = Button(root, text ="Enter", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get()))
-		Enter.place(bordermode=OUTSIDE,x=292,y=240)		
+		Enter = Button(root, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get()))
+		Enter.place(bordermode=OUTSIDE,x=160,y=240)		
+		
+		Enter = Button(root, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get()))
+		Enter.place(bordermode=OUTSIDE,x=235,y=240)	
 
 class CreateAccountPage(Page):
-	def __init__(self, *args, **kwargs):
-		Frame.__init__(self, *args, **kwargs)
+	def __init__(self, root):
+		Frame.__init__(self, root)
+		
 		userForm = Label(root,text="Create Username")
 		userForm.place(bordermode=OUTSIDE,x=60,y=140)
 
@@ -45,18 +49,21 @@ class CreateAccountPage(Page):
 		passVar = Entry(root,bd=5,show="*")
 		passVar.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		Enter = Button(root, text ="Enter", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get()))
-		Enter.place(bordermode=OUTSIDE,x=292,y=240)	
+		Enter = Button(root, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get()))
+		Enter.place(bordermode=OUTSIDE,x=292,y=240)
+			
 
 class RetrieveAccounts(Page):
-	def __init__(self, *args, **kwargs):
-		Frame.__init__(self, *args, **kwargs)
+	def __init__(self, root):
+		Frame.__init__(self, root)
 		label = Label(self, text="This is page 3")
 		label.pack(side="top", fill="both", expand=True)	
 
-class MainView(Frame):
-	def __init__(self, *args, **kwargs):
-		Frame.__init__(self, *args, **kwargs)
+class FirstView(Frame):
+	def __init__(self, root):
+		Frame.__init__(self, root)
+		self.root = root
+		self.page = 0
 		p1 = LoginPage(self)
 
 		logo = PhotoImage(file="fireproof.png")
@@ -69,7 +76,7 @@ class MainView(Frame):
 
 if __name__ == "__main__":
 	root = Tk()
-	main = MainView(root)
+	main = FirstView(root)
 	main.pack(side="top", fill="both", expand=True)
 	root.wm_geometry("400x300")
 	root.mainloop()

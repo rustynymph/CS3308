@@ -17,8 +17,6 @@ with con:
 window = Tk()
 window.minsize(width=350, height=100)
 
-#Page.show(LoginPage)
-
 userForm = Label(window,text="Username")
 userForm.place(bordermode=OUTSIDE,x=10,y=10)
 
