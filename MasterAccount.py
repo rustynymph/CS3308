@@ -18,7 +18,7 @@ class MasterAccount:
 		self.iv = os.urandom(16)
 		self.key = key_hash_obj.digest()
 		self.username_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.username)
-		self.password_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.password)	
+		self.password_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.password)
 	
 	@staticmethod
 	def encryptCredentials(key,iv,text):
@@ -36,8 +36,8 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()
-			cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
-			cur.execute("CREATE TABLE FireproofAccountLogin(Id INT,UserName VARCHAR(512), PasswordName VARCHAR(512))")
+			#cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
+			#cur.execute("CREATE TABLE FireproofAccountLogin(Id INT,UserName VARCHAR(512), PasswordName VARCHAR(512))")
 			cur.execute("INSERT INTO FireproofAccountLogin (Id,UserName,PasswordName) VALUES (%s,%s,%s)",(self.idNum,self.username_enc,self.password_enc))
 		
 			
@@ -46,9 +46,9 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()	
-			cur.execute("SELECT UserName FROM FireproofAccountLogin WHERE Id=0")
-			account = cur.fetchone()
-			print str(account[0]) == str(self.username_enc)
+			#cur.execute("SELECT UserName FROM FireproofAccountLogin WHERE Id=0")
+			#account = cur.fetchone()
+			#print str(account[0]) == str(self.username_enc)
 			cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
 			id_number = cur.fetchone()
 			print id_number
