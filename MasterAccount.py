@@ -53,18 +53,8 @@ class MasterAccount:
 			account_pass = cur.fetchone()
 			
 			if(account_name and account_pass):
-				#print("Encrypted username is:")
-				#print account_name[0]
 				username = MasterAccount.decryptCredentials(self.key,self.iv,account_name[0])
-				#print("Decrypted username is:")
-				#print username
-				
-				#print("Encrypted password is:")
-				#print account_pass[0]
 				password = MasterAccount.decryptCredentials(self.key,self.iv,account_pass[0])
-				#print("Decrypted password is:")
-				#print password
-				
 				return MasterAccount(username,password,0)
 			else:
 				return None

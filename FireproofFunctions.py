@@ -3,30 +3,26 @@ from Tkinter import *
 import tkMessageBox
 import config
 from MasterAccount import *
+from GUIpages import *
 
 class FireproofFunctions:
 
 	@staticmethod
-	def Login(MasterAccount):
-		masterusername = MasterAccount.username
-		masterpassword = MasterAccount.password
-		masterid = MasterAccount.idNum
+	def Login(masterusername,masterpassword):
 		if(not(masterusername) or not(masterpassword)):
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 		else:
-			account = MasterAccount
+			account = MasterAccount(masterusername,masterpassword,0)
 			if(not(MasterAccount.retrieveMasterAccount(account))):
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please create an account.")
-				createLoginInfo()
+				p2 = CreateAccountPage(self)
 			else:
 				print account.username
 				print account.password
 				print account.idNum
 			
 	@staticmethod
-	def createLoginInfo():
-		masterusername = userVar.get()
-		masterpassword = passVar.get()
+	def createLoginInfo(masterusername,masterpassword):
 		if(not(masterusername) or not(masterpassword)):
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 		else:
