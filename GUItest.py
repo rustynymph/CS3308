@@ -2,9 +2,18 @@
 #import Tkinter
 from Tkinter import *
 import tkMessageBox
+import config
+from MasterAccount import *
+
+con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+
+with con:
+	cur = con.cursor()
+	cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
+	cur.execute("CREATE TABLE FireproofAccountLogin(Id INT,UserName VARCHAR(512), PasswordName VARCHAR(512))")
 
 window = Tk()
-window.minsize(width=350, height=130)
+window.minsize(width=350, height=100)
 
 userForm = Label(window,text="Username")
 userForm.place(bordermode=OUTSIDE,x=10,y=10)
@@ -15,18 +24,18 @@ passForm.place(bordermode=OUTSIDE,x=10,y=50)
 userVar = Entry(window,bd=5)
 userVar.place(bordermode=OUTSIDE,x=150,y=10)
 
-username = userVar.get()
-
-passVar = Entry(window,bd=5)
+passVar = Entry(window,bd=5,show="*")
 passVar.place(bordermode=OUTSIDE,x=150,y=50)
 
-password = passVar.get()
-
 def enterLoginInfo():
-	if(not(username) or not(password)):
+	masterusername = userVar.get()
+	masterpassword = passVar.get()
+	if(not(masterusername) or not(masterpassword)):
 		tkMessageBox.showinfo("Error","Please enter username and password.")
 	else:
-		tkMessageBox.showinfo("Box","hey")
+		account = MasterAccount(masterusername,masterpassword,0)
+		MasterAccount.insertMasterAccount(account)
+		MasterAccount.retrieveMasterAccount(account)
 
 Enter = Button(window, text ="Enter", command = enterLoginInfo)
 

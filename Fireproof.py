@@ -2,7 +2,7 @@
 
 import MySQLdb as mdb
 import sys
-from User import *
+from MasterAccount import *
 
 
 def main():

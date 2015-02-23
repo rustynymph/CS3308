@@ -39,22 +39,30 @@ class MasterAccount:
 		with con:
 			cur = con.cursor()
 			cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
-			cur.execute("CREATE TABLE FireproofAccountLogin(Id INT PRIMARY KEY AUTO_INCREMENT, \
-					 UserName VARCHAR(512), PasswordName VARCHAR(512))")
-			cur.execute("INSERT INTO FireproofAccountLogin(UserName) VALUES (%s)", username_enc)
-			cur.execute("INSERT INTO FireproofAccountLogin(PasswordName) VALUES (%s)", password_enc)
+			cur.execute("CREATE TABLE FireproofAccountLogin(Id INT,UserName VARCHAR(512), PasswordName VARCHAR(512))")
+			cur.execute("INSERT INTO FireproofAccountLogin (Id,UserName,PasswordName) VALUES (%s,%s,%s)",(self.idNum,username_enc, password_enc))
 			
 	def retrieveMasterAccount(self):
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
 			cur = con.cursor()	
-			cur.execute("SELECT UserName FROM FireproofAccountLogin")
+			cur.execute("SELECT UserName FROM FireproofAccountLogin WHERE Id=0")
 			account_name = cur.fetchone()
+			cur.execute("SELECT PasswordName FROM FireproofAccountLogin WHERE Id=0")
+			account_pass = cur.fetchone()
 			
+			print("Encrypted username is:")
 			print account_name[0]
 			username = MasterAccount.decryptCredentials(self.key,self.iv,account_name[0])
+			print("Decrypted username is:")
 			print username
+			
+			print("Encrypted password is:")
+			print account_pass[0]
+			password = MasterAccount.decryptCredentials(self.key,self.iv,account_pass[0])
+			print("Decrypted password is:")
+			print password
 
 
 			
