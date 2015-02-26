@@ -60,14 +60,15 @@ class MasterAccount:
 			if not(id_number):
 				return None
 			else:
-				cur.execute("SELECT UserName FROM FireproofAccountLogin WHERE Id= %d",id_number)
+				cur.execute("SELECT UserName FROM FireproofAccountLogin WHERE Id= %s",id_number)
 				account_name = cur.fetchone()
-				cur.execute("SELECT PasswordName FROM FireproofAccountLogin WHERE Id= %d",id_number)
+				cur.execute("SELECT PasswordName FROM FireproofAccountLogin WHERE Id= %s",id_number)
 				account_pass = cur.fetchone()
 			
 				if(account_name and account_pass):
 					username = MasterAccount.decryptCredentials(self.key,self.iv,account_name[0])
 					password = MasterAccount.decryptCredentials(self.key,self.iv,account_pass[0])
+					print("hi")
 					return MasterAccount(username,password,0)
 				else:
 					return None

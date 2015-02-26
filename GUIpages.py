@@ -78,10 +78,12 @@ class FirstView(Frame):
 
 if __name__ == "__main__":
 	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+	#initialize the database
 	with con:
 		cur = con.cursor()
 		cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
 		cur.execute("CREATE TABLE FireproofAccountLogin(Id INT NOT NULL AUTO_INCREMENT,UserName VARCHAR(512), PasswordName VARCHAR(512),PRIMARY KEY (id))")
+	#initialize the GUI
 	root = Tk()
 	main = FirstView(root)
 	main.pack(side="top", fill="both", expand=True)
