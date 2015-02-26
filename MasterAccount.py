@@ -15,7 +15,8 @@ class MasterAccount:
 		self.password = password
 		self.idNum = idNum
 		key_hash_obj = hashlib.md5(self.password)
-		self.iv = os.urandom(16)
+		#self.iv = os.urandom(16)
+		self.iv = 'abcdefghijklmnop'
 		self.key = key_hash_obj.digest()
 		self.username_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.username)
 		self.password_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.password)
@@ -29,6 +30,9 @@ class MasterAccount:
 	def decryptCredentials(key,iv,text):
 		decryption_suite = AES.new(key, AES.MODE_CFB, iv)
 		return decryption_suite.decrypt(text)
+	
+	#def initializeTable():
+		
 		
 	def insertMasterAccount(self):
 			
@@ -37,7 +41,7 @@ class MasterAccount:
 		with con:
 			cur = con.cursor()
 			#cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
-			#cur.execute("CREATE TABLE FireproofAccountLogin(Id INT,UserName VARCHAR(512), PasswordName VARCHAR(512))")
+			
 			cur.execute("INSERT INTO FireproofAccountLogin (Id,UserName,PasswordName) VALUES (%s,%s,%s)",(self.idNum,self.username_enc,self.password_enc))
 		
 			
