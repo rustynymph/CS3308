@@ -58,7 +58,15 @@ class LoginPage(tk.Frame):
 		passVar = Entry(self,bd=5,show="*")
 		passVar.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		Enter = Button(self, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get()))
+		def callback():
+			print("hi")
+			isUser = FireproofFunctions.Login(userVar.get(),passVar.get())
+			if isUser:
+				controller.show_frame(ServicesPage)
+			else:
+				return 0
+		
+		Enter = Button(self, text ="Login", command=callback)
 		Enter.place(bordermode=OUTSIDE,x=292,y=240)		
 		
 		label = tk.Label(self, text="New User?", font=TEXT_FONT)

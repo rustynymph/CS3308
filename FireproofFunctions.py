@@ -12,10 +12,12 @@ class FireproofFunctions:
 	def Login(masterusername,masterpassword):
 		if(not(masterusername) or not(masterpassword)):
 			tkMessageBox.showinfo("Error","Please enter username and password.")
+			return False
 		else:
 			account = MasterAccount(masterusername,masterpassword,0)
 			if(not(MasterAccount.retrieveMasterAccount(account))):
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please click create an account.")
+				return False
 				
 			else:
 
