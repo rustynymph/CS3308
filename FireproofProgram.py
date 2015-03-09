@@ -90,10 +90,10 @@ class CreateAccountPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 		
-		userForm = Label(self,text="Create Username")
+		userForm = Label(self,text="Username")
 		userForm.place(bordermode=OUTSIDE,x=60,y=140)
 
-		passForm = Label(self,text="Create Password")
+		passForm = Label(self,text="Password")
 		passForm.place(bordermode=OUTSIDE,x=60,y=190)
 		
 		confirmPassForm = Label(self,text="Confirm Password")
@@ -109,7 +109,13 @@ class CreateAccountPage(tk.Frame):
 		confirmPassVar.place(bordermode=OUTSIDE,x=180,y=240)
 		
 		Enter = Button(self, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get()))
-		Enter.place(bordermode=OUTSIDE,x=235,y=290)							
+		Enter.place(bordermode=OUTSIDE,x=235,y=290)
+		
+		Enter = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
+		Enter.place(bordermode=OUTSIDE,x=5,y=5)		
+		
+		#tips = Label(self,text="Passwords should be at least 8 characters")
+		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
 		
 class ServicesPage(tk.Frame):
 	def __init__(self, parent, controller):
