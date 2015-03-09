@@ -18,12 +18,7 @@ class FireproofFunctions:
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please click create an account.")
 				
 			else:
-				#PageName = page.__name__
-				#SPage = self.page
-				#PageName.tkraise()
-				print page
-				print frames
-				Fireproof.show_frame(page.__name__)
+
 				print account.username
 				print account.password
 				print account.idNum
@@ -36,6 +31,11 @@ class FireproofFunctions:
 		elif(masterpassword != confirmmasterpassword):
 			tkMessageBox.showinfo("Error","Passwords entered do not match.")
 		else:
-			account = MasterAccount(masterusername,masterpassword,0)
-			MasterAccount.insertMasterAccount(account)
+			if(len(masterpassword) < 8):
+				tkMessageBox.showinfo("Error","Password must be at least 8 characters.")
+			#elif:
+			#elif:
+			else:
+				account = MasterAccount(masterusername,masterpassword,0)
+				MasterAccount.insertMasterAccount(account)
 
