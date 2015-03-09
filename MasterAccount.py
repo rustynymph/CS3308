@@ -40,6 +40,9 @@ class MasterAccount:
 			#cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
 			
 			cur.execute("INSERT INTO FireproofAccountLogin (UserName,PasswordName) VALUES (%s,%s)",(self.username_enc,self.password_enc))
+			#cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
+			#id_number = cur.fetchone()			
+			#cur.execute("CREATE TABLE %s", (id_number))
 		
 			
 	def retrieveMasterAccount(self):
