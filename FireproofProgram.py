@@ -59,12 +59,7 @@ class StartPage(tk.Frame):
 class LoginPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent) 
-		#label = tk.Label(self, text="This is the login page", font=TITLE_FONT)
-		#label.pack(side="top", fill="x", pady=10)
-		#button = tk.Button(self, text="Go to the main page", 
-		#				   command=lambda: controller.show_frame(StartPage))
-						   				   
-		#button.pack()
+
 		userForm = Label(self,text="Username")
 		userForm.place(bordermode=OUTSIDE,x=60,y=140)
 
@@ -78,19 +73,16 @@ class LoginPage(tk.Frame):
 		passVar.place(bordermode=OUTSIDE,x=180,y=190)
 		
 		Enter = Button(self, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get()))
-		Enter.place(bordermode=OUTSIDE,x=160,y=240)		
+		Enter.place(bordermode=OUTSIDE,x=235,y=240)		
 		
-		Enter = Button(self, text ="Create Account", command=lambda: controller.show_frame(CreateAccountPage))
-		Enter.place(bordermode=OUTSIDE,x=235,y=240)			
+		label = tk.Label(self, text="New User? Click here to create an account"
+		
+		Enter = Button(self, text ="Sign Up", command=lambda: controller.show_frame(CreateAccountPage))
+		Enter.place(bordermode=OUTSIDE,x=135,y=340)			
 
 class CreateAccountPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		#label = tk.Label(self, text="This is create account page", font=TITLE_FONT)
-		#label.pack(side="top", fill="x", pady=10)
-		#button = tk.Button(self, text="Go to the main page", 
-						  # command=lambda: controller.show_frame(StartPage))
-		#button.pack()
 		
 		userForm = Label(self,text="Create Username")
 		userForm.place(bordermode=OUTSIDE,x=60,y=140)
@@ -110,7 +102,7 @@ class CreateAccountPage(tk.Frame):
 		confirmPassVar = Entry(self,bd=5,show="*")
 		confirmPassVar.place(bordermode=OUTSIDE,x=180,y=240)
 		
-		Enter = Button(self, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get()))
+		Enter = Button(self, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get()))
 		Enter.place(bordermode=OUTSIDE,x=235,y=290)							
 		
 class ServicesPage(tk.Frame):
