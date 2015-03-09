@@ -7,6 +7,7 @@ import MySQLdb as mdb
 from config import *
 
 TITLE_FONT = ("Helvetica", 18, "bold")
+TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
@@ -72,13 +73,18 @@ class LoginPage(tk.Frame):
 		passVar = Entry(self,bd=5,show="*")
 		passVar.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		Enter = Button(self, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get()))
-		Enter.place(bordermode=OUTSIDE,x=235,y=240)		
+		Enter = Button(self, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get(),ServicesPage))
+		Enter.place(bordermode=OUTSIDE,x=292,y=240)		
 		
-		label = tk.Label(self, text="New User? Click here to create an account"
+		label = tk.Label(self, text="New User?", font=TEXT_FONT)
+		label.place(bordermode=OUTSIDE,x=235,y=300)
+		
+		label = tk.Label(self, text="Click here to create an account", font=TEXT_FONT)
+		label.place(bordermode=OUTSIDE,x=190,y=320)
 		
 		Enter = Button(self, text ="Sign Up", command=lambda: controller.show_frame(CreateAccountPage))
-		Enter.place(bordermode=OUTSIDE,x=135,y=340)			
+		Enter.place(bordermode=OUTSIDE,x=225,y=340)
+				
 
 class CreateAccountPage(tk.Frame):
 	def __init__(self, parent, controller):
