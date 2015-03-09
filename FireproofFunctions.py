@@ -9,7 +9,7 @@ from FireproofProgram import *
 class FireproofFunctions:
 
 	@staticmethod
-	def Login(masterusername,masterpassword,page,frames):
+	def Login(masterusername,masterpassword):
 		if(not(masterusername) or not(masterpassword)):
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 		else:

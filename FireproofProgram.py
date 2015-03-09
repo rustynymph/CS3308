@@ -19,9 +19,14 @@ class Fireproof(tk.Tk):
 		container.pack(side="top", fill="both", expand=True)
 		container.grid_rowconfigure(0, weight=1)
 		container.grid_columnconfigure(0, weight=1)
+		
+		logo = PhotoImage(file="fireproof.png")
+		w1 = Label(image=logo)
+		w1.image = logo
+		w1.place(bordermode=OUTSIDE,x=150,y=15)		
 
 		self.frames = {}
-		for F in (StartPage, LoginPage, CreateAccountPage, ServicesPage, ServiceInfoPage):
+		for F in (LoginPage, CreateAccountPage, ServicesPage, ServiceInfoPage):
 			frame = F(container, self)
 			self.frames[F] = frame
 			# put all of the pages in the same location; 
@@ -35,26 +40,6 @@ class Fireproof(tk.Tk):
 		'''Show a frame for the given class'''
 		frame = self.frames[c]
 		frame.tkraise()
-
-class StartPage(tk.Frame):
-	def __init__(self, parent, controller):
-		tk.Frame.__init__(self, parent) 
-		label = tk.Label(self, text="This is the start page", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
-		
-		logo = PhotoImage(file="fireproof.png")
-		w1 = Label(image=logo)
-		w1.image = logo
-		w1.place(bordermode=OUTSIDE,x=150,y=15)
-				
-
-		button1 = tk.Button(self, text="Go to Page One", 
-							command=lambda: controller.show_frame(LoginPage))
-		button1.place(bordermode=OUTSIDE,x=180,y=140)
-		button2 = tk.Button(self, text="Go to Page Two",
-							command=lambda: controller.show_frame(CreateAccountPage))
-		button2.place(bordermode=OUTSIDE,x=180,y=340)
-
 
 
 class LoginPage(tk.Frame):
@@ -73,7 +58,7 @@ class LoginPage(tk.Frame):
 		passVar = Entry(self,bd=5,show="*")
 		passVar.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		Enter = Button(self, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get(),ServicesPage))
+		Enter = Button(self, text ="Login", command=lambda: FireproofFunctions.Login(userVar.get(),passVar.get()))
 		Enter.place(bordermode=OUTSIDE,x=292,y=240)		
 		
 		label = tk.Label(self, text="New User?", font=TEXT_FONT)
