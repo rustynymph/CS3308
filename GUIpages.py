@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from Tkinter import *
+import ttk
 import tkMessageBox
-import config
 from MasterAccount import *
 from FireproofFunctions import *
 import MySQLdb as mdb
@@ -53,6 +53,33 @@ class CreateAccountPage(Page):
 		
 		Enter = Button(root, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get()))
 		Enter.place(bordermode=OUTSIDE,x=292,y=240)
+
+class CreateNewServicePage(Page):
+	def __init__(self, root):
+		Frame.__init__(self, root)
+		
+		existingForm = Label(root,text="Add to existing service")
+		existingForm.place(bordermode=OUTSIDE,x=50,y=140)
+		
+		userForm = Label(root,text="Username")
+		userForm.place(bordermode=OUTSIDE,x=50,y=180)
+		
+		passForm = Label(root,text="Password")
+		passForm.place(bordermode=OUTSIDE,x=50,y=220)
+		
+		existingVar_value = StringVar()
+		existingVar = ttk.Combobox(root, textvariable=existingVar_value)
+		existingVar['values'] = ('Facebook','Gmail','Moodle') #need to change this to 'get' existing services
+		existingVar.current(0)
+		existingVar.grid(column=0, row=0)
+		existingVar.place(border=OUTSIDE,x=200,y=140)
+		
+		
+		userVar = Entry(root,bd=5)
+		userVar.place(bordermode=OUTSIDE,x=200,y=180)
+		
+		passVar = Entry(root,bd=5)
+		passVar.place(bordermode=OUTSIDE,x=200,y=220)
 			
 
 class RetrieveAccounts(Page):
