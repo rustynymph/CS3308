@@ -14,16 +14,15 @@ class FireproofFunctions:
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 			return False
 		else:
-			account = MasterAccount(masterusername,masterpassword,0)
+			account = MasterAccount(masterusername,masterpassword)
 			if(not(MasterAccount.retrieveMasterAccount(account))):
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please click create an account.")
 				return False
 				
 			else:
-
-				print account.username
-				print account.password
-				print account.idNum
+				#print account.username
+				#print account.password
+				#print account.idNum
 				return True
 			
 	@staticmethod
@@ -38,6 +37,6 @@ class FireproofFunctions:
 			#elif:
 			#elif:
 			else:
-				account = MasterAccount(masterusername,masterpassword,0)
+				account = MasterAccount(masterusername,masterpassword)
 				MasterAccount.insertMasterAccount(account)
 

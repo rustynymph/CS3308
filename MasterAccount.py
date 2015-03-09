@@ -10,10 +10,10 @@ import base64
 import os
 
 class MasterAccount:
-	def __init__(self,username,password,idNum):
+	def __init__(self,username,password):
 		self.username = username
 		self.password = password
-		self.idNum = idNum
+		#self.idNum = idNum
 		key_hash_obj = hashlib.md5(self.password)
 		#self.iv = os.urandom(16)
 		self.iv = 'abcdefghijklmnop'
@@ -30,10 +30,7 @@ class MasterAccount:
 	def decryptCredentials(key,iv,text):
 		decryption_suite = AES.new(key, AES.MODE_CFB, iv)
 		return decryption_suite.decrypt(text)
-	
-	#def initializeTable():
-		
-		
+			
 	def insertMasterAccount(self):
 			
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
@@ -42,7 +39,7 @@ class MasterAccount:
 			cur = con.cursor()
 			#cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
 			
-			cur.execute("INSERT INTO FireproofAccountLogin (Id,UserName,PasswordName) VALUES (%s,%s,%s)",(self.idNum,self.username_enc,self.password_enc))
+			cur.execute("INSERT INTO FireproofAccountLogin (UserName,PasswordName) VALUES (%s,%s)",(self.username_enc,self.password_enc))
 		
 			
 	def retrieveMasterAccount(self):
@@ -55,7 +52,6 @@ class MasterAccount:
 			#print str(account[0]) == str(self.username_enc)
 			cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
 			id_number = cur.fetchone()
-			print id_number
 			
 			if not(id_number):
 				return None
@@ -68,8 +64,10 @@ class MasterAccount:
 				if(account_name and account_pass):
 					username = MasterAccount.decryptCredentials(self.key,self.iv,account_name[0])
 					password = MasterAccount.decryptCredentials(self.key,self.iv,account_pass[0])
-					print("hi")
-					return MasterAccount(username,password,0)
+					print username
+					print password
+					print id_number
+					return MasterAccount(username,password)
 				else:
 					return None
 
