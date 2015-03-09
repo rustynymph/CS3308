@@ -1,14 +1,16 @@
-# CS3308
+# CS3308 -- Fireproof
 Software Engineering Methods and Tools
 
-###Fireproof.py
-The main file to run in order to test the encryption and decryption of usernames and passwords in the database.
+NOTE: Before you guys try to test the program please follow these steps:
+1. launch MySQL by running "mysql -u root -p"
+2. login using the password you created during lab
+3. CREATE DATABASE Fireproof;
+4. in the MySQL prompt run "CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'testAnnie';"
+4. next run "GRANT ALL ON testdb.* TO 'testuser'@'localhost';"
+5. now you are ready to use FireproofProgram.py
+
+###FireproofProgram.py
+The main file to launch our GUI.
 
 To run:
-python Fireproof.py username password
-
-###MasterUser.py
-Contains the master usename and password classes, also includes AES encryption standards to encrypt account information before storing it in our database.
-
-###GUItest.py
-Work in progress.
+python FireproofProgram.py
