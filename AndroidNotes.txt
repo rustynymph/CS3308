@@ -1,0 +1,22 @@
+
+Notes for Android Implementation:
+
+Python to Java
+	Going to use Jython
+		Wikipedia pg: http://en.wikipedia.org/wiki/Jython
+			good for general information ESP how it works
+	Potential Issues with Jython:
+		Jython and Python library support
+			Library: Tkinter
+				Found this: http://stackoverflow.com/questions/4993400/does-jython-support-tkinter
+				Leads to JyNI: http://www.jyni.org/
+					Compatability layer to enable Jython to use CPython
+					Stated to support Tkinter, though JyNI is still in development
+
+Running on Android
+	Potential Issues:
+		Android MySQL support?
+			Yes?; found: http://stackoverflow.com/questions/15732853/how-to-connect-android-app-to-mysql-database
+				Must get from a URL for this answer, so......will it work with ours?
+			Also found this tutorial that may be helpful: http://www.tutorialspoint.com/android/android_php_mysql.htm
+			
