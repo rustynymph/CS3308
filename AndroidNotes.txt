@@ -5,6 +5,11 @@ Installation:
 Jython : sudo apt-get install jython
 Android : follow tutorial listed in 'Android' section below
 
+Running:
+Jython : $jython [filename.py]
+	Right now, doesn't run Fireproof b/c need to get JyNI support for Tkinter
+	Does run a simple python program that doesn't use Tkinter
+
 Python to Java
 	Going to use Jython
 		Wikipedia pg: http://en.wikipedia.org/wiki/Jython
