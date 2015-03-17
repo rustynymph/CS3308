@@ -1,10 +1,15 @@
 
 Notes for Android Implementation:
 
+Installation:
+Jython : sudo apt-get install jython
+Android : follow tutorial listed in 'Android' section below
+
 Python to Java
 	Going to use Jython
 		Wikipedia pg: http://en.wikipedia.org/wiki/Jython
 			good for general information ESP how it works
+		Tutorial: http://www.jython.org/docs/tutorial/indexprogress.html
 	Potential Issues with Jython:
 		Jython and Python library support
 			Library: Tkinter
@@ -14,6 +19,7 @@ Python to Java
 					Stated to support Tkinter, though JyNI is still in development
 
 Running on Android
+	Using this tutorial to learn basics: https://developer.android.com/training/basics/firstapp/creating-project.html
 	Potential Issues:
 		Android MySQL support?
 			Yes?; found: http://stackoverflow.com/questions/15732853/how-to-connect-android-app-to-mysql-database
