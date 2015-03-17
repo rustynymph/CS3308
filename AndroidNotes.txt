@@ -1,4 +1,3 @@
-
 Notes for Android Implementation:
 
 Installation:
