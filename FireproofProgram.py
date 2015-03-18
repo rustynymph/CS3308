@@ -126,7 +126,33 @@ class ServiceInfoPage(tk.Frame):
 		label.pack(side="top", fill="x", pady=10)
 		button = tk.Button(self, text="Go to the start page", 
 						   command=lambda: controller.show_frame(StartPage))
-		button.pack()		
+		button.pack()
+		
+class CreateNewServicePage(Page):
+	def __init__(self, parent, controller):
+		tk.Frame.__init__(self, parent)
+		
+		existingForm = Label(self, text = "Add to existing service")
+		existingForm.place(bordermode=OUTSIDE, x=50, y=140)
+		
+		userForm = Label(self, text = "Username")
+		userForm.place(bordermode=OUTSIDE, x=50, y=180)
+		
+		passForm = Label(self, text = "Password")
+		passForm.place(bordermode=OUTSIDE, x=50, y=220)
+		
+		existingVar_value = StringVar()
+		existingVar = ttk.ComboBox(self, textvariable = existingVar_value)
+		existingVar['values'] = ('Facebook', 'Gmail', 'Moodle') #still need to change this to support get method
+		existingVar.current(0)
+		existingVar.grid(column=0, row=0)
+		existingVar.place(bordermode=OUTSIDE, x=200, y=140)
+		
+		userVar = Entry(self, bd=5)
+		userVar.place(bordermode=OUTSIDE, x=200, y=180)
+		
+		passVar = Entry(self, bd=5)
+		passVar.place(bordermode=OUTSIDE, x=200, y=220)
 
 if __name__ == "__main__":
 	app = Fireproof()
