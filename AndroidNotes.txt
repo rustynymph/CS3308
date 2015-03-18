@@ -1,5 +1,7 @@
 Notes for Android Implementation:
 
+***Jython will not work -> doesn't go to Android-executable Java***
+
 Installation:
 Jython : sudo apt-get install jython
 Android : follow tutorial listed in 'Android' section below
