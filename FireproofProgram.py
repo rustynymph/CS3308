@@ -101,7 +101,13 @@ class CreateAccountPage(tk.Frame):
 		confirmPassVar = Entry(self,bd=5,show="*")
 		confirmPassVar.place(bordermode=OUTSIDE,x=180,y=240)
 		
-		Enter = Button(self, text ="Create Account", command=lambda: FireproofFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get()))
+		def callback():
+			print("hi")
+			isUser = FireproofFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get())
+			controller.show_frame(LoginPage)
+			return 0
+		
+		Enter = Button(self, text ="Create Account", command=callback)
 		Enter.place(bordermode=OUTSIDE,x=235,y=290)
 		
 		Enter = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
