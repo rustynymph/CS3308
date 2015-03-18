@@ -128,7 +128,7 @@ class ServiceInfoPage(tk.Frame):
 						   command=lambda: controller.show_frame(StartPage))
 		button.pack()
 		
-class CreateNewServicePage(Page):
+class CreateNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 		
@@ -153,6 +153,15 @@ class CreateNewServicePage(Page):
 		
 		passVar = Entry(self, bd=5)
 		passVar.place(bordermode=OUTSIDE, x=200, y=220)
+		
+		Enter = Button(self, text ="Go Back", command=lambda: controller.show_frame(StartPage))
+		Enter.place(bordermode=OUTSIDE,x=5,y=5)
+		
+		Enter = Button(self, text ="Add Service", command=lambda: controller.show_frame(StartPage))
+		Enter.place(bordermode=OUTSIDE,x=220,y=240)
+		
+		Enter = Button(self, text ="More Options", command=lambda: controller.show_frame(StartPage))
+		Enter.place(bordermode=OUTSIDE,x=292,y=240)
 
 if __name__ == "__main__":
 	app = Fireproof()
