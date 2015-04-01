@@ -7,11 +7,11 @@ class TestFireproofMethods(unittest.TestCase):
     account1 = MasterAccount('MyUsername','MyPassword')
     account2 = MasterAccount('MyUsername','MyPassword')
     account3 = MasterAccount('Shmoopi','smileyface')
-    account4 = MasterAccount('','12345678')
-    account5 = MasterAccount('random','        ')
+    account4 = MasterAccount('hi','12345678')
+    account5 = MasterAccount('random','________')
     account6 = MasterAccount('samename','samename')
-    accountUsernames = ['MyUsername','MyUsername','Shmoopi','','random','samename']
-    accountPasswords = ['MyPassword','MyPassword','smileyface','12345678','        ','samename']
+    accountUsernames = ['MyUsername','MyUsername','Shmoopi','hi','random','samename']
+    accountPasswords = ['MyPassword','MyPassword','smileyface','12345678','________','samename']
     accountList = [account1,account2,account3,account4,account5,account6]
     accountEncryptedUsernames = [account.username_enc for account in accountList]
     accountEncryptedPasswords = [account.password_enc for account in accountList]    
@@ -75,7 +75,6 @@ class TestFireproofMethods(unittest.TestCase):
         decryptedPassword = MasterAccount.decryptCredentials(key,iv,encryptedPassword)
         self.assertEqual(givenPassword,decryptedPassword)
 
-'''
+
 if __name__ == '__main__':
   unittest.main()
-'''
