@@ -4,6 +4,7 @@ from FireproofProgram import *
 from MasterAccount import *
 
 class TestFireproofMethods(unittest.TestCase):
+
     account1 = MasterAccount('MyUsername','MyPassword')
     account2 = MasterAccount('MyUsername','MyPassword')
     account3 = MasterAccount('Shmoopi','smileyface')
@@ -75,6 +76,7 @@ class TestFireproofMethods(unittest.TestCase):
         decryptedPassword = MasterAccount.decryptCredentials(key,iv,encryptedPassword)
         self.assertEqual(givenPassword,decryptedPassword)
 
+    def test_encryptionLength(self):
 
 if __name__ == '__main__':
   unittest.main()

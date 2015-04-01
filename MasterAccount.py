@@ -14,7 +14,8 @@ class MasterAccount:
 		self.username = username
 		self.password = password
 		#self.idNum = idNum
-		key_hash_obj = hashlib.md5(self.password)
+		#key_hash_obj = hashlib.md5(self.password)
+		key_hash_obj = hashlib.sha256(self.password)
 		#self.iv = os.urandom(16)
 		self.iv = 'abcdefghijklmnop'
 		self.key = key_hash_obj.digest()
@@ -37,8 +38,10 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()
-			#cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
-			
+			cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
+			cur.execute("CREATE TABLE FireproofAccountLogin (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,UserName VARCHAR(30) NOT NULL,\
+				PasswordName VARCHAR(30) NOT NULL)")
+
 			cur.execute("INSERT INTO FireproofAccountLogin (UserName,PasswordName) VALUES (%s,%s)",(self.username_enc,self.password_enc))
 			#cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
 			#id_number = cur.fetchone()			
