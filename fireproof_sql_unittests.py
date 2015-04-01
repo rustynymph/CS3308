@@ -15,16 +15,18 @@ class TestFireproofSQL(unittest.TestCase):
 	accountList = [account1,account2,account3,account4,account5,account6]
 	accountEncryptedUsernames = [account.username_enc for account in accountList]
 	accountEncryptedPasswords = [account.password_enc for account in accountList]    
-	con = mdb.connect('localhost','unittestUser','unittestPassword','TestDB');
+	#con = mdb.connect('localhost','unittestUser','unittestPassword','TestDB');
+	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+	
 	with con:
 		cur = con.cursor()
-		cur.execute("DROP TABLE IF EXISTS TestDB")
-		cur.execute("CREATE TABLE TestDB (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,UserName VARCHAR(30) NOT NULL,\
+		cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
+		cur.execute("CREATE TABLE FireproofAccountLogin (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,UserName VARCHAR(30) NOT NULL,\
 			PasswordName VARCHAR(30) NOT NULL)")
 
 		for i in range(0,6):
 			account = accountList[i]
-			cur.execute("INSERT INTO TestDB (UserName,PasswordName) VALUES (%s,%s)",(account.username_enc,account.password_enc))
+			cur.execute("INSERT INTO FireproofAccountLogin (UserName,PasswordName) VALUES (%s,%s)",(account.username_enc,account.password_enc))
 
 	def test_accountRetrieval(self):
 		con = TestFireproofSQL.con
