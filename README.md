@@ -6,7 +6,7 @@ NOTE: Before you guys try to test the program please follow these steps:
 * login using the password you created during lab
 * CREATE DATABASE Fireproof;
 * in the MySQL prompt run "CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'testAnnie';"
-* next run "GRANT ALL ON testdb.* TO 'testuser'@'localhost';"
+* next run "GRANT ALL PRIVILEGES ON `%`.* TO 'testuser'@'localhost' IDENTIFIED BY 'testAnnie' WITH GRANT OPTION;"
 * now you are ready to use FireproofProgram.py
 
 ###FireproofProgram.py
