@@ -1,7 +1,6 @@
 import Tkinter as tk
 import tkMessageBox
 from Tkinter import *
-from MasterAccount import *
 from LoginFunctions import *
 #from StorageFunctions import *
 import MySQLdb as mdb
@@ -21,10 +20,10 @@ class Fireproof(tk.Tk):
 		container.grid_rowconfigure(0, weight=1)
 		container.grid_columnconfigure(0, weight=1)
 		
-		logo = PhotoImage(file="fireproof.png")
-		w1 = Label(image=logo)
-		w1.image = logo
-		w1.place(bordermode=OUTSIDE,x=150,y=15)		
+		fireproof_image = PhotoImage(file="fireproof.png")
+		fireproof_banner = Label(image=fireproof_image)
+		fireproof_banner.image = fireproof_image
+		fireproof_banner.place(bordermode=OUTSIDE,x=150,y=15)		
 
 		self.frames = {}
 		for F in (LoginPage, CreateAccountPage, ServicesPage, ServiceInfoPage):
@@ -47,72 +46,71 @@ class LoginPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent) 
 
-		userForm = Label(self,text="Username")
-		userForm.place(bordermode=OUTSIDE,x=60,y=140)
+		username_form_label = Label(self,text="Username")
+		username_form_label.place(bordermode=OUTSIDE,x=60,y=140)
 
-		passForm = Label(self,text="Password")
-		passForm.place(bordermode=OUTSIDE,x=60,y=190)
+		password_form_label = Label(self,text="Password")
+		password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
 
-		userVar = Entry(self,bd=5)
-		userVar.place(bordermode=OUTSIDE,x=180,y=140)
+		username_input_form = Entry(self,bd=5)
+		username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
 
-		passVar = Entry(self,bd=5,show="*")
-		passVar.place(bordermode=OUTSIDE,x=180,y=190)
+		password_input_form = Entry(self,bd=5,show="*")
+		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		def callback():
+		def checkIfUser():
 			print("hi")
-			isUser = LoginFunctions.Login(userVar.get(),passVar.get())
-			if isUser:
+			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
+			if is_a_user:
 				controller.show_frame(ServicesPage)
-			else:
-				return 0
+			else: return 0
 		
-		Enter = Button(self, text ="Login", command=callback)
-		Enter.place(bordermode=OUTSIDE,x=292,y=240)		
+		login_button = Button(self, text ="Login", command=checkIfUser)
+		login_button.place(bordermode=OUTSIDE,x=292,y=240)		
 		
-		label = tk.Label(self, text="New User?", font=TEXT_FONT)
-		label.place(bordermode=OUTSIDE,x=235,y=300)
+		new_user_label = tk.Label(self, text="New User?", font=TEXT_FONT)
+		new_user_label.place(bordermode=OUTSIDE,x=235,y=300)
 		
-		label = tk.Label(self, text="Click here to create an account", font=TEXT_FONT)
-		label.place(bordermode=OUTSIDE,x=190,y=320)
+		create_account_label = tk.Label(self, text="Click here to create an account", font=TEXT_FONT)
+		create_account_label.place(bordermode=OUTSIDE,x=190,y=320)
 		
-		Enter = Button(self, text ="Sign Up", command=lambda: controller.show_frame(CreateAccountPage))
-		Enter.place(bordermode=OUTSIDE,x=225,y=340)
+		sign_up_button = Button(self, text ="Sign Up", command=lambda: controller.show_frame(CreateAccountPage))
+		sign_up_button.place(bordermode=OUTSIDE,x=225,y=340)
 				
 
 class CreateAccountPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 		
-		userForm = Label(self,text="Username")
-		userForm.place(bordermode=OUTSIDE,x=60,y=140)
+		username_form_label = Label(self,text="Username")
+		username_form_label.place(bordermode=OUTSIDE,x=60,y=140)
 
-		passForm = Label(self,text="Password")
-		passForm.place(bordermode=OUTSIDE,x=60,y=190)
+		password_form_label = Label(self,text="Password")
+		password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
 		
-		confirmPassForm = Label(self,text="Confirm Password")
-		confirmPassForm.place(bordermode=OUTSIDE,x=60,y=240)
+		confirm_password_form_label = Label(self,text="Confirm Password")
+		confirm_password_form_label.place(bordermode=OUTSIDE,x=60,y=240)
 
-		userVar = Entry(self,bd=5)
-		userVar.place(bordermode=OUTSIDE,x=180,y=140)
+		username_input_form = Entry(self,bd=5)
+		username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
 
-		passVar = Entry(self,bd=5,show="*")
-		passVar.place(bordermode=OUTSIDE,x=180,y=190)
+		password_input_form = Entry(self,bd=5,show="*")
+		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		confirmPassVar = Entry(self,bd=5,show="*")
-		confirmPassVar.place(bordermode=OUTSIDE,x=180,y=240)
+		confirm_password_input_form = Entry(self,bd=5,show="*")
+		confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=240)
 		
-		def callback():
+		def createAccount():
 			print("hi")
-			isUser = LoginFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get())
+			LoginFunctions.createLoginInfo(username_input_form.get(),password_input_form.get(),confirm_password_input_form.get())
 			controller.show_frame(LoginPage)
 			return 0
 		
-		Enter = Button(self, text ="Create Account", command=callback)
-		Enter.place(bordermode=OUTSIDE,x=235,y=290)
+		create_account_button = Button(self, text ="Create Account", command=createAccount)
+		create_account_button.place(bordermode=OUTSIDE,x=235,y=290)
 		
-		Enter = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
-		Enter.place(bordermode=OUTSIDE,x=5,y=5)		
+		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
+		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)		
 		
 		#tips = Label(self,text="Passwords should be at least 8 characters")
 		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
@@ -122,9 +120,9 @@ class ServicesPage(tk.Frame):
 		tk.Frame.__init__(self, parent)
 		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
-		button = tk.Button(self, text="Go to the start page", 
-						   command=lambda: controller.show_frame(StartPage))
-		button.pack()
+		go_back_to_login_button = Button(self, text="Go to the login page", 
+						   command=lambda: controller.show_frame(LoginPage))
+		go_back_to_login_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
 class ServiceInfoPage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -142,11 +140,11 @@ class CreateNewServicePage(tk.Frame):
 		existingForm = Label(self, text = "Add to existing service")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=140)
 		
-		userForm = Label(self, text = "Username")
-		userForm.place(bordermode=OUTSIDE, x=50, y=180)
+		username_form_label = Label(self, text = "Username")
+		username_form_label.place(bordermode=OUTSIDE, x=50, y=180)
 		
-		passForm = Label(self, text = "Password")
-		passForm.place(bordermode=OUTSIDE, x=50, y=220)
+		password_form_label = Label(self, text = "Password")
+		password_form_label.place(bordermode=OUTSIDE, x=50, y=220)
 		
 		#existingVar_value = StringVar()
 		#existingVar = ttk.ComboBox(self, textvariable = existingVar_value)
@@ -155,20 +153,20 @@ class CreateNewServicePage(tk.Frame):
 		#existingVar.grid(column=0, row=0)
 		#existingVar.place(bordermode=OUTSIDE, x=200, y=140)
 		
-		userVar = Entry(self, bd=5)
-		userVar.place(bordermode=OUTSIDE, x=200, y=180)
+		username_input_form = Entry(self, bd=5)
+		username_input_form.place(bordermode=OUTSIDE, x=200, y=180)
 		
-		passVar = Entry(self, bd=5)
-		passVar.place(bordermode=OUTSIDE, x=200, y=220)
+		password_input_form = Entry(self, bd=5)
+		password_input_form.place(bordermode=OUTSIDE, x=200, y=220)
 		
-		Enter = Button(self, text ="Go Back", command=lambda: controller.show_frame(StartPage))
-		Enter.place(bordermode=OUTSIDE,x=5,y=5)
+		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(StartPage))
+		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
-		Enter = Button(self, text ="Add Service", command=lambda: controller.show_frame(StartPage))
-		Enter.place(bordermode=OUTSIDE,x=160,y=300)
+		add_service_button = Button(self, text ="Add Service", command=lambda: controller.show_frame(StartPage))
+		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
 		
-		Enter = Button(self, text ="More Options", command=lambda: controller.show_frame(StartPage))
-		Enter.place(bordermode=OUTSIDE,x=292,y=300)
+		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(StartPage))
+		more_options_button.place(bordermode=OUTSIDE,x=292,y=300)
 
 if __name__ == "__main__":
 

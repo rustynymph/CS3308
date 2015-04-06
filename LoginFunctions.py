@@ -11,39 +11,34 @@ class LoginFunctions:
 	accounts = []
 
 	@staticmethod
-	def Login(masterusername,masterpassword):
-		if(not(masterusername) or not(masterpassword)):
+	def Login(master_username,master_password):
+		if(not(master_username) or not(master_password)):
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 			return False
 		else:
-			loginAccount = None
+			login_account = None
 			for account in LoginFunctions.accounts:
-				if (masterusername == account.username) and (masterpassword == account.password):
-					loginAccount = account
-			#account = MasterAccount(masterusername,masterpassword)
-			if(not(MasterAccount.retrieveMasterAccount(loginAccount))):
+				if (master_username == account.username) and (master_password == account.password):
+					login_account = account
+			if(not(MasterAccount.retrieveMasterAccount(login_account))):
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please click create an account.")
 				return False
-				
-			else:
-				#print account.username
-				#print account.password
-				#print account.idNum
-				return True
+			else: return True
 			
 	@staticmethod
-	def createLoginInfo(masterusername,masterpassword,confirmmasterpassword):
-		if((not(masterusername) or not(masterpassword)) or not(confirmmasterpassword)):
+	def createLoginInfo(master_username,master_password,confirm_master_password):
+		username_characters = set(master_username)
+		password_characters = set(master_password)
+		if((not(master_username) or not(master_password)) or not(confirm_master_password)):
 			tkMessageBox.showinfo("Error","Please enter required fields.")
-		elif(masterpassword != confirmmasterpassword):
+		elif((' ' in username_characters) or (' ' in password_characters)):
+			tkMessageBox.showinfo("Error","Usernames and passwords must not contain spaces.")
+		elif(master_password != confirm_master_password):
 			tkMessageBox.showinfo("Error","Passwords entered do not match.")
+		elif(len(master_password) < 8):
+			tkMessageBox.showinfo("Error","Password must be at least 8 characters.")
 		else:
-			if(len(masterpassword) < 8):
-				tkMessageBox.showinfo("Error","Password must be at least 8 characters.")
-			#elif:
-			#elif:
-			else:
-				account = MasterAccount(masterusername,masterpassword)
-				LoginFunctions.accounts += [account]
-				MasterAccount.insertMasterAccount(account)
+			account = MasterAccount(master_username,master_password)
+			LoginFunctions.accounts += [account]
+			MasterAccount.insertMasterAccount(account)
 
