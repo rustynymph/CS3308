@@ -2,7 +2,8 @@ import Tkinter as tk
 import tkMessageBox
 from Tkinter import *
 from MasterAccount import *
-from FireproofFunctions import *
+from LoginFunctions import *
+from StorageFunctions import *
 import MySQLdb as mdb
 from config import *
 
@@ -60,7 +61,7 @@ class LoginPage(tk.Frame):
 		
 		def callback():
 			print("hi")
-			isUser = FireproofFunctions.Login(userVar.get(),passVar.get())
+			isUser = LoginFunctions.Login(userVar.get(),passVar.get())
 			if isUser:
 				controller.show_frame(ServicesPage)
 			else:
@@ -103,7 +104,7 @@ class CreateAccountPage(tk.Frame):
 		
 		def callback():
 			print("hi")
-			isUser = FireproofFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get())
+			isUser = LoginFunctions.createLoginInfo(userVar.get(),passVar.get(),confirmPassVar.get())
 			controller.show_frame(LoginPage)
 			return 0
 		
