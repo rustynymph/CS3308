@@ -7,13 +7,13 @@ from config import *
 import os
 from Encryption import *
 
-count = 0
-
 class MasterAccount:
+
+	count = 0
+
 	def __init__(self,username,password):
-		global count
-		self.id_num = count
-		count += 1
+		self.id_num = MasterAccount.count
+		MasterAccount.count += 1
 		self.username = username
 		self.password = password
 		key_hash_obj = Encryption.hashPassword(self.password) #sha256 more secure than md5
