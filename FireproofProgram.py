@@ -3,7 +3,7 @@ import tkMessageBox
 from Tkinter import *
 from MasterAccount import *
 from LoginFunctions import *
-from StorageFunctions import *
+#from StorageFunctions import *
 import MySQLdb as mdb
 from config import *
 
