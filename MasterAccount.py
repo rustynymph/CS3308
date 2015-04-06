@@ -28,18 +28,20 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()
-			cur.execute("INSERT INTO FireproofAccountLogin (id,UserName,PasswordName) VALUES (%s,%s,%s)",(self.id_num,self.username_enc,self.password_enc))
-			cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
-			id_number = cur.fetchone()	
-			self.id_num = id_number				
+			#important info on preventing SQL injection
+			#http://bobby-tables.com/python.html
+			
+			insert_account_command = "INSERT INTO FireproofAccountLogin (id,UserName,PasswordName) VALUES (%s,%s,%s)"
+			cur.execute(insert_account_command,(self.id_num,self.username_enc,self.password_enc))
 	
 	@staticmethod		
 	def retrieveMasterAccount(account):
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
-			cur = con.cursor()	
-			cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (account.username_enc,account.password_enc))
+			cur = con.cursor()
+			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
+			cur.execute(retrieve_account_id_command, (account.username_enc,account.password_enc))
 			id_number = cur.fetchone()
 		
 		return id_number
