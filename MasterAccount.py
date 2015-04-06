@@ -9,13 +9,18 @@ import hashlib
 import base64
 import os
 
+count = 0
+
 class MasterAccount:
 	def __init__(self,username,password):
+		global count
+		self.idNum = count
+		count += 1
 		self.username = username
 		self.password = password
 		#self.idNum = idNum
 		#key_hash_obj = hashlib.md5(self.password)
-		key_hash_obj = hashlib.sha256(self.password)
+		key_hash_obj = hashlib.sha256(self.password) #sha256 more secure than md5
 		#self.iv = os.urandom(16)
 		self.iv = 'abcdefghijklmnop'
 		self.key = key_hash_obj.digest()
@@ -33,20 +38,15 @@ class MasterAccount:
 		return decryption_suite.decrypt(text)
 			
 	def insertMasterAccount(self):
-			
+
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
 			cur = con.cursor()
-			cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
-			cur.execute("CREATE TABLE FireproofAccountLogin (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,UserName VARCHAR(30) NOT NULL,\
-				PasswordName VARCHAR(30) NOT NULL)")
-
-			cur.execute("INSERT INTO FireproofAccountLogin (UserName,PasswordName) VALUES (%s,%s)",(self.username_enc,self.password_enc))
-			#cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
-			#id_number = cur.fetchone()			
-			#cur.execute("CREATE TABLE %s", (id_number))
-		
+			cur.execute("INSERT INTO FireproofAccountLogin (id,UserName,PasswordName) VALUES (%s,%s,%s)",(self.idNum,self.username_enc,self.password_enc))
+			cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
+			id_number = cur.fetchone()	
+			self.idNum = id_number				
 			
 	def retrieveMasterAccount(self):
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);

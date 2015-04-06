@@ -170,6 +170,15 @@ class CreateNewServicePage(tk.Frame):
 		Enter.place(bordermode=OUTSIDE,x=292,y=300)
 
 if __name__ == "__main__":
+
+	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+
+	with con:
+		cur = con.cursor()
+		cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
+		cur.execute("CREATE TABLE FireproofAccountLogin (id INT(6) PRIMARY KEY,UserName VARCHAR(30) NOT NULL,\
+			PasswordName VARCHAR(30) NOT NULL)")
+
 	app = Fireproof()
 	app.wm_geometry("500x400")
 	app.mainloop()
