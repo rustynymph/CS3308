@@ -4,10 +4,8 @@
 import MySQLdb as mdb
 import sys
 from config import *
-from Crypto.Cipher import AES
-import hashlib
-import base64
 import os
+from Encryption import *
 
 count = 0
 
@@ -18,23 +16,13 @@ class MasterAccount:
 		count += 1
 		self.username = username
 		self.password = password
-		key_hash_obj = hashlib.sha256(self.password) #sha256 more secure than md5
+		key_hash_obj = Encryption.hashPassword(self.password) #sha256 more secure than md5
 		#self.iv = os.urandom(16)
 		self.iv = 'abcdefghijklmnop'
 		self.key = key_hash_obj.digest()
-		self.username_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.username)
-		self.password_enc = MasterAccount.encryptCredentials(self.key,self.iv,self.password)
-	
-	@staticmethod
-	def encryptCredentials(key,iv,text):
-		encryption_suite = AES.new(key, AES.MODE_CFB, iv)
-		return encryption_suite.encrypt(text)
-	
-	@staticmethod
-	def decryptCredentials(key,iv,text):
-		decryption_suite = AES.new(key, AES.MODE_CFB, iv)
-		return decryption_suite.decrypt(text)
-			
+		self.username_enc = Encryption.encryptCredentials(self.key,self.iv,self.username)
+		self.password_enc = Encryption.encryptCredentials(self.key,self.iv,self.password)
+				
 	def insertMasterAccount(self):
 
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
@@ -63,8 +51,8 @@ class MasterAccount:
 				account_pass = cur.fetchone()
 			
 				if(account_name and account_pass):
-					username = MasterAccount.decryptCredentials(self.key,self.iv,account_name[0])
-					password = MasterAccount.decryptCredentials(self.key,self.iv,account_pass[0])
+					username = Encryption.decryptCredentials(self.key,self.iv,account_name[0])
+					password = Encryption.decryptCredentials(self.key,self.iv,account_pass[0])
 					print username
 					print password
 					print id_number
