@@ -18,8 +18,6 @@ class MasterAccount:
 		count += 1
 		self.username = username
 		self.password = password
-		#self.idNum = idNum
-		#key_hash_obj = hashlib.md5(self.password)
 		key_hash_obj = hashlib.sha256(self.password) #sha256 more secure than md5
 		#self.iv = os.urandom(16)
 		self.iv = 'abcdefghijklmnop'
@@ -53,9 +51,6 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()	
-			#cur.execute("SELECT UserName FROM FireproofAccountLogin WHERE Id=0")
-			#account = cur.fetchone()
-			#print str(account[0]) == str(self.username_enc)
 			cur.execute("SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)", (self.username_enc,self.password_enc))
 			id_number = cur.fetchone()
 			
