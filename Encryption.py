@@ -1,6 +1,5 @@
 from Crypto.Cipher import AES
 import hashlib
-import base64
 import os
 
 BLOCKSIZE = 16
