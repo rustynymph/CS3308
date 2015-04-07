@@ -2,7 +2,6 @@ import Tkinter as tk
 import tkMessageBox
 from Tkinter import *
 from LoginFunctions import *
-#from StorageFunctions import *
 import MySQLdb as mdb
 from config import *
 

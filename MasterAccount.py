@@ -5,7 +5,7 @@ import MySQLdb as mdb
 import sys
 from config import *
 import os
-from Encryption import *
+from AESCipher import *
 
 class MasterAccount:
 
@@ -16,11 +16,11 @@ class MasterAccount:
 		MasterAccount.count += 1
 		self.username = username
 		self.password = password
-		key_hash_obj = Encryption.hashPassword(self.password) #sha256 more secure than md5
+		key_hash_obj = AESCipher.hashPassword(self.password) #sha256 more secure than md5
 		self.iv = os.urandom(16)
 		self.key = key_hash_obj.digest()
-		self.username_enc = Encryption.encryptCredentials(self.key,self.iv,self.username)
-		self.password_enc = Encryption.encryptCredentials(self.key,self.iv,self.password)
+		self.username_enc = AESCipher.encryptCredentials(self.key,self.iv,self.username)
+		self.password_enc = AESCipher.encryptCredentials(self.key,self.iv,self.password)
 				
 	def insertMasterAccount(self):
 
