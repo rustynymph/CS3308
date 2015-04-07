@@ -3,9 +3,7 @@ import hashlib
 import base64
 import os
 
-#BS = 16
-#pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS) 
-#unpad = lambda s : s[0:-ord(s[-1])]
+BLOCKSIZE = 16
 
 class Encryption:
 
@@ -13,12 +11,8 @@ class Encryption:
 	#so that our string is a multiple of 16 bytes
 
 	#PKCS5 padding algorithm
-	@staticmethod
-	def pad(text): return text + (16 - len(text) % 16) * chr(16 - len(text) % 16)
-
-	#PKCS5 unpadding algorithm
-	@staticmethod
-	def unpad(text): return text[0:-ord(text[-1])]
+	pad = staticmethod(lambda text: text + (BLOCKSIZE - len(text) % BLOCKSIZE) * chr(BLOCKSIZE - len(text) % BLOCKSIZE))
+	unpad = staticmethod(lambda text : text[0:-ord(text[-1])])
 
 	@staticmethod
 	def hashPassword(password):	return hashlib.sha256(password)

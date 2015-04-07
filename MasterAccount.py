@@ -43,7 +43,7 @@ class MasterAccount:
 			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
 			cur.execute(retrieve_account_id_command, (account.username_enc,account.password_enc))
 			id_number = cur.fetchone()
-		
+
 		return id_number
 
 
