@@ -26,7 +26,7 @@ class Fireproof(tk.Tk):
 		fireproof_banner.place(bordermode=OUTSIDE,x=150,y=15)		
 
 		self.frames = {}
-		for F in (LoginPage, CreateAccountPage, ServicesPage, ServiceInfoPage):
+		for F in (LoginPage, CreateAccountPage, ServicesPage, AddNewServicePage):
 			frame = F(container, self)
 			self.frames[F] = frame
 			# put all of the pages in the same location; 
@@ -120,20 +120,14 @@ class ServicesPage(tk.Frame):
 		tk.Frame.__init__(self, parent)
 		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
-		go_back_to_login_button = Button(self, text="Go to the login page", 
-						   command=lambda: controller.show_frame(LoginPage))
+		go_back_to_login_button = Button(self, text="Go to the login page", command=lambda: controller.show_frame(LoginPage))
 		go_back_to_login_button.place(bordermode=OUTSIDE,x=5,y=5)
+
+		add_new_service_button = Button(self, text="Add a new service", command=lambda: controller.show_frame(AddNewServicePage))
+		add_new_service_button.place(bordermode=OUTSIDE,x=50,y=100)
 		
-class ServiceInfoPage(tk.Frame):
-	def __init__(self, parent, controller):
-		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
-		button = tk.Button(self, text="Go to the start page", 
-						   command=lambda: controller.show_frame(StartPage))
-		button.pack()
 		
-class CreateNewServicePage(tk.Frame):
+class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 		
@@ -159,7 +153,7 @@ class CreateNewServicePage(tk.Frame):
 		password_input_form = Entry(self, bd=5)
 		password_input_form.place(bordermode=OUTSIDE, x=200, y=220)
 		
-		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(StartPage))
+		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
 		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
 		add_service_button = Button(self, text ="Add Service", command=lambda: controller.show_frame(StartPage))
