@@ -35,13 +35,13 @@ class MasterAccount:
 			cur.execute(insert_account_command,(self.id_num,self.username_enc,self.password_enc))
 	
 	@staticmethod		
-	def retrieveMasterAccount(account):
+	def retrieveMasterAccountId(username_enc,password_enc):
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
 			cur = con.cursor()
 			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
-			cur.execute(retrieve_account_id_command, (account.username_enc,account.password_enc))
+			cur.execute(retrieve_account_id_command, (username_enc,password_enc))
 			id_number = cur.fetchone()
 
 		return id_number

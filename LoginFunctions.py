@@ -16,11 +16,13 @@ class LoginFunctions:
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 			return False
 		else:
-			login_account = None
+			username_enc = None
+			password_enc = None
 			for account in LoginFunctions.accounts:
 				if (master_username == account.username) and (master_password == account.password):
-					login_account = account
-			if(not(MasterAccount.retrieveMasterAccount(login_account))):
+					username_enc = account.username_enc
+					password_enc = account.password_enc
+			if(not(MasterAccount.retrieveMasterAccountId(username_enc,password_enc))):
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please click create an account.")
 				return False
 			else: return True
