@@ -66,6 +66,8 @@ class LoginPage(tk.Frame):
 		def checkIfUser():
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
+				print "heyyyyyy"
+				print is_a_user
 				Fireproof.current_account = is_a_user
 				username_input_form.delete(0, 'end')
 				password_input_form.delete(0, 'end')
@@ -259,14 +261,20 @@ class AddNewServicePage(tk.Frame):
 		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(ServicesPage))
 		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
-		def addService(servicename,username,password):
+		def addService():
+			username = username_input_form.get()
+			password = password_input_form.get()
+			servicename = service_input_form.get()
+			print "Service:", servicename
+			print "Username:", username
+			print "Password:", password
 			service_account = ServiceAccount(username,password)
 			service = Service(servicename,[service_account])
 			Service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
 			controller.show_frame(ServicesPage)
 		
-		add_service_button = Button(self, text ="Add Service", command=addService(service_input_form.get(),username_input_form.get(),password_input_form.get()))
+		add_service_button = Button(self, text ="Add Service", command=addService)
 		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))

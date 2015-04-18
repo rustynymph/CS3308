@@ -19,7 +19,7 @@ class Service:
 			cur = con.cursor()
 			insert_servicename_command = "INSERT INTO FireproofServices (masterid,ServiceName) VALUES (%s,%s)"
 			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
-			cur.execute(insert_servicename_command,(account.id_num,"Facebook"))
+			cur.execute(insert_servicename_command,(account.id_num,service.service_name))
 
 	@staticmethod
 	def retrieveServiceName(account,service):
@@ -36,6 +36,7 @@ class Service:
 
 	@staticmethod
 	def changeService(account,service):
+		
 		account_id = account.id_num	
 
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
