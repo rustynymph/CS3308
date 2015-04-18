@@ -157,6 +157,7 @@ class ServiceInfoPage(tk.Frame):
         
         #editpage
 		edit_service_button = Button(self, text="    Edit this service    ", command=lambda: controller.show_frame(EditPage))
+
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
 		
 		back_button = Button(self, text="Back", command=lambda: controller.show_frame(AddNewServicePage))
