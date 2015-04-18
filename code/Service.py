@@ -8,7 +8,6 @@ class Service:
 
 	@staticmethod
 	def insertServiceName(account,service):
-		print "heyayayayaa"
 
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
