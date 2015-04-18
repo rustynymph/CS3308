@@ -49,24 +49,48 @@ class MasterAccount:
 
 
 	@staticmethod
-	def changeMasterPassword(account,new_password):
+	def changeMasterPassword(account,new_password,confirm_password):
+		#updating key to use new password
 		old_password = account.password
 		old_key = account.key
 		key_hash_obj = AESCipher.hashPassword(new_password)
 		new_key = key_hash_obj.digest()
 		account.key = new_key		
 
-		#must decrypt and reencrypt the master username and password in the database
-		new_username_enc = AESCipher.encryptCredentials(account.key,account.iv,account.username)
-		new_password_enc = AESCipher.encryptCredentials(account.key,account.iv,account.password)
-		account.username_enc = new_username_enc
-		account.password_enc = new_password_enc
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
-		for servicename in account.service_name_list:
-			decrypted_service_name = AESCipher.decryptCredentials(account.key,account.iv,servicename.service_name)
+		with con:
+			cur = con.cursor()
+			#must decrypt and reencrypt the master username and password in the database
+			new_username_enc = AESCipher.encryptCredentials(account.key,account.iv,account.username)
+			new_password_enc = AESCipher.encryptCredentials(account.key,account.iv,account.password)
+			old_username_enc = account.username_enc
+			old_password_enc = account.password_enc
+			account.username_enc = new_username_enc
+			account.password_enc = new_password_enc			
+			#insert_username_command = "UPDATE FireproofAccountLogin SET UserName = new_username_enc WHERE (UserName) = (%s)"
+			#insert_password_command = "UPDATE FireproofAccountLogin SET PasswordName = new_password_enc WHERE (PasswordName) = (%s)"
+			#cur.execute(insert_username_command, (old_username_enc))
+			#cur.execute(insert_password_command, (old_password_enc))
+			
+			#add the new enc username and password to the database
 
-			reencrypted_service_name = AESCipher.encryptCredentials(account.key,account.iv,servicename.service_name)
-			#for account in servicename.service_accounts:
+			#need to reencrypt the service names and service account username/passwords
+			for service in account.service_name_list:
+				service_id_num = service.id_num
+				old_service_name_enc = service.service_name_enc
+				encrypted_service = AESCipher.encryptCredentials(account.key,account.iv,service.service_name)
+				#insert_service_command = "UPDATE FireprooServices SET Servicename = encrypted_service WHERE (Servicename) = (%s)"
+				#cur.execute(insert_service_command, (old_service_name))
+
+				for service_account in servicename.service_accounts:
+					old_sa_username_enc = service_account.username_enc
+					old_sa_password_enc = service_account.password_enc
+					encrypted_service_account_username = AESCipher.encryptCredentials(account.key,account.iv,service_account.username)
+					encrypted_service_account_password = AESCipher.encryptCredentials(account.key,account.iv,service_account.password)
+
+					#insert_sa_username_command = 
+					#insert_sa_password_command = 
 
 #	@staticmethod
-#	def changeMasterUsername(account,new_username): sdff
+#	def changeMasterUsername(account,new_username): 

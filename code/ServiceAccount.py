@@ -7,8 +7,8 @@ class ServiceAccount:
 		self.username = username
 		self.password = password
 
-		#self.username_enc
-		#self.password_enc
+		self.username_enc = AESCipher.encryptCredentials(Fireproof.current_account.key,Fireproof.current_account.iv,self.username)
+		self.password_enc = AESCipher.encryptCredentials(Fireproof.current_account.key,Fireproof.current_account.iv,self.password)
 
 	@staticmethod
 	def insertServiceAccount(account,service,serviceaccount):

@@ -10,11 +10,8 @@ class Service:
 		self.service_accounts = service_accounts #will be a list of ServiceAccounts
 		self.id_num = Service.ServiceCount
 		Service.ServiceCount += 1
-		
 
-		#self.service_name_enc = 
-	
-	
+		self.service_name_enc = AESCipher.encryptCredentials(Fireproof.current_account.key,Fireproof.current_account.iv,self.service_name)
 	
 	@staticmethod
 	def insertServiceName(account,service):
