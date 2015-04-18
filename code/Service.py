@@ -2,14 +2,20 @@ import MySQLdb as mdb
 from config import *
 
 class Service:
-
+	
+	ServiceCount = 1
+	
 	def __init__(self,service_name,service_accounts=[]):
 		self.service_name = service_name
 		self.service_accounts = service_accounts #will be a list of ServiceAccounts
-		self.id_num = 0
+		self.id_num = Service.ServiceCount
+		Service.ServiceCount += 1
+		
 
 		#self.service_name_enc = 
-
+	
+	
+	
 	@staticmethod
 	def insertServiceName(account,service):
 
@@ -17,9 +23,9 @@ class Service:
 
 		with con:
 			cur = con.cursor()
-			insert_servicename_command = "INSERT INTO FireproofServices (masterid,ServiceName) VALUES (%s,%s)"
+			insert_servicename_command = "INSERT INTO FireproofServices (id,masterid,ServiceName) VALUES (%s,%s,%s)"
 			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
-			cur.execute(insert_servicename_command,(account.id_num,service.service_name))
+			cur.execute(insert_servicename_command,(service.id_num,account.id_num,service.service_name))
 
 	@staticmethod
 	def retrieveServiceName(account,service):
@@ -55,7 +61,7 @@ class Service:
 		with con:
 			cur = con.cursor()
 			cur.execute("DROP TABLE IF EXISTS FireproofServices")
-			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
+			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
 
 
 	

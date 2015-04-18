@@ -12,7 +12,7 @@ TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
 	
-	current_account = MasterAccount("Username","Password")
+	current_account = None
 	
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
@@ -220,7 +220,7 @@ class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 		
-		existingForm = Label(self, text = "Add to existing service")
+		existingForm = Label(self, text = "Add new service:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
 		
 		# Service name label/field
@@ -246,10 +246,10 @@ class AddNewServicePage(tk.Frame):
 		username_input_form = Entry(self, bd=5)
 		username_input_form.place(bordermode=OUTSIDE, x=200, y=180)
 		
-		password_input_form = Entry(self, bd=5)
+		password_input_form = Entry(self, bd=5, show="*")
 		password_input_form.place(bordermode=OUTSIDE, x=200, y=220)
 		
-		existingForm = Label(self, text = "Add to existing service")
+		existingForm = Label(self, text = "Add to existing service:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=265)
 		
 		var = StringVar()
@@ -257,9 +257,6 @@ class AddNewServicePage(tk.Frame):
 		options.pack(expand="yes", fill="x")
 		var.set('Facebook')
 		options.place(bordermode=OUTSIDE, x=200, y=260)
-		
-		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(ServicesPage))
-		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
 		def addService():
 			username = username_input_form.get()
@@ -270,15 +267,18 @@ class AddNewServicePage(tk.Frame):
 			print "Password:", password
 			service_account = ServiceAccount(username,password)
 			service = Service(servicename,[service_account])
-			Service.insertServiceName(Fireproof.current_account,service)
+			service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
 			controller.show_frame(ServicesPage)
 		
 		add_service_button = Button(self, text ="Add Service", command=addService)
-		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
+		add_service_button.place(bordermode=OUTSIDE,x=325,y=350)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
-		more_options_button.place(bordermode=OUTSIDE,x=292,y=300)
+		more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
+		
+		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))
+		back_button.place(bordermode=OUTSIDE,x=125,y=350)
 
 if __name__ == "__main__":
 
