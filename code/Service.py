@@ -1,6 +1,6 @@
 class Service:
 
-	def __init__(self,service_name,service_accounts):
+	def __init__(self,service_name,service_accounts=[]):
 		self.service_name = service_name
 		self.service_accounts = service_accounts #will be a list of ServiceAccounts
 

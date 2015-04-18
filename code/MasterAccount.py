@@ -11,7 +11,7 @@ class MasterAccount:
 
 	count = 0
 
-	def __init__(self,username,password):
+	def __init__(self,username,password,service_name_list=[]):
 		self.id_num = MasterAccount.count
 		MasterAccount.count += 1
 		self.username = username
@@ -21,6 +21,7 @@ class MasterAccount:
 		self.key = key_hash_obj.digest()
 		self.username_enc = AESCipher.encryptCredentials(self.key,self.iv,self.username)
 		self.password_enc = AESCipher.encryptCredentials(self.key,self.iv,self.password)
+		self.service_name_list = service_name_list
 				
 	def insertMasterAccount(self):
 
@@ -46,3 +47,26 @@ class MasterAccount:
 
 		return id_number
 
+
+	@staticmethod
+	def changeMasterPassword(account,new_password):
+		old_password = account.password
+		old_key = account.key
+		key_hash_obj = AESCipher.hashPassword(new_password)
+		new_key = key_hash_obj.digest()
+		account.key = new_key		
+
+		#must decrypt and reencrypt the master username and password in the database
+		new_username_enc = AESCipher.encryptCredentials(account.key,account.iv,account.username)
+		new_password_enc = AESCipher.encryptCredentials(account.key,account.iv,account.password)
+		account.username_enc = new_username_enc
+		account.password_enc = new_password_enc
+
+		for servicename in account.service_name_list:
+			decrypted_service_name = AESCipher.decryptCredentials(account.key,account.iv,servicename.service_name)
+
+			reencrypted_service_name = AESCipher.encryptCredentials(account.key,account.iv,servicename.service_name)
+			#for account in servicename.service_accounts:
+
+#	@staticmethod
+#	def changeMasterUsername(account,new_username):
