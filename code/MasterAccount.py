@@ -59,8 +59,18 @@ class MasterAccount:
 			cur.execute(insert_servicename_command,(account.id_num,"Facebook"))
 
 	@staticmethod
+	def insertServiceAccount(account,service):
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+
+		with con:
+			cur = con.cursor()
+			insert_serviceaccount_command = "INSERT INTO FireproofServicesAccounts (serviceid,masterid,username,password) VALUES (%s,%s,%s,%s)"
+			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
+			cur.execute(insert_serviceaccount_command,(service.id_num,account.id_num,service.username,service.password))
+
+	@staticmethod
 	def retrieveServiceName(account,service):
-		account_id = account.id_num
+		account_id = account.id_nums
 
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
@@ -90,7 +100,6 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()
-			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
 			cur.execute("DROP TABLE IF EXISTS FireproofServices")
 			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
 
@@ -101,6 +110,5 @@ class MasterAccount:
 
 		with con:
 			cur = con.cursor()
-			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
-			cur.execute("DROP TABLE IF EXISTS FireproofServices")
-			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")		
+			cur.execute("CREATE TABLE FireproofServicesAccounts (id INT(6) PRIMARY KEY AUTO_INCREMENT,serviceid INT(6),\
+				masterid INT(6),ServiceUsername VARCHAR(30) NOT NULL,ServicePassword VARCHAR(30) NOT NULL)")		
