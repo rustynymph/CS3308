@@ -262,8 +262,21 @@ class AddNewServicePage(tk.Frame):
 			service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
 			controller.show_frame(ServicesPage)
+			
+		def addServiceChecker():
+			username = username_input_form.get()
+			password = password_input_form.get()
+			servicename = service_input_form.get()
+			if (servicename) == "":
+				tkMessageBox.showinfo("Error","Please enter a service name.")
+			elif (username) == "":
+				tkMessageBox.showinfo("Error","Please enter a valid username.")
+			elif (password) == "":
+				tkMessageBox.showinfo("Error","Please enter a valid password.")
+			else:
+				addService()
 		
-		add_service_button = Button(self, text ="Add Service", command=addService)
+		add_service_button = Button(self, text ="Add Service", command=addServiceChecker)
 		add_service_button.place(bordermode=OUTSIDE,x=325,y=350)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
