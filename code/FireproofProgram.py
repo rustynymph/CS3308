@@ -157,7 +157,7 @@ class AddNewServicePage(tk.Frame):
 		
 		MasterAccount.createServiceTable()
 
-		add_service_button = Button(self, text ="Add Service", command=lambda: Fireproof.current_account.insertServiceName("Facebook"))
+		add_service_button = Button(self, text ="Add Service", command=lambda: MasterAccount.insertServiceName(Fireproof.current_account,"Facebook"))
 		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(StartPage))

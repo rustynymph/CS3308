@@ -71,7 +71,18 @@ class MasterAccount:
 			service_primary_key = cur.fetchone()
 			print service_primary_key		
 
-	#def changeService(self,service):	
+	@staticmethod
+	def changeService(account,service):
+		account_id = account.id_num	
+
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+
+		with con:
+			cur = con.cursor()
+			retrieve_service_name_command = "SELECT id FROM FireproofServices WHERE (masterid,ServiceName) = (%s,%s)"
+			cur.execute(retrieve_service_name_command,(account_id,service.service_name))
+			service_primary_key = cur.fetchone()
+			print service_primary_key			
 
 	@staticmethod
 	def createServiceTable():
@@ -83,3 +94,13 @@ class MasterAccount:
 			cur.execute("DROP TABLE IF EXISTS FireproofServices")
 			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
 
+
+	@staticmethod
+	def createServiceAccountsTable():
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+
+		with con:
+			cur = con.cursor()
+			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
+			cur.execute("DROP TABLE IF EXISTS FireproofServices")
+			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")		
