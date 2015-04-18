@@ -61,7 +61,6 @@ class LoginPage(tk.Frame):
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
 				controller.show_frame(ServicesPage)
-			else: return 0
 		
 		login_button = Button(self, text ="Login", command=checkIfUser)
 		login_button.place(bordermode=OUTSIDE,x=292,y=240)		
@@ -99,10 +98,8 @@ class CreateAccountPage(tk.Frame):
 		confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=240)
 		
 		def createAccount():
-			print("hi")
 			LoginFunctions.createLoginInfo(username_input_form.get(),password_input_form.get(),confirm_password_input_form.get())
 			controller.show_frame(LoginPage)
-			return 0
 		
 		create_account_button = Button(self, text ="Create Account", command=createAccount)
 		create_account_button.place(bordermode=OUTSIDE,x=235,y=290)
