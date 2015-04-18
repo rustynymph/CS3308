@@ -4,10 +4,15 @@ from Tkinter import *
 from LoginFunctions import *
 import MySQLdb as mdb
 from config import *
+from Service import *
+from ServiceAccount import *
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
+	
+	current_account = MasterAccount("Username","Password")
+	
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
 
@@ -60,6 +65,7 @@ class LoginPage(tk.Frame):
 		def checkIfUser():
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
+				Fireproof.current_account = is_a_user
 				username_input_form.delete(0, 'end')
 				password_input_form.delete(0, 'end')
 				controller.show_frame(ServicesPage)
@@ -212,7 +218,14 @@ class AddNewServicePage(tk.Frame):
 		tk.Frame.__init__(self, parent)
 		
 		existingForm = Label(self, text = "Add to existing service")
-		existingForm.place(bordermode=OUTSIDE, x=50, y=140)
+		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
+		
+		# Service name label/field
+		service_form_label = Label(self, text = "Service Name")
+		service_form_label.place(bordermode=OUTSIDE, x=50, y=140)
+		
+		service_input_form = Entry(self, bd=5)
+		service_input_form.place(bordermode=OUTSIDE, x=200, y=140)
 		
 		username_form_label = Label(self, text = "Username")
 		username_form_label.place(bordermode=OUTSIDE, x=50, y=180)
@@ -236,7 +249,14 @@ class AddNewServicePage(tk.Frame):
 		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(ServicesPage))
 		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
-		add_service_button = Button(self, text ="Add Service", command=lambda: controller.show_frame(ServicesPage))
+		def addService(servicename,username,password):
+			service_account = ServiceAccount(username,password)
+			service = Service(servicename,[service_account])
+			Service.insertServiceName(Fireproof.current_account,service)
+			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
+			controller.show_frame(ServicesPage)
+		
+		add_service_button = Button(self, text ="Add Service", command=addService(service_input_form.get(),username_input_form.get(),password_input_form.get()))
 		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
@@ -249,8 +269,13 @@ if __name__ == "__main__":
 	with con:
 		cur = con.cursor()
 		cur.execute("DROP TABLE IF EXISTS FireproofAccountLogin")
+		cur.execute("DROP TABLE IF EXISTS FireproofServices")
+		cur.execute("DROP TABLE IF EXISTS FireproofServicesAccounts")
 		cur.execute("CREATE TABLE FireproofAccountLogin (id INT(6) PRIMARY KEY,UserName VARCHAR(30) NOT NULL,\
 			PasswordName VARCHAR(30) NOT NULL)")
+			
+	Service.createServiceTable()
+	ServiceAccount.createServiceAccountsTable()
     
 	app = Fireproof()
 	app.wm_geometry("500x400")

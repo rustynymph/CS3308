@@ -1,8 +1,12 @@
+import MySQLdb as mdb
+from config import *
+
 class Service:
 
 	def __init__(self,service_name,service_accounts=[]):
 		self.service_name = service_name
 		self.service_accounts = service_accounts #will be a list of ServiceAccounts
+		self.id_num = 0
 
 		#self.service_name_enc = 
 
@@ -53,11 +57,4 @@ class Service:
 			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
 
 
-	@staticmethod
-	def createServiceAccountsTable():
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-
-		with con:
-			cur = con.cursor()
-			cur.execute("CREATE TABLE FireproofServicesAccounts (id INT(6) PRIMARY KEY AUTO_INCREMENT,serviceid INT(6),\
-				masterid INT(6),ServiceUsername VARCHAR(30) NOT NULL,ServicePassword VARCHAR(30) NOT NULL)")		
+	
