@@ -223,7 +223,6 @@ class AddNewServicePage(tk.Frame):
 		existingForm = Label(self, text = "Add new service:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
 		
-		# Service name label/field
 		service_form_label = Label(self, text = "Service Name")
 		service_form_label.place(bordermode=OUTSIDE, x=50, y=140)
 		
@@ -235,13 +234,6 @@ class AddNewServicePage(tk.Frame):
 		
 		password_form_label = Label(self, text = "Password")
 		password_form_label.place(bordermode=OUTSIDE, x=50, y=220)
-		
-		#existingVar_value = StringVar()
-		#existingVar = ttk.ComboBox(self, textvariable = existingVar_value)
-		#existingVar['values'] = ('Facebook', 'Gmail', 'Moodle') #still need to change this to support get method
-		#existingVar.current(0)
-		#existingVar.grid(column=0, row=0)
-		#existingVar.place(bordermode=OUTSIDE, x=200, y=140)
 		
 		username_input_form = Entry(self, bd=5)
 		username_input_form.place(bordermode=OUTSIDE, x=200, y=180)
