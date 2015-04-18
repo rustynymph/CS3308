@@ -58,7 +58,6 @@ class LoginPage(tk.Frame):
 		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
 		def checkIfUser():
-			print("hi")
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
 				controller.show_frame(ServicesPage)
