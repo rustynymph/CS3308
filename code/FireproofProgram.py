@@ -7,6 +7,7 @@ from config import *
 from Service import *
 from ServiceAccount import *
 
+
 TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
@@ -245,6 +246,15 @@ class AddNewServicePage(tk.Frame):
 		
 		password_input_form = Entry(self, bd=5)
 		password_input_form.place(bordermode=OUTSIDE, x=200, y=220)
+		
+		existingForm = Label(self, text = "Add to existing service")
+		existingForm.place(bordermode=OUTSIDE, x=50, y=265)
+		
+		var = StringVar()
+		options = OptionMenu(self, var, 'Facebook', 'Gmail', 'Moodle')
+		options.pack(expand="yes", fill="x")
+		var.set('Facebook')
+		options.place(bordermode=OUTSIDE, x=200, y=260)
 		
 		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(ServicesPage))
 		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
