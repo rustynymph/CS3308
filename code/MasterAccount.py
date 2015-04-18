@@ -11,7 +11,7 @@ class MasterAccount:
 
 	count = 0
 
-	def __init__(self,username,password):
+	def __init__(self,username,password,service_name_list=[]):
 		self.id_num = MasterAccount.count
 		MasterAccount.count += 1
 		self.username = username
@@ -21,6 +21,7 @@ class MasterAccount:
 		self.key = key_hash_obj.digest()
 		self.username_enc = AESCipher.encryptCredentials(self.key,self.iv,self.username)
 		self.password_enc = AESCipher.encryptCredentials(self.key,self.iv,self.password)
+		self.service_name_list = service_name_list
 				
 	def insertMasterAccount(self):
 
@@ -46,61 +47,26 @@ class MasterAccount:
 
 		return id_number
 
-	@staticmethod
-	def insertServiceName(account,service):
-		print "heyayayayaa"
-
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-
-		with con:
-			cur = con.cursor()
-			insert_servicename_command = "INSERT INTO FireproofServices (masterid,ServiceName) VALUES (%s,%s)"
-			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
-			cur.execute(insert_servicename_command,(account.id_num,"Facebook"))
 
 	@staticmethod
-	def retrieveServiceName(account,service):
-		account_id = account.id_num
+	def changeMasterPassword(account,new_password):
+		old_password = account.password
+		old_key = account.key
+		key_hash_obj = AESCipher.hashPassword(new_password)
+		new_key = key_hash_obj.digest()
+		account.key = new_key		
 
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		#must decrypt and reencrypt the master username and password in the database
+		new_username_enc = AESCipher.encryptCredentials(account.key,account.iv,account.username)
+		new_password_enc = AESCipher.encryptCredentials(account.key,account.iv,account.password)
+		account.username_enc = new_username_enc
+		account.password_enc = new_password_enc
 
-		with con:
-			cur = con.cursor()
-			retrieve_service_name_command = "SELECT id FROM FireproofServices WHERE (masterid,ServiceName) = (%s,%s)"
-			cur.execute(retrieve_service_name_command,(account_id,service.service_name))
-			service_primary_key = cur.fetchone()
-			print service_primary_key		
+		for servicename in account.service_name_list:
+			decrypted_service_name = AESCipher.decryptCredentials(account.key,account.iv,servicename.service_name)
 
-	@staticmethod
-	def changeService(account,service):
-		account_id = account.id_num	
+			reencrypted_service_name = AESCipher.encryptCredentials(account.key,account.iv,servicename.service_name)
+			#for account in servicename.service_accounts:
 
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-
-		with con:
-			cur = con.cursor()
-			retrieve_service_name_command = "SELECT id FROM FireproofServices WHERE (masterid,ServiceName) = (%s,%s)"
-			cur.execute(retrieve_service_name_command,(account_id,service.service_name))
-			service_primary_key = cur.fetchone()
-			print service_primary_key			
-
-	@staticmethod
-	def createServiceTable():
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-
-		with con:
-			cur = con.cursor()
-			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
-			cur.execute("DROP TABLE IF EXISTS FireproofServices")
-			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
-
-
-	@staticmethod
-	def createServiceAccountsTable():
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-
-		with con:
-			cur = con.cursor()
-			retrieve_account_id_command = "SELECT Id FROM FireproofAccountLogin WHERE (UserName,PasswordName) = (%s,%s)"
-			cur.execute("DROP TABLE IF EXISTS FireproofServices")
-			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY AUTO_INCREMENT,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")		
+#	@staticmethod
+#	def changeMasterUsername(account,new_username): sdff

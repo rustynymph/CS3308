@@ -26,7 +26,7 @@ class Fireproof(tk.Tk):
 		fireproof_banner.place(bordermode=OUTSIDE,x=150,y=15)		
 
 		self.frames = {}
-		for F in (LoginPage, CreateAccountPage, LoginPage2, SettingsPage, ServiceInfoPage, AddNewServicePage):
+		for F in (LoginPage, CreateAccountPage, ServicesPage, SettingsPage, ServiceInfoPage, AddNewServicePage, EditPage):
 			frame = F(container, self)
 			self.frames[F] = frame
 			# put all of the pages in the same location; 
@@ -42,7 +42,7 @@ class Fireproof(tk.Tk):
 		frame.tkraise()
 
 
-class LoginPage2(tk.Frame):
+class LoginPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent) 
 
@@ -51,7 +51,7 @@ class LoginPage2(tk.Frame):
 
 		password_form_label = Label(self,text="Password")
 		password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
-
+		
 		username_input_form = Entry(self,bd=5)
 		username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
 
@@ -61,6 +61,8 @@ class LoginPage2(tk.Frame):
 		def checkIfUser():
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
+				username_input_form.delete(0, 'end')
+				password_input_form.delete(0, 'end')
 				controller.show_frame(ServicesPage)
 		
 		login_button = Button(self, text ="Login", command=checkIfUser)
@@ -111,7 +113,7 @@ class CreateAccountPage(tk.Frame):
 		#tips = Label(self,text="Passwords should be at least 8 characters")
 		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
 		
-class LoginPage(tk.Frame):
+class ServicesPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
@@ -127,7 +129,7 @@ class LoginPage(tk.Frame):
 		add_new_service_button.place(bordermode=OUTSIDE,x=355,y=365)
         
         #editpage
-		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(AddNewServicePage))
+		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
 
 		#deletepage
@@ -147,7 +149,7 @@ class SettingsPage(tk.Frame):
 		change_password_button = Button(self, text="Change Username", command=lambda: controller.show_frame(AddNewServicePage))
 		change_password_button.place(bordermode=OUTSIDE,x=200,y=250)
 		
-		back_button = Button(self, text="Back", command=lambda: controller.show_frame(AddNewServicePage))
+		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
 		back_button.place(bordermode=OUTSIDE,x=200,y=280)
 		
 class ServiceInfoPage(tk.Frame):
@@ -161,34 +163,50 @@ class ServiceInfoPage(tk.Frame):
 
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
 		
-		back_button = Button(self, text="Back", command=lambda: controller.show_frame(AddNewServicePage))
+		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
 		back_button.place(bordermode=OUTSIDE,x=200,y=280)
 
 class EditPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="Service Information Page", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
-		#display UN
-		#edit UN field
-		#display password
-		#edit P field
-		#confirm P field
+		# display service name
+		service_form_label = Label(self,text="ServiceNameGoesHere")
+		service_form_label.place(bordermode=OUTSIDE,x=60,y =120)
+		
+		curr_username_form_label = Label(self,text="Current Username:")
+		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=160)
+		
+		curruser_label = Label(self,text="FOOBAR")
+		curruser_label.place(bordermode=OUTSIDE,x=210,y=160)
+		
+		currpass_label = Label(self,text="BestPasswordEver1234")
+		currpass_label.place(bordermode=OUTSIDE,x=210,y=190)
+		
+		curr_password_form_label = Label(self,text="Current Password:")
+		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
+		
+		# display current password; pull from DB
 		
 		username_form_label = Label(self,text="New Username")
-		username_form_label.place(bordermode=OUTSIDE,x=60,y=140)
-
-		password_form_label = Label(self,text="New Password")
-		password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
-
-		#username_input_form = Entry(self,bd=5)
-		#username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
-
-		#password_input_form = Entry(self,bd=5,show="*")
-		#password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
+		username_form_label.place(bordermode=OUTSIDE,x=60,y=235)
+		username_input_form = Entry(self,bd=5)
+		username_input_form.place(bordermode=OUTSIDE,x=210,y=230)
 		
-		back_button = Button(self, text="Back", command=lambda: controller.show_frame(AddNewServicePage))
-		back_button.place(bordermode=OUTSIDE,x=200,y=280)
+		password_form_label = Label(self,text="New Password")
+		password_form_label.place(bordermode=OUTSIDE,x=60,y=270)
+		password_input_form = Entry(self,bd=5,show="*")
+		password_input_form.place(bordermode=OUTSIDE,x=210,y=265)
+		
+		confirm_password_label = Label(self,text="Confirm New Password")
+		confirm_password_label.place(bordermode=OUTSIDE,x=60,y=305)
+		confirm_password_input_form = Entry(self,bd=5,show="*")
+		confirm_password_input_form.place(bordermode=OUTSIDE,x=210,y=300)
+		
+		back_button = Button(self, text="Cancel", command=lambda: controller.show_frame(ServicesPage))
+		back_button.place(bordermode=OUTSIDE,x=150,y=350)
+		
+		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
+		save_button.place(bordermode=OUTSIDE,x=250,y=350)
 
 class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -222,13 +240,13 @@ class AddNewServicePage(tk.Frame):
 		var.set('Facebook')
 		options.place(bordermode=OUTSIDE, x=200, y=260)
 		
-		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
+		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(ServicesPage))
 		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
-		add_service_button = Button(self, text ="Add Service", command=lambda: controller.show_frame(StartPage))
+		add_service_button = Button(self, text ="Add Service", command=lambda: controller.show_frame(ServicesPage))
 		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
 		
-		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(StartPage))
+		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
 		more_options_button.place(bordermode=OUTSIDE,x=292,y=300)
 
 if __name__ == "__main__":
