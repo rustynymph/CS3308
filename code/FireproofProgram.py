@@ -31,7 +31,7 @@ class Fireproof(tk.Tk):
 		fireproof_banner.place(bordermode=OUTSIDE,x=150,y=15)		
 
 		self.frames = {}
-		for F in (LoginPage, CreateAccountPage, ServicesPage, SettingsPage, ServiceInfoPage, AddNewServicePage, EditPage):
+		for F in (LoginPage, CreateAccountPage, ServicesPage, SettingsPage, ServiceInfoPage, AddNewServicePage, EditPage, RemoveServicePage):
 			frame = F(container, self)
 			self.frames[F] = frame
 			# put all of the pages in the same location; 
@@ -115,8 +115,8 @@ class CreateAccountPage(tk.Frame):
 		create_account_button = Button(self, text ="Create Account", command=createAccount)
 		create_account_button.place(bordermode=OUTSIDE,x=235,y=290)
 		
-		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
-		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)		
+		go_back_button = Button(self, text ="Back", command=lambda: controller.show_frame(LoginPage))
+		go_back_button.place(bordermode=OUTSIDE,x=125,y=350)
 		
 		#tips = Label(self,text="Passwords should be at least 8 characters")
 		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
@@ -141,7 +141,7 @@ class ServicesPage(tk.Frame):
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
 
 		#deletepage
-		delete_service_button = Button(self, text="    Delete service   ", command=lambda: controller.show_frame(AddNewServicePage))
+		delete_service_button = Button(self, text="    Delete service   ", command=lambda: controller.show_frame(RemoveServicePage))
 		delete_service_button.place(bordermode=OUTSIDE, x=355,y=305)
 
 class SettingsPage(tk.Frame):
@@ -216,6 +216,27 @@ class EditPage(tk.Frame):
 		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
 		save_button.place(bordermode=OUTSIDE,x=250,y=350)
 
+class RemoveServicePage(tk.Frame):
+	def __init__(self, parent, controller):
+		tk.Frame.__init__(self, parent)
+		
+		existingForm = Label(self, text = "Choose a service to remove:")
+		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
+		
+		def ConfirmRemove():
+			result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
+			if result == 'yes':
+				print "Deleted!"
+			else:
+				print "Returning you to main screen"
+			controller.show_frame(ServicesPage)
+		
+		more_options_button = Button(self, text ="Remove Service", command=ConfirmRemove)
+		more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
+		
+		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))
+		back_button.place(bordermode=OUTSIDE,x=125,y=350)
+
 class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
@@ -262,8 +283,21 @@ class AddNewServicePage(tk.Frame):
 			service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
 			controller.show_frame(ServicesPage)
+
+		def addServiceChecker():
+			username = username_input_form.get()
+			password = password_input_form.get()
+			servicename = service_input_form.get()
+			if (servicename) == "":
+				tkMessageBox.showinfo("Error","Please enter a service name.")
+			elif (username) == "":
+				tkMessageBox.showinfo("Error","Please enter a valid username.")
+			elif (password) == "":
+				tkMessageBox.showinfo("Error","Please enter a valid password.")
+			else:
+				addService()
 		
-		add_service_button = Button(self, text ="Add Service", command=addService)
+		add_service_button = Button(self, text ="Add Service", command=addServiceChecker)
 		add_service_button.place(bordermode=OUTSIDE,x=325,y=350)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
