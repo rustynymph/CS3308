@@ -16,14 +16,18 @@ class LoginFunctions:
 		else:
 			username_enc = None
 			password_enc = None
+			current_account = None
 			for account in LoginFunctions.accounts:
 				if (master_username == account.username) and (master_password == account.password):
 					username_enc = account.username_enc
 					password_enc = account.password_enc
+
+					current_account = account
+
 			if(not(MasterAccount.retrieveMasterAccountId(username_enc,password_enc))):
 				tkMessageBox.showinfo("Create Login","Username and password not found. Please click create an account.")
 				return False
-			else: return True
+			else: return current_account
 			
 	@staticmethod
 	def createLoginInfo(master_username,master_password,confirm_master_password):

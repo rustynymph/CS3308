@@ -8,6 +8,9 @@ from config import *
 TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
+
+	current_account = None
+
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
 
@@ -60,6 +63,7 @@ class LoginPage(tk.Frame):
 		def checkIfUser():
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
+				Fireproof.current_account = is_a_user
 				controller.show_frame(ServicesPage)
 		
 		login_button = Button(self, text ="Login", command=checkIfUser)
@@ -151,7 +155,9 @@ class AddNewServicePage(tk.Frame):
 		go_back_button = Button(self, text ="Go Back", command=lambda: controller.show_frame(LoginPage))
 		go_back_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
-		add_service_button = Button(self, text ="Add Service", command=lambda: controller.show_frame(StartPage))
+		MasterAccount.createServiceTable()
+
+		add_service_button = Button(self, text ="Add Service", command=lambda: Fireproof.current_account.insertServiceName("Facebook"))
 		add_service_button.place(bordermode=OUTSIDE,x=160,y=300)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(StartPage))
