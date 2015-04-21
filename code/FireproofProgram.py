@@ -278,8 +278,12 @@ class AddNewServicePage(tk.Frame):
 			print "Service:", servicename
 			print "Username:", username
 			print "Password:", password
-			service_account = ServiceAccount(username,password)
-			service = Service(servicename,[service_account])
+			service_account = ServiceAccount(username,password,Fireproof.current_account)
+
+			service = Service(servicename,Fireproof.current_account,[service_account])
+
+			Fireproof.current_account.service_name_list += [service]
+
 			service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
 			controller.show_frame(ServicesPage)

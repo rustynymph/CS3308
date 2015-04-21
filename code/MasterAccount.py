@@ -6,6 +6,7 @@ import sys
 from config import *
 import os
 from AESCipher import *
+from FireproofProgram import *
 
 class MasterAccount:
 
@@ -22,6 +23,9 @@ class MasterAccount:
 		self.username_enc = AESCipher.encryptCredentials(self.key,self.iv,self.username)
 		self.password_enc = AESCipher.encryptCredentials(self.key,self.iv,self.password)
 		self.service_name_list = service_name_list
+
+	def __str__(self):
+		return self.__class__.__name__ + "(" + self.username + ", " + self.password + ")"
 				
 	def insertMasterAccount(self):
 
