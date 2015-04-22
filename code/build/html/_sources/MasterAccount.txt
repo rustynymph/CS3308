@@ -1,7 +1,0 @@
-MasterAccount module
-====================
-
-.. automodule:: MasterAccount
-    :members:
-    :undoc-members:
-    :show-inheritance:
