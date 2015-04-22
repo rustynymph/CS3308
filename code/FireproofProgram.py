@@ -13,7 +13,6 @@ TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
 	
 	current_account = None
-	PopulatingOptionsMenu = []
 	
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
@@ -67,7 +66,6 @@ class LoginPage(tk.Frame):
 		def checkIfUser():
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
-				print "heyyyyyy"
 				print is_a_user
 				Fireproof.current_account = is_a_user
 				username_input_form.delete(0, 'end')
@@ -131,30 +129,28 @@ class ServicesPage(tk.Frame):
 		logout_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
 		text_label = "Welcome! Here are your stored services:"
-		
 		ListboxLabel = Label(self, text = text_label)
-		ListboxLabel.place(bordermode=OUTSIDE, x=20, y=120)
+		ListboxLabel.place(x=20, y=120)
 		
 		self.CurrentServices = Listbox(self)
+		self.CurrentServices.config(borderwidth=4, height=14, width=38)
 		self.CurrentServices.pack()
-		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=150)
+		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
 		
-		self.CurrentServices.insert(END, "Entry?")
-		
-		#changepassword
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
 		change_password_button.place(bordermode=OUTSIDE,x=417,y=5)
 		
 		add_new_service_button = Button(self, text="Add a new service", command=lambda: controller.show_frame(AddNewServicePage))
 		add_new_service_button.place(bordermode=OUTSIDE,x=355,y=365)
         
-        #editpage
 		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
 
-		#deletepage
 		delete_service_button = Button(self, text="    Delete service   ", command=lambda: controller.show_frame(RemoveServicePage))
 		delete_service_button.place(bordermode=OUTSIDE, x=355,y=305)
+		
+	def update_CurrentServices(self, string):
+		self.CurrentServices.insert(END, string)
 
 class SettingsPage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -178,7 +174,6 @@ class ServiceInfoPage(tk.Frame):
 		label = tk.Label(self, text="Service Information Page", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
         
-        #editpage
 		edit_service_button = Button(self, text="    Edit this service    ", command=lambda: controller.show_frame(EditPage))
 
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
@@ -277,22 +272,37 @@ class AddNewServicePage(tk.Frame):
 		existingForm = Label(self, text = "Add to existing service:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=265)
 		
-		var = StringVar()
+		#var = StringVar()
 		
-		options = OptionMenu(self, var, Fireproof.PopulatingOptionsMenu, 'None')
-		options.pack(expand="yes", fill="x")
-		var.set('Click Here')
-		options.place(bordermode=OUTSIDE, x=200, y=260)
+		#options = OptionMenu(self, var, Fireproof.PopulatingOptionsMenu, 'None')
+		#options.pack(expand="yes", fill="x")
+		#var.set('Click Here')
+		#options.place(bordermode=OUTSIDE, x=200, y=260)
+		
+		scrollbar = Scrollbar(self, orient=VERTICAL)
+		scrollbar.pack(side=RIGHT, fill=Y)
+		
+		add_to_existing = Listbox(self, yscrollcommand=scrollbar.set)
+		add_to_existing.pack(side=LEFT, fill=BOTH) #expand=1
+		
+		add_to_existing.config(yscrollcommand=scrollbar.set, borderwidth=4, height=2, width=21)
+		scrollbar.config(command=add_to_existing.yview)
+		
+		add_to_existing.place(bordermode=OUTSIDE,x=200,y=260)
+		scrollbar.place(x=380,y=260, height=40)
 		
 		def addService():
 			username = username_input_form.get()
 			password = password_input_form.get()
 			servicename = service_input_form.get()
+			
 			print "Service:", servicename
 			print "Username:", username
 			print "Password:", password
-			templist = [servicename]
-			Fireproof.PopulatingOptionsMenu += templist
+			
+			# ***** WHY DOESN'T THIS WORK *****
+			#ServicesPage.update_CurrentServices(servicename)
+			add_to_existing.insert(END, servicename)
 			
 			service_account = ServiceAccount(username,password,Fireproof.current_account)
 
@@ -303,6 +313,11 @@ class AddNewServicePage(tk.Frame):
 			service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
 			app.update()
+			
+			username_input_form.delete(0, 'end')
+			password_input_form.delete(0, 'end')
+			service_input_form.delete(0, 'end')
+			
 			controller.show_frame(ServicesPage)
 
 		def addServiceChecker():
