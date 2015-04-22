@@ -5,6 +5,15 @@ from AESCipher import *
 class ServiceAccount:
 
 	def __init__(self,username,password,account_owner):
+		"""Constructor that initializes a ServiceAccount object
+
+		:param username: username for the service
+		:param password: password for the service
+		:param account_owner: the master account for this service
+
+		:return: A ServiceAccount object which stores the username and password for the service, the owner, and encrypted information
+		"""
+
 		self.username = username
 		self.password = password
 		self.account_owner = account_owner
@@ -17,6 +26,11 @@ class ServiceAccount:
 
 	@staticmethod
 	def insertServiceAccount(account,service,serviceaccount):
+		"""Inserts the encrypted ServiceAccount into the database by matching it with the master account's and service account's primary id
+
+		:param account: the master account who owns this service
+		:param service: the service that this account is associated with
+		"""		
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
@@ -28,6 +42,7 @@ class ServiceAccount:
 
 	@staticmethod
 	def createServiceAccountsTable():
+		"""Initializes the FireproofServicesAccounts table in our database"""
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:

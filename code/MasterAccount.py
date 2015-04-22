@@ -11,8 +11,18 @@ from FireproofProgram import *
 class MasterAccount:
 
 	count = 0
+	"""note:: a global count of how many accounts we have in our database"""
 
 	def __init__(self,username,password,service_name_list=[]):
+		"""Constructor that initializes a MasterAccount object
+
+		:param username: The username associated with the account
+		:param password: The password associated with the account
+		:param service_name_list: A list of services associated with the account
+
+		:return: Returns a MasterAccount object with username, password, encrypted username, encrypted password, key, iv, and a list of services as its attributes
+		"""
+
 		self.id_num = MasterAccount.count
 		MasterAccount.count += 1
 		self.username = username
@@ -28,6 +38,7 @@ class MasterAccount:
 		return self.__class__.__name__ + "(" + self.username + ", " + self.password + ")"
 				
 	def insertMasterAccount(self):
+		"""Inserts the account's encrypted username and password into our database"""
 
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
@@ -41,6 +52,15 @@ class MasterAccount:
 	
 	@staticmethod		
 	def retrieveMasterAccountId(username_enc,password_enc):
+		"""Retrieves the account's primary id from our database
+
+		:param username_enc: The account's encrypted username
+		:param password_enc: The account's encrypted password
+
+		:return: primary id
+		:rtype: int
+		"""
+
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
@@ -54,7 +74,11 @@ class MasterAccount:
 
 	@staticmethod
 	def changeMasterPassword(account,new_password,confirm_password):
-		#updating key to use new password
+		"""Decrypts and reencrypts everything in the database using the user's new hashed password as the key
+
+		:param account: MasterAccount object
+		:param new_password: The new password the user chooses
+		"""
 		old_password = account.password
 		old_key = account.key
 		key_hash_obj = AESCipher.hashPassword(new_password)

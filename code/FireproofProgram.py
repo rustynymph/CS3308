@@ -78,10 +78,10 @@ class LoginPage(tk.Frame):
 		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
 		def checkIfUser():
-		""" This function checks to see if the inputted information exists
-		in the database, and if so, displays the next page. Otherwise,
-		it returns an error to the user.
-		"""
+			""" This function checks to see if the inputted information exists
+			in the database, and if so, displays the next page. Otherwise,
+			it returns an error to the user.
+			"""
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
 				print is_a_user
@@ -301,13 +301,13 @@ class RemoveServicePage(tk.Frame):
 		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
 		
 		def ConfirmRemove():
-		""" This function activates when the user clicks the delete button.
-		It provides a popup window that confirms the user would like to
-		delete the account. If the user clicks yes, then it deletes the
-		account and returns to the main screen. If the user clicks no,
-		the account is untouched and the user is returned to the Remove
-		Service page frame.
-		"""
+			""" This function activates when the user clicks the delete button.
+			It provides a popup window that confirms the user would like to
+			delete the account. If the user clicks yes, then it deletes the
+			account and returns to the main screen. If the user clicks no,
+			the account is untouched and the user is returned to the Remove
+			Service page frame.
+			"""
 			result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
 			if result == 'yes':
 				print "Deleted!"

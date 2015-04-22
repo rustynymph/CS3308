@@ -11,11 +11,19 @@ class AESCipher:
 
 	#PKCS5 padding algorithm
 	pad = staticmethod(lambda text: text + (BLOCKSIZE - len(text) % BLOCKSIZE) * chr(BLOCKSIZE - len(text) % BLOCKSIZE))
+	"""Takes a string of text as input and pads it to make its length a multiple of 16"""
+
 	unpad = staticmethod(lambda text : text[0:-ord(text[-1])])
+	"""Takes padded text as input and strips the extra padding from it"""
 
 	@staticmethod
 	def hashPassword(password):
-		""" Hashes the given password string using sha256. """
+		""" Hashes the given password string using sha256.
+
+		:param password: a string of at least 8 characters
+		:return: returns a hash of 256 bits
+
+		"""
 		return hashlib.sha256(password)
 
 	@staticmethod
@@ -26,7 +34,8 @@ class AESCipher:
 
         :param key: symmetric key used in the AES128 suite
         :param iv: random 16 bit iv used in the AES128 suite
-        :return: returns an encrypted string of text that is a multiple of 16
+        :param text: a string of text
+        :return: returns an encrypted string of text that is a multiple of 16 bits
 
 		"""
 		padded_text = AESCipher.pad(text)
@@ -36,7 +45,14 @@ class AESCipher:
 	@staticmethod
 	def decryptCredentials(key,iv,text):
 		""" Creates an AES128 decryption suite that includes the symmetric key and iv for the particular master
-		account.  We use the decryption suite to decrypt the given string of text. """
+		account.  We use the decryption suite to decrypt the given string of text.
+
+        :param key: symmetric key used in the AES128 suite
+        :param iv: random 16 bit iv used in the AES128 suite
+        :param text: an encrypted string that is a multiple of 16 bits
+        :return: returns the decrypted text
+
+		"""
 		decryption_suite = AES.new(key, AES.MODE_CBC, iv)
 		decrypted_padded_text = decryption_suite.decrypt(text)
 		return AESCipher.unpad(decrypted_padded_text)

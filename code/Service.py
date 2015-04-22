@@ -8,6 +8,14 @@ class Service:
 	ServiceCount = 1
 	
 	def __init__(self,service_name,account_owner,service_accounts=[]):
+		"""Constructor that initializes a Service object
+
+		:param service_name: name of the service
+		:param account_owner: master account who owns this service
+		:param service_accounts: all of the login accounts associated with this service
+
+		:return: A Service object which store the name of the service, the owner, all of its accounts, and encrypted information
+		"""
 		self.service_name = service_name
 		self.account_owner = account_owner
 		self.service_accounts = service_accounts #will be a list of ServiceAccounts
@@ -21,6 +29,10 @@ class Service:
 	
 	@staticmethod
 	def insertServiceName(account,service):
+		"""Inserts the encrypted Service into the database by matching it with the master account's primary id
+
+		:param account: The master account who owns this service
+		"""
 
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
@@ -32,6 +44,13 @@ class Service:
 
 	@staticmethod
 	def retrieveServiceNameId(account,service):
+		"""Retrieves the primary id of the service from the database
+
+		:param account: The master account who owns this service
+		:return: Primary id of the service
+		:rtype: int
+		"""
+
 		service_name_enc = service.service_name_enc
 
 		account_id = account.id_nums
@@ -47,6 +66,7 @@ class Service:
 
 	@staticmethod
 	def changeService(account,service):
+		"""Allows the user to update their existing services"""
 		
 		account_id = account.id_num	
 
@@ -61,6 +81,7 @@ class Service:
 
 	@staticmethod
 	def createServiceTable():
+		"""Initializes the FireproofServices table in our database"""
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
 		with con:
