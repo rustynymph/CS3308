@@ -10,6 +10,17 @@ class LoginFunctions:
 
 	@staticmethod
 	def Login(master_username,master_password):
+		"""Checks a user's Username and Password against the master account database. The user enters his/her credentials 
+		which are checked against the database to see if a matching Username & Password combination exist. If a username or 
+		password is not provided, an error message appears asking the user to enter one. If the credentials don't match any
+		existing master accounts in the database, an error message asks the user to create an account, otherwise the user 
+		successfully logs into their Fireproof account. 
+		
+		:param master_username: the main username used to login to Fireproof (checked against database)
+		:param master_password: the main password used to login to Fireproof (checked against database)
+		:return: returns the current account based on the username and password provided by the user. 
+		
+		"""
 		if(not(master_username) or not(master_password)):
 			tkMessageBox.showinfo("Error","Please enter username and password.")
 			return False
@@ -31,6 +42,15 @@ class LoginFunctions:
 			
 	@staticmethod
 	def createLoginInfo(master_username,master_password,confirm_master_password):
+		"""Creates a new master account in the database when a new user signs up for Fireproof. The Master Username and Password
+		then uses the insertMasterAccount function to be inserted as a new set in the database of master account. Error messages handle
+		malformed inputs for either username, password, or confirm password. Upon successful input of credentials, a new master account is
+		created and the user returns to the Login function. 
+		
+		:param master_username: the main username used to login to Fireproof (checked against database)
+		:param master_password: the main password used to login to Fireproof (checked against database)
+		
+		"""
 		username_characters = set(master_username)
 		password_characters = set(master_password)
 		if((not(master_username) or not(master_password)) or not(confirm_master_password)):
