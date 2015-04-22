@@ -1,0 +1,7 @@
+AESCipher module
+================
+
+.. automodule:: AESCipher
+    :members:
+    :undoc-members:
+    :show-inheritance:

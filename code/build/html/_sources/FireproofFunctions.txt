@@ -1,0 +1,7 @@
+FireproofFunctions module
+=========================
+
+.. automodule:: FireproofFunctions
+    :members:
+    :undoc-members:
+    :show-inheritance:
