@@ -15,6 +15,11 @@ class Fireproof(tk.Tk):
 	current_account = None
 	
 	def __init__(self, *args, **kwargs):
+		""" Initializes the main Tkinter frame container.
+		Also places the Fireproof graphic onto every frame.
+
+        :param tk.TK: Toplevel widget of Tkinter which represents the main window of the Fireproof appliation
+		"""
 		tk.Tk.__init__(self, *args, **kwargs)
 
 		# the container is where we'll stack a bunch of frames
@@ -42,13 +47,22 @@ class Fireproof(tk.Tk):
 		self.show_frame(LoginPage)
 
 	def show_frame(self, c):
-		'''Show a frame for the given class'''
+		""" This function changes frame (c) so it is visible to the user.
+
+        :param c: Name of frame
+		"""
 		frame = self.frames[c]
 		frame.tkraise()
 
 
 class LoginPage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the login frame for the app. The login frame
+		allows the user to sign in to an existing account, or create a new
+		account.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent) 
 
 		username_form_label = Label(self,text="Username")
@@ -64,6 +78,10 @@ class LoginPage(tk.Frame):
 		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
 		def checkIfUser():
+		""" This function checks to see if the inputted information exists
+		in the database, and if so, displays the next page. Otherwise,
+		it returns an error to the user.
+		"""
 			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
 			if is_a_user:
 				print is_a_user
@@ -87,6 +105,12 @@ class LoginPage(tk.Frame):
 
 class CreateAccountPage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the create account frame for the app. The create
+		account frame allows the person to enter information that will be used
+		to create a new account in the database.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		username_form_label = Label(self,text="Username")
@@ -108,7 +132,14 @@ class CreateAccountPage(tk.Frame):
 		confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=240)
 		
 		def createAccount():
+			""" This creates the user account when the create account 
+			button is selected. It also clears the information from the 
+			fields, and then displays the login page for the user.
+			"""
 			LoginFunctions.createLoginInfo(username_input_form.get(),password_input_form.get(),confirm_password_input_form.get())
+			username_input_form.delete(0, 'end')
+			password_input_form.delete(0, 'end')
+			confirm_password_input_form.delete(0, 'end')
 			controller.show_frame(LoginPage)
 		
 		create_account_button = Button(self, text ="Create Account", command=createAccount)
@@ -122,6 +153,12 @@ class CreateAccountPage(tk.Frame):
 		
 class ServicesPage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the services page frame for the app. This frame
+		displays a list of the user's stored services, and provides buttons
+		that allow the user to transition to other frames.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
@@ -156,11 +193,17 @@ class ServicesPage(tk.Frame):
 		delete_service_button = Button(self, text="    Delete service   ", command=lambda: controller.show_frame(RemoveServicePage))
 		delete_service_button.place(bordermode=OUTSIDE, x=355,y=305)
 		
-	def update_CurrentServices(self, string):
-		self.CurrentServices.insert(END, string)
+	#def update_CurrentServices(self, string):
+	#	self.CurrentServices.insert(END, string)
 
 class SettingsPage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the settings page frame for the app. This frame
+		provides the user with some buttons for adjusting the settings of
+		the app.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
@@ -177,6 +220,13 @@ class SettingsPage(tk.Frame):
 		
 class ServiceInfoPage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the individual service page frames for the services
+		that are stored on this account. This frame displays the stored username,
+		password and name of the service. It also displays a button that allows
+		the user to edit the information associated with this service.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		label = tk.Label(self, text="Service Information Page", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
@@ -190,6 +240,13 @@ class ServiceInfoPage(tk.Frame):
 
 class EditPage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the edit page frame for the app. This frame
+		displays the service name along with the current stored username
+		and password, and allows the user to save a new username and 
+		password for this service.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		# display service name
 		service_form_label = Label(self,text="ServiceNameGoesHere")
@@ -232,12 +289,25 @@ class EditPage(tk.Frame):
 
 class RemoveServicePage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the remove services page frame for the app. 
+		This frame provides a list of the current services saved to the
+		user's account, and allows the user to select one for removal.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		existingForm = Label(self, text = "Choose a service to remove:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
 		
 		def ConfirmRemove():
+		""" This function activates when the user clicks the delete button.
+		It provides a popup window that confirms the user would like to
+		delete the account. If the user clicks yes, then it deletes the
+		account and returns to the main screen. If the user clicks no,
+		the account is untouched and the user is returned to the Remove
+		Service page frame.
+		"""
 			result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
 			if result == 'yes':
 				print "Deleted!"
@@ -253,6 +323,13 @@ class RemoveServicePage(tk.Frame):
 
 class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
+		""" This initializes the add new service page frame for the app.
+		This page allows the user to enter in the service name, along with
+		the username and password for that service, to be stored in a 
+		database.
+
+        :param tk.Frame: Tkinter frame widget
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		existingForm = Label(self, text = "Add new service:")
@@ -299,6 +376,11 @@ class AddNewServicePage(tk.Frame):
 		scrollbar.place(x=380,y=260, height=40)
 		
 		def addService():
+			""" This function grabs the information from the provided fields
+			and adds it to the database under the user's main account. It then
+			clears the fields on this frame, and redirects the user to the 
+			main page.			
+			"""
 			username = username_input_form.get()
 			password = password_input_form.get()
 			servicename = service_input_form.get()
@@ -328,6 +410,11 @@ class AddNewServicePage(tk.Frame):
 			controller.show_frame(ServicesPage)
 
 		def addServiceChecker():
+			""" This function checks that all the fields on this frame
+			have been filled out. If a field is blank, it creates a popup
+			window alerting the user to the blank field. If all fields
+			are filled out, it proceeds to call addService()
+			"""
 			username = username_input_form.get()
 			password = password_input_form.get()
 			servicename = service_input_form.get()
