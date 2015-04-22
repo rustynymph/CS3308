@@ -132,10 +132,17 @@ class ServicesPage(tk.Frame):
 		ListboxLabel = Label(self, text = text_label)
 		ListboxLabel.place(x=20, y=120)
 		
+		scrollbar = Scrollbar(self, orient=VERTICAL)
+		scrollbar.pack(side=RIGHT, fill=Y)
+		
 		self.CurrentServices = Listbox(self)
-		self.CurrentServices.config(borderwidth=4, height=14, width=38)
 		self.CurrentServices.pack()
+		
+		self.CurrentServices.config(borderwidth=4, height=14, width=38)
+		scrollbar.config(command=self.CurrentServices.yview)
+		
 		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
+		scrollbar.place(x=335,y=145, height=230)
 		
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
 		change_password_button.place(bordermode=OUTSIDE,x=417,y=5)
@@ -283,7 +290,7 @@ class AddNewServicePage(tk.Frame):
 		scrollbar.pack(side=RIGHT, fill=Y)
 		
 		add_to_existing = Listbox(self, yscrollcommand=scrollbar.set)
-		add_to_existing.pack(side=LEFT, fill=BOTH) #expand=1
+		add_to_existing.pack(side=LEFT, fill=BOTH)
 		
 		add_to_existing.config(yscrollcommand=scrollbar.set, borderwidth=4, height=2, width=21)
 		scrollbar.config(command=add_to_existing.yview)
