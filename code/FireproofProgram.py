@@ -13,6 +13,7 @@ TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
 	
 	current_account = None
+	PopulatingOptionsMenu = []
 	
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
@@ -128,6 +129,17 @@ class ServicesPage(tk.Frame):
 		label.pack(side="top", fill="x", pady=10)
 		logout_button = Button(self, text="Logout", command=lambda: controller.show_frame(LoginPage))
 		logout_button.place(bordermode=OUTSIDE,x=5,y=5)
+		
+		text_label = "Welcome! Here are your stored services:"
+		
+		ListboxLabel = Label(self, text = text_label)
+		ListboxLabel.place(bordermode=OUTSIDE, x=20, y=120)
+		
+		self.CurrentServices = Listbox(self)
+		self.CurrentServices.pack()
+		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=150)
+		
+		self.CurrentServices.insert(END, "Entry?")
 		
 		#changepassword
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
@@ -266,9 +278,10 @@ class AddNewServicePage(tk.Frame):
 		existingForm.place(bordermode=OUTSIDE, x=50, y=265)
 		
 		var = StringVar()
-		options = OptionMenu(self, var, 'Facebook', 'Gmail', 'Moodle')
+		
+		options = OptionMenu(self, var, Fireproof.PopulatingOptionsMenu, 'None')
 		options.pack(expand="yes", fill="x")
-		var.set('Facebook')
+		var.set('Click Here')
 		options.place(bordermode=OUTSIDE, x=200, y=260)
 		
 		def addService():
@@ -278,6 +291,9 @@ class AddNewServicePage(tk.Frame):
 			print "Service:", servicename
 			print "Username:", username
 			print "Password:", password
+			templist = [servicename]
+			Fireproof.PopulatingOptionsMenu += templist
+			
 			service_account = ServiceAccount(username,password,Fireproof.current_account)
 
 			service = Service(servicename,Fireproof.current_account,[service_account])
@@ -286,6 +302,7 @@ class AddNewServicePage(tk.Frame):
 
 			service.insertServiceName(Fireproof.current_account,service)
 			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
+			app.update()
 			controller.show_frame(ServicesPage)
 
 		def addServiceChecker():
@@ -326,5 +343,11 @@ if __name__ == "__main__":
 	ServiceAccount.createServiceAccountsTable()
     
 	app = Fireproof()
-	app.wm_geometry("500x400")
+	window_width = 500
+	window_height = 400
+	screen_width = app.winfo_screenwidth()
+	screen_height = app.winfo_screenheight()
+	position_x = (screen_width/2) - (window_width/2)
+	position_y = (screen_height/2) - (window_height/2)
+	app.wm_geometry('%dx%d+%d+%d' % (window_width, window_height, position_x, position_y))
 	app.mainloop()
