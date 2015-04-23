@@ -235,7 +235,7 @@ class ServiceInfoPage(tk.Frame):
 		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))#has to populate from the database#Service.populateEditService(self.label,self,controller))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
 		
-		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
+		back_button = Button(self, text="Back", command=lambda: Service.hideFields(self,controller))
 		back_button.place(bordermode=OUTSIDE,x=10,y=10)
 
 class EditPage(tk.Frame):
