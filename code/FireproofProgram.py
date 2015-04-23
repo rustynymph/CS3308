@@ -54,6 +54,9 @@ class Fireproof(tk.Tk):
 		frame = self.frames[c]
 		frame.tkraise()
 
+	def returnFrame(self, c):
+		return self.frames[c]
+
 
 class LoginPage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -152,6 +155,8 @@ class CreateAccountPage(tk.Frame):
 		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
 		
 class ServicesPage(tk.Frame):
+
+
 	def __init__(self, parent, controller):
 		""" This initializes the services page frame for the app. This frame
 		displays a list of the user's stored services, and provides buttons
@@ -192,9 +197,9 @@ class ServicesPage(tk.Frame):
 
 		delete_service_button = Button(self, text="    Delete service   ", command=lambda: controller.show_frame(RemoveServicePage))
 		delete_service_button.place(bordermode=OUTSIDE, x=355,y=305)
-		
-	#def update_CurrentServices(self, string):
-	#	self.CurrentServices.insert(END, string)
+	
+	def update_CurrentServices(self,string):
+		self.CurrentServices.insert(END, string)
 
 class SettingsPage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -355,14 +360,7 @@ class AddNewServicePage(tk.Frame):
 		
 		existingForm = Label(self, text = "Add to existing service:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=265)
-		
-		#var = StringVar()
-		
-		#options = OptionMenu(self, var, Fireproof.PopulatingOptionsMenu, 'None')
-		#options.pack(expand="yes", fill="x")
-		#var.set('Click Here')
-		#options.place(bordermode=OUTSIDE, x=200, y=260)
-		
+				
 		scrollbar = Scrollbar(self, orient=VERTICAL)
 		scrollbar.pack(side=RIGHT, fill=Y)
 		
@@ -390,8 +388,9 @@ class AddNewServicePage(tk.Frame):
 			print "Password:", password
 			
 			# ***** WHY DOESN'T THIS WORK *****
-			#ServicesPage.update_CurrentServices(servicename)
-			add_to_existing.insert(END, servicename)
+			service_page_frame = controller.returnFrame(ServicesPage)
+			service_page_frame.update_CurrentServices(servicename)
+			#add_to_existing.insert(END, servicename)
 			
 			service_account = ServiceAccount(username,password,Fireproof.current_account)
 
