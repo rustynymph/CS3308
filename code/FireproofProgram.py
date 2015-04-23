@@ -167,7 +167,7 @@ class ServicesPage(tk.Frame):
 		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
 		scrollbar.place(x=335,y=145, height=230)
 		
-		view_button = Button(self, text="View Info", command=lambda: controller.show_frame(SettingsPage))
+		view_button = Button(self, text="       View Info       ", command=lambda: controller.show_frame(ServiceInfoPage))
 		view_button.place(bordermode=OUTSIDE,x=355,y=275)
 		
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
@@ -217,15 +217,32 @@ class ServiceInfoPage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="Service Information Page", font=TITLE_FONT)
+		label = tk.Label(self, text="YAY!", font=TITLE_FONT)
 		label.pack(side="top", fill="x", pady=10)
+		
+		service_form_label = Label(self,text="Service Name:")
+		service_form_label.place(bordermode=OUTSIDE,x=60,y=120)
+		
+		service_label = Label(self,text="Facebook")
+		service_label.place(bordermode=OUTSIDE,x=210,y=120)
+		
+		curr_username_form_label = Label(self,text="Current Username:")
+		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=160)
+		
+		curruser_label = Label(self,text="Annie")
+		curruser_label.place(bordermode=OUTSIDE,x=210,y=160)
+		
+		currpass_label = Label(self,text="**********")
+		currpass_label.place(bordermode=OUTSIDE,x=210,y=190)
+		
+		curr_password_form_label = Label(self,text="Current Password:")
+		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
         
-		edit_service_button = Button(self, text="    Edit this service    ", command=lambda: controller.show_frame(EditPage))
-
-		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
+		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))
+		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
 		
 		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
-		back_button.place(bordermode=OUTSIDE,x=200,y=280)
+		back_button.place(bordermode=OUTSIDE,x=125,y=350)
 
 class EditPage(tk.Frame):
 	def __init__(self, parent, controller):
