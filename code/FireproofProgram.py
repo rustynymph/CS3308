@@ -35,7 +35,7 @@ class Fireproof(tk.Tk):
 		fireproof_banner.place(bordermode=OUTSIDE,x=150,y=15)		
 
 		self.frames = {}
-		for F in (LoginPage, CreateAccountPage, ServicesPage, SettingsPage, ServiceInfoPage, AddNewServicePage, EditPage, RemoveServicePage):
+		for F in (LoginPage, CreateAccountPage, ServicesPage, SettingsPage, ServiceInfoPage, AddNewServicePage, EditPage):
 			frame = F(container, self)
 			self.frames[F] = frame
 			frame.grid(row=0, column=0, sticky="nsew")
@@ -47,7 +47,6 @@ class Fireproof(tk.Tk):
 		self.ServiceInfoPage = ServiceInfoPage
 		self.AddNewServicePage = AddNewServicePage
 		self.EditPage = EditPage
-		self.RemoveServicePage = RemoveServicePage
 
 		#app.update()
 		self.show_frame(LoginPage)
@@ -179,11 +178,14 @@ class ServicesPage(tk.Frame):
 		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
 
-		delete_service_button = Button(self, text="    Delete service   ", command=lambda: controller.show_frame(RemoveServicePage))
+		delete_service_button = Button(self, text="    Delete service   ", command=lambda: Service.confirmRemoveService(self,controller))
 		delete_service_button.place(bordermode=OUTSIDE, x=355,y=305)
 	
-	def update_CurrentServices(self,string):
+	def addToCurrentServicesListBox(self,string):
 		self.CurrentServices.insert(END, string)
+
+	def removeFromCurrentServicesListBox(self,index):
+		self.CurrentServices.delete(index)
 
 class SettingsPage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -293,25 +295,6 @@ class EditPage(tk.Frame):
 		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
 		save_button.place(bordermode=OUTSIDE,x=250,y=350)
 
-class RemoveServicePage(tk.Frame):
-	def __init__(self, parent, controller):
-		""" This initializes the remove services page frame for the app. 
-		This frame provides a list of the current services saved to the
-		user's account, and allows the user to select one for removal.
-
-        :param tk.Frame: Tkinter frame widget
-		"""
-		tk.Frame.__init__(self, parent)
-		
-		existingForm = Label(self, text = "Choose a service to remove:")
-		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
-				
-		more_options_button = Button(self, text ="Remove Service", command=lambda: Service.confirmRemoveService(self,controller))
-		more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
-		
-		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))
-		back_button.place(bordermode=OUTSIDE,x=125,y=350)
-
 class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
 		""" This initializes the add new service page frame for the app.
@@ -350,13 +333,13 @@ class AddNewServicePage(tk.Frame):
 		scrollbar = Scrollbar(self, orient=VERTICAL)
 		scrollbar.pack(side=RIGHT, fill=Y)
 		
-		add_to_existing = Listbox(self, yscrollcommand=scrollbar.set)
-		add_to_existing.pack(side=LEFT, fill=BOTH)
+		self.add_to_existing = Listbox(self, yscrollcommand=scrollbar.set)
+		self.add_to_existing.pack(side=LEFT, fill=BOTH)
 		
-		add_to_existing.config(yscrollcommand=scrollbar.set, borderwidth=4, height=2, width=21)
-		scrollbar.config(command=add_to_existing.yview)
+		self.add_to_existing.config(yscrollcommand=scrollbar.set, borderwidth=4, height=2, width=21)
+		scrollbar.config(command=self.add_to_existing.yview)
 		
-		add_to_existing.place(bordermode=OUTSIDE,x=200,y=260)
+		self.add_to_existing.place(bordermode=OUTSIDE,x=200,y=260)
 		scrollbar.place(x=380,y=260, height=40)
 				
 		add_service_button = Button(self, text ="Add Service", command=lambda: Service.addServiceChecker(self.username_input_form.get(),\
@@ -368,6 +351,12 @@ class AddNewServicePage(tk.Frame):
 		
 		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))
 		back_button.place(bordermode=OUTSIDE,x=125,y=350)
+
+	def addToExistingServicesListBox(self,string):
+		self.add_to_existing.insert(END, string)
+
+	def removeFromExistingServicesListBox(self,index):
+		self.add_to_existing.delete(index)
 
 if __name__ == "__main__":
 
