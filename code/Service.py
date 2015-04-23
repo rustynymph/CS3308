@@ -190,4 +190,26 @@ class Service:
 			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p,y=y_coordinate_p)
 			y_coordinate_p += 20
 
-		controller.show_frame(controller.ServiceInfoPage)				
+		controller.show_frame(controller.ServiceInfoPage)
+		
+	@staticmethod
+	def populateEditService(service_index, frame, controller):
+		y_coordinate_u = 160
+		x_coordinate_u = 210
+		y_coordinate_p = 190
+		x_coordinate_p = 210
+		
+		service_info_page_frame = controller.getFrame(controller.EditPage)
+		
+		service = controller.current_account.service_name_list[service_index]
+		label = tk.Label(service_info_page_frame, text=service.service_name)
+		label.place(bordermode=OUTSIDE, x=210, y=120)
+		for account in service.service_accounts:
+			username_label = tk.Label(service_info_page_frame, text=account.username)
+			username_label.place(bordermode=OUTSIDE,x=x_coordinate_u, y=y_coordinate_u)
+			y_coordinate_u += 20
+			
+			password_label = tk.Label(service_info_page_frame, text=account.password)
+			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p, y=y_coordinate_p)
+			y_coordinate_p += 20
+		controller.show_frame(controller.EditPage)

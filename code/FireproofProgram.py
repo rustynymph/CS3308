@@ -48,7 +48,6 @@ class Fireproof(tk.Tk):
 		self.AddNewServicePage = AddNewServicePage
 		self.EditPage = EditPage
 
-		#app.update()
 		self.show_frame(LoginPage)
 
 	def show_frame(self, c):
@@ -57,6 +56,7 @@ class Fireproof(tk.Tk):
         :param c: Name of frame
 		"""
 		frame = self.frames[c]
+		#tk.Tk.update(self)
 		frame.tkraise()
 
 	def getFrame(self, c):
@@ -166,7 +166,6 @@ class ServicesPage(tk.Frame):
 		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
 		scrollbar.place(x=335,y=145, height=230)
 		
-
 		view_button = Button(self, text="       View Info       ", command=lambda: Service.viewService(self.CurrentServices.curselection()[0],self,controller))
 		view_button.place(bordermode=OUTSIDE,x=355,y=275)
 		
@@ -176,7 +175,7 @@ class ServicesPage(tk.Frame):
 		add_new_service_button = Button(self, text="Add a new service", command=lambda: controller.show_frame(AddNewServicePage))
 		add_new_service_button.place(bordermode=OUTSIDE,x=355,y=365)
         
-		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))
+		edit_service_button = Button(self, text="     Edit service     ", command=lambda: Service.populateEditService(self.CurrentServices.curselection()[0],self,controller))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
 
 		delete_service_button = Button(self, text="    Delete service   ", command=lambda: Service.confirmRemoveService(self,controller))
@@ -249,23 +248,15 @@ class EditPage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
-		# display service name
-		service_form_label = Label(self,text="ServiceNameGoesHere")
+
+		service_form_label = Label(self,text="Service Name:")
 		service_form_label.place(bordermode=OUTSIDE,x=60,y =120)
 		
 		curr_username_form_label = Label(self,text="Current Username:")
 		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=160)
 		
-		curruser_label = Label(self,text="FOOBAR")
-		curruser_label.place(bordermode=OUTSIDE,x=210,y=160)
-		
-		currpass_label = Label(self,text="BestPasswordEver1234")
-		currpass_label.place(bordermode=OUTSIDE,x=210,y=190)
-		
 		curr_password_form_label = Label(self,text="Current Password:")
 		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
-		
-		# display current password; pull from DB
 		
 		username_form_label = Label(self,text="New Username")
 		username_form_label.place(bordermode=OUTSIDE,x=60,y=235)
