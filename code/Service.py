@@ -245,3 +245,16 @@ class Service:
 		hide_password_label.place(bordermode=OUTSIDE,x=190,y=190)
 	
 		controller.show_frame(controller.ServicesPage)	
+
+	@staticmethod
+	def hideFieldsFromEdit(self, controller):
+		hide_service_label = Label(self,text="                           ", font = TITLE_FONT)
+		hide_service_label.place(bordermode=OUTSIDE,x=160,y=110)	
+	
+		hide_username_label = Label(self, text="                         ")
+		hide_username_label.place(bordermode=OUTSIDE,x=190,y=160)
+	
+		hide_password_label = Label(self, text="                         ")
+		hide_password_label.place(bordermode=OUTSIDE,x=190,y=190)
+	
+		controller.show_frame(controller.EditPage)	
