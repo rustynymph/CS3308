@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Service module &mdash; Fireproof 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Fireproof 0.0.1 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fireproof 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-Service">
+<span id="service-module"></span><h1>Service module<a class="headerlink" href="#module-Service" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Service.Service">
+<em class="property">class </em><code class="descclassname">Service.</code><code class="descname">Service</code><span class="sig-paren">(</span><em>service_name</em>, <em>account_owner</em>, <em>service_accounts=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.Service" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="Service.Service.ServiceCount">
+<code class="descname">ServiceCount</code><em class="property"> = 1</em><a class="headerlink" href="#Service.Service.ServiceCount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="Service.Service.changeService">
+<em class="property">static </em><code class="descname">changeService</code><span class="sig-paren">(</span><em>account</em>, <em>service</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.Service.changeService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the user to update their existing services</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Service.Service.createServiceTable">
+<em class="property">static </em><code class="descname">createServiceTable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Service.Service.createServiceTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the FireproofServices table in our database</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Service.Service.insertServiceName">
+<em class="property">static </em><code class="descname">insertServiceName</code><span class="sig-paren">(</span><em>account</em>, <em>service</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.Service.insertServiceName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts the encrypted Service into the database by matching it with the master account&#8217;s primary id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>account</strong> &#8211; The master account who owns this service</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="Service.Service.retrieveServiceNameId">
+<em class="property">static </em><code class="descname">retrieveServiceNameId</code><span class="sig-paren">(</span><em>account</em>, <em>service</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.Service.retrieveServiceNameId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the primary id of the service from the database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>account</strong> &#8211; The master account who owns this service</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Primary id of the service</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/library/functions.html#int" title="(in Python v2.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Service.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Annie Kelly, Tyler Tafoya, Kara James, Tori Augustine.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/Service.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
