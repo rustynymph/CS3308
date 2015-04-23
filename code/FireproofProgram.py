@@ -12,7 +12,7 @@ TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
 	
-	current_account = None
+	#current_account = None
 	
 	def __init__(self, *args, **kwargs):
 		""" Initializes the main Tkinter frame container.
@@ -25,6 +25,8 @@ class Fireproof(tk.Tk):
 		# the container is where we'll stack a bunch of frames
 		# on top of each other, then the one we want visible
 		# will be raised above the others
+		self.current_account = None
+
 		container = tk.Frame(self)
 		container.pack(side="top", fill="both", expand=True)
 		container.grid_rowconfigure(0, weight=1)
@@ -44,6 +46,16 @@ class Fireproof(tk.Tk):
 			# will be the one that is visible.
 			frame.grid(row=0, column=0, sticky="nsew")
 
+		self.LoginPage = LoginPage
+		self.CreateAccountPage = CreateAccountPage
+		self.ServicesPage = ServicesPage
+		self.SettingsPage = SettingsPage
+		self.ServiceInfoPage = ServiceInfoPage
+		self.AddNewServicePage = AddNewServicePage
+		self.EditPage = EditPage
+		self.RemoveServicePage = RemoveServicePage
+
+
 		self.show_frame(LoginPage)
 
 	def show_frame(self, c):
@@ -54,7 +66,7 @@ class Fireproof(tk.Tk):
 		frame = self.frames[c]
 		frame.tkraise()
 
-	def returnFrame(self, c):
+	def getFrame(self, c):
 		return self.frames[c]
 
 
@@ -74,26 +86,14 @@ class LoginPage(tk.Frame):
 		password_form_label = Label(self,text="Password")
 		password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
 		
-		username_input_form = Entry(self,bd=5)
-		username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
+		self.username_input_form = Entry(self,bd=5)
+		self.username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
 
-		password_input_form = Entry(self,bd=5,show="*")
-		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
+		self.password_input_form = Entry(self,bd=5,show="*")
+		self.password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		def checkIfUser():
-			""" This function checks to see if the inputted information exists
-			in the database, and if so, displays the next page. Otherwise,
-			it returns an error to the user.
-			"""
-			is_a_user = LoginFunctions.Login(username_input_form.get(),password_input_form.get())
-			if is_a_user:
-				print is_a_user
-				Fireproof.current_account = is_a_user
-				username_input_form.delete(0, 'end')
-				password_input_form.delete(0, 'end')
-				controller.show_frame(ServicesPage)
 		
-		login_button = Button(self, text ="Login", command=checkIfUser)
+		login_button = Button(self, text ="Login", command= lambda: LoginFunctions.checkIfUser(self.username_input_form.get(),self.password_input_form.get(),self,controller))
 		login_button.place(bordermode=OUTSIDE,x=292,y=240)		
 		
 		new_user_label = tk.Label(self, text="New User?", font=TEXT_FONT)
@@ -388,18 +388,18 @@ class AddNewServicePage(tk.Frame):
 			print "Password:", password
 			
 			# ***** WHY DOESN'T THIS WORK *****
-			service_page_frame = controller.returnFrame(ServicesPage)
+			service_page_frame = controller.getFrame(ServicesPage)
 			service_page_frame.update_CurrentServices(servicename)
 			#add_to_existing.insert(END, servicename)
 			
-			service_account = ServiceAccount(username,password,Fireproof.current_account)
+			service_account = ServiceAccount(username,password,controller.current_account)
 
-			service = Service(servicename,Fireproof.current_account,[service_account])
+			service = Service(servicename,controller.current_account,[service_account])
 
-			Fireproof.current_account.service_name_list += [service]
+			controller.current_account.service_name_list += [service]
 
-			service.insertServiceName(Fireproof.current_account,service)
-			ServiceAccount.insertServiceAccount(Fireproof.current_account,service,service_account)
+			service.insertServiceName(controller.current_account,service)
+			ServiceAccount.insertServiceAccount(controller.current_account,service,service_account)
 			app.update()
 			
 			username_input_form.delete(0, 'end')

@@ -66,3 +66,17 @@ class LoginFunctions:
 			LoginFunctions.accounts += [account]
 			MasterAccount.insertMasterAccount(account)
 
+
+	@staticmethod
+	def checkIfUser(username,password,frame,controller):
+		""" This function checks to see if the inputted information exists
+		in the database, and if so, displays the next page. Otherwise,
+		it returns an error to the user.
+		"""
+		is_a_user = LoginFunctions.Login(username,password)
+		if is_a_user:
+			print is_a_user
+			controller.current_account = is_a_user
+			frame.username_input_form.delete(0, 'end')
+			frame.password_input_form.delete(0, 'end')
+			controller.show_frame(controller.ServicesPage)
