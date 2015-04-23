@@ -273,7 +273,7 @@ class EditPage(tk.Frame):
 		confirm_password_input_form = Entry(self,bd=5,show="*")
 		confirm_password_input_form.place(bordermode=OUTSIDE,x=210,y=300)
 		
-		back_button = Button(self, text="Cancel", command=lambda: controller.show_frame(ServicesPage))
+		back_button = Button(self, text="Cancel", command=lambda: Service.hideFields(self,controller))
 		back_button.place(bordermode=OUTSIDE,x=150,y=350)
 		
 		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
