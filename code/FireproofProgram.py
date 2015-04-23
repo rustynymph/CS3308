@@ -232,7 +232,7 @@ class ServiceInfoPage(tk.Frame):
 		curr_password_form_label = Label(self,text="Current Password:")
 		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
         
-		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))
+		edit_service_button = Button(self, text="     Edit service     ", command=lambda: controller.show_frame(EditPage))#has to populate from the database#Service.populateEditService(self.label,self,controller))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
 		
 		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
