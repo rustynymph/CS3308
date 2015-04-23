@@ -171,23 +171,37 @@ class Service:
 
 	@staticmethod
 	def viewService(service_index,frame,controller):
-		y_coordinate_u = 380
-		y_coordinate_p = 380
-		x_coordinate_u = 200
-		x_coordinate_p = 300
+		y_coordinate_u = 160
+		x_coordinate_u = 190
+		
+		y_coordinate_p = 190
+		x_coordinate_p = 190
 
 		service_info_page_frame = controller.getFrame(controller.ServiceInfoPage)
 
 		service = controller.current_account.service_name_list[service_index]
 		label = tk.Label(service_info_page_frame, text=service.service_name, font=TITLE_FONT)
-		label.place(bordermode=OUTSIDE,x=100,y=150)		
+		label.place(bordermode=OUTSIDE,x=160,y=110)		
 		for account in service.service_accounts:
-			username_label = tk.Label(service_info_page_frame, text=account.username, font=TEXT_FONT)
+			username_label = tk.Label(service_info_page_frame, text=account.username)
 			username_label.place(bordermode=OUTSIDE,x=x_coordinate_u,y=y_coordinate_u)
 			y_coordinate_u += 20
 
-			password_label = tk.Label(service_info_page_frame, text=account.password, font=TEXT_FONT)
+			password_label = tk.Label(service_info_page_frame, text=account.password)
 			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p,y=y_coordinate_p)
 			y_coordinate_p += 20
 
-		controller.show_frame(controller.ServiceInfoPage)				
+		controller.show_frame(controller.ServiceInfoPage)	
+		
+	@staticmethod
+	def hideFields(self, controller):
+		hide_service_label = Label(self,text="                           ", font = TITLE_FONT)
+		hide_service_label.place(bordermode=OUTSIDE,x=160,y=110)	
+	
+		hide_username_label = Label(self, text="                         ")
+		hide_username_label.place(bordermode=OUTSIDE,x=190,y=160)
+	
+		hide_password_label = Label(self, text="                         ")
+		hide_password_label.place(bordermode=OUTSIDE,x=190,y=190)
+	
+		controller.show_frame(controller.ServicesPage)	
