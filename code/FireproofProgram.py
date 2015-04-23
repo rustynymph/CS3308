@@ -304,23 +304,8 @@ class RemoveServicePage(tk.Frame):
 		
 		existingForm = Label(self, text = "Choose a service to remove:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
-		
-		def ConfirmRemove():
-			""" This function activates when the user clicks the delete button.
-			It provides a popup window that confirms the user would like to
-			delete the account. If the user clicks yes, then it deletes the
-			account and returns to the main screen. If the user clicks no,
-			the account is untouched and the user is returned to the Remove
-			Service page frame.
-			"""
-			result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
-			if result == 'yes':
-				print "Deleted!"
-			else:
-				print "Returning you to main screen"
-			controller.show_frame(ServicesPage)
-		
-		more_options_button = Button(self, text ="Remove Service", command=ConfirmRemove)
+				
+		more_options_button = Button(self, text ="Remove Service", command=lambda: Service.confirmRemoveService(self,controller))
 		more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
 		
 		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))

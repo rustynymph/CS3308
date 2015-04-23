@@ -89,5 +89,18 @@ class Service:
 			cur.execute("DROP TABLE IF EXISTS FireproofServices")
 			cur.execute("CREATE TABLE FireproofServices (id INT(6) PRIMARY KEY,masterid INT(6),ServiceName VARCHAR(30) NOT NULL)")
 
-
-	
+	@staticmethod
+	def confirmRemoveService(frame,controller):
+		""" This function activates when the user clicks the delete button.
+		It provides a popup window that confirms the user would like to
+		delete the account. If the user clicks yes, then it deletes the
+		account and returns to the main screen. If the user clicks no,
+		the account is untouched and the user is returned to the Remove
+		Service page frame.
+		"""
+		result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
+		if result == 'yes':
+			print "Deleted!"
+		else:
+			print "Returning you to main screen"
+		controller.show_frame(controller.ServicesPage)
