@@ -166,7 +166,7 @@ class ServicesPage(tk.Frame):
 		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
 		scrollbar.place(x=335,y=145, height=230)
 		
-		view_button = Button(self, text="View Info", command=lambda: controller.show_frame(SettingsPage))
+		view_button = Button(self, text="View Info", command=lambda: Service.viewService(self.CurrentServices.curselection()[0],self,controller))
 		view_button.place(bordermode=OUTSIDE,x=355,y=275)
 		
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
@@ -219,8 +219,8 @@ class ServiceInfoPage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="Service Information Page", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
+		#label = tk.Label(self, text="Service Information Page", font=TITLE_FONT)
+		#label.pack(side="top", fill="x", pady=10)
         
 		edit_service_button = Button(self, text="    Edit this service    ", command=lambda: controller.show_frame(EditPage))
 

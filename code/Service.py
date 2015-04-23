@@ -4,6 +4,9 @@ from AESCipher import *
 from FireproofProgram import *
 from ServiceAccount import *
 
+TITLE_FONT = ("Helvetica", 18, "bold")
+TEXT_FONT = ("Helvetica", 8, "bold")
+
 class Service:
 	
 	ServiceCount = 1
@@ -165,3 +168,26 @@ class Service:
 			tkMessageBox.showinfo("Error","Please enter a valid password.")
 		else:
 			Service.addService(username,password,servicename,frame,controller)
+
+	@staticmethod
+	def viewService(service_index,frame,controller):
+		y_coordinate_u = 380
+		y_coordinate_p = 380
+		x_coordinate_u = 200
+		x_coordinate_p = 300
+
+		service_info_page_frame = controller.getFrame(controller.ServiceInfoPage)
+
+		service = controller.current_account.service_name_list[service_index]
+		label = tk.Label(service_info_page_frame, text=service.service_name, font=TITLE_FONT)
+		label.place(bordermode=OUTSIDE,x=100,y=150)		
+		for account in service.service_accounts:
+			username_label = tk.Label(service_info_page_frame, text=account.username, font=TEXT_FONT)
+			username_label.place(bordermode=OUTSIDE,x=x_coordinate_u,y=y_coordinate_u)
+			y_coordinate_u += 20
+
+			password_label = tk.Label(service_info_page_frame, text=account.password, font=TEXT_FONT)
+			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p,y=y_coordinate_p)
+			y_coordinate_p += 20
+
+		controller.show_frame(controller.ServiceInfoPage)				
