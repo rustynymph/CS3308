@@ -102,6 +102,15 @@ class Service:
 		result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
 		if result == 'yes':
 			print "Deleted!"
+			index_to_delete = frame.CurrentServices.curselection()[0]
+
+			service_page_frame = controller.getFrame(controller.ServicesPage)
+			service_page_frame.removeFromCurrentServicesListBox(index_to_delete)
+
+			service_page_frame = controller.getFrame(controller.AddNewServicePage)
+			service_page_frame.removeFromExistingServicesListBox(index_to_delete)			
+
+
 		else:
 			print "Returning you to main screen"
 		controller.show_frame(controller.ServicesPage)
@@ -119,7 +128,10 @@ class Service:
 		
 		# ***** WHY DOESN'T THIS WORK *****
 		service_page_frame = controller.getFrame(controller.ServicesPage)
-		service_page_frame.update_CurrentServices(servicename)
+		service_page_frame.addToCurrentServicesListBox(servicename)
+
+		service_page_frame = controller.getFrame(controller.AddNewServicePage)
+		service_page_frame.addToExistingServicesListBox(servicename)		
 		#add_to_existing.insert(END, servicename)
 		
 		service_account = ServiceAccount(username,password,controller.current_account)
