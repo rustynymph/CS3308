@@ -48,6 +48,7 @@ class Fireproof(tk.Tk):
 		self.AddNewServicePage = AddNewServicePage
 		self.EditPage = EditPage
 
+		#app.update()
 		self.show_frame(LoginPage)
 
 	def show_frame(self, c):
@@ -164,6 +165,9 @@ class ServicesPage(tk.Frame):
 		
 		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
 		scrollbar.place(x=335,y=145, height=230)
+		
+		view_button = Button(self, text="View Info", command=lambda: controller.show_frame(SettingsPage))
+		view_button.place(bordermode=OUTSIDE,x=355,y=275)
 		
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
 		change_password_button.place(bordermode=OUTSIDE,x=417,y=5)
