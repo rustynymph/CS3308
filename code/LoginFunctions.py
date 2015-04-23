@@ -2,7 +2,6 @@
 
 import config
 from MasterAccount import *
-from FireproofProgram import *
 
 class LoginFunctions:
 
@@ -80,3 +79,16 @@ class LoginFunctions:
 			frame.username_input_form.delete(0, 'end')
 			frame.password_input_form.delete(0, 'end')
 			controller.show_frame(controller.ServicesPage)
+
+
+	@staticmethod
+	def createAccount(username,password,confirm_password,frame,controller):
+		""" This creates the user account when the create account 
+		button is selected. It also clears the information from the 
+		fields, and then displays the login page for the user.
+		"""
+		LoginFunctions.createLoginInfo(username,password,confirm_password)
+		frame.username_input_form.delete(0, 'end')
+		frame.password_input_form.delete(0, 'end')
+		frame.confirm_password_input_form.delete(0, 'end')
+		controller.show_frame(controller.LoginPage)			

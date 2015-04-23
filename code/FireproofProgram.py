@@ -5,14 +5,11 @@ from LoginFunctions import *
 import MySQLdb as mdb
 from config import *
 from Service import *
-from ServiceAccount import *
 
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
-	
-	#current_account = None
 	
 	def __init__(self, *args, **kwargs):
 		""" Initializes the main Tkinter frame container.
@@ -41,9 +38,6 @@ class Fireproof(tk.Tk):
 		for F in (LoginPage, CreateAccountPage, ServicesPage, SettingsPage, ServiceInfoPage, AddNewServicePage, EditPage, RemoveServicePage):
 			frame = F(container, self)
 			self.frames[F] = frame
-			# put all of the pages in the same location; 
-			# the one on the top of the stacking order
-			# will be the one that is visible.
 			frame.grid(row=0, column=0, sticky="nsew")
 
 		self.LoginPage = LoginPage
@@ -92,7 +86,6 @@ class LoginPage(tk.Frame):
 		self.password_input_form = Entry(self,bd=5,show="*")
 		self.password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		
 		login_button = Button(self, text ="Login", command= lambda: LoginFunctions.checkIfUser(self.username_input_form.get(),self.password_input_form.get(),self,controller))
 		login_button.place(bordermode=OUTSIDE,x=292,y=240)		
 		
@@ -125,27 +118,17 @@ class CreateAccountPage(tk.Frame):
 		confirm_password_form_label = Label(self,text="Confirm Password")
 		confirm_password_form_label.place(bordermode=OUTSIDE,x=60,y=240)
 
-		username_input_form = Entry(self,bd=5)
-		username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
+		self.username_input_form = Entry(self,bd=5)
+		self.username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
 
-		password_input_form = Entry(self,bd=5,show="*")
-		password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
+		self.password_input_form = Entry(self,bd=5,show="*")
+		self.password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
-		confirm_password_input_form = Entry(self,bd=5,show="*")
-		confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=240)
+		self.confirm_password_input_form = Entry(self,bd=5,show="*")
+		self.confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=240)
 		
-		def createAccount():
-			""" This creates the user account when the create account 
-			button is selected. It also clears the information from the 
-			fields, and then displays the login page for the user.
-			"""
-			LoginFunctions.createLoginInfo(username_input_form.get(),password_input_form.get(),confirm_password_input_form.get())
-			username_input_form.delete(0, 'end')
-			password_input_form.delete(0, 'end')
-			confirm_password_input_form.delete(0, 'end')
-			controller.show_frame(LoginPage)
-		
-		create_account_button = Button(self, text ="Create Account", command=createAccount)
+		create_account_button = Button(self, text ="Create Account", command=lambda: LoginFunctions.createAccount(self.username_input_form.get(),\
+			self.password_input_form.get(),self.confirm_password_input_form.get(),self,controller))
 		create_account_button.place(bordermode=OUTSIDE,x=235,y=290)
 		
 		go_back_button = Button(self, text ="Back", command=lambda: controller.show_frame(LoginPage))
@@ -155,8 +138,6 @@ class CreateAccountPage(tk.Frame):
 		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
 		
 class ServicesPage(tk.Frame):
-
-
 	def __init__(self, parent, controller):
 		""" This initializes the services page frame for the app. This frame
 		displays a list of the user's stored services, and provides buttons
@@ -328,8 +309,8 @@ class AddNewServicePage(tk.Frame):
 		service_form_label = Label(self, text = "Service Name")
 		service_form_label.place(bordermode=OUTSIDE, x=50, y=140)
 		
-		service_input_form = Entry(self, bd=5)
-		service_input_form.place(bordermode=OUTSIDE, x=200, y=140)
+		self.service_input_form = Entry(self, bd=5)
+		self.service_input_form.place(bordermode=OUTSIDE, x=200, y=140)
 		
 		username_form_label = Label(self, text = "Username")
 		username_form_label.place(bordermode=OUTSIDE, x=50, y=180)
@@ -337,11 +318,11 @@ class AddNewServicePage(tk.Frame):
 		password_form_label = Label(self, text = "Password")
 		password_form_label.place(bordermode=OUTSIDE, x=50, y=220)
 		
-		username_input_form = Entry(self, bd=5)
-		username_input_form.place(bordermode=OUTSIDE, x=200, y=180)
+		self.username_input_form = Entry(self, bd=5)
+		self.username_input_form.place(bordermode=OUTSIDE, x=200, y=180)
 		
-		password_input_form = Entry(self, bd=5, show="*")
-		password_input_form.place(bordermode=OUTSIDE, x=200, y=220)
+		self.password_input_form = Entry(self, bd=5, show="*")
+		self.password_input_form.place(bordermode=OUTSIDE, x=200, y=220)
 		
 		existingForm = Label(self, text = "Add to existing service:")
 		existingForm.place(bordermode=OUTSIDE, x=50, y=265)
@@ -357,61 +338,9 @@ class AddNewServicePage(tk.Frame):
 		
 		add_to_existing.place(bordermode=OUTSIDE,x=200,y=260)
 		scrollbar.place(x=380,y=260, height=40)
-		
-		def addService():
-			""" This function grabs the information from the provided fields
-			and adds it to the database under the user's main account. It then
-			clears the fields on this frame, and redirects the user to the 
-			main page.			
-			"""
-			username = username_input_form.get()
-			password = password_input_form.get()
-			servicename = service_input_form.get()
-			
-			print "Service:", servicename
-			print "Username:", username
-			print "Password:", password
-			
-			# ***** WHY DOESN'T THIS WORK *****
-			service_page_frame = controller.getFrame(ServicesPage)
-			service_page_frame.update_CurrentServices(servicename)
-			#add_to_existing.insert(END, servicename)
-			
-			service_account = ServiceAccount(username,password,controller.current_account)
-
-			service = Service(servicename,controller.current_account,[service_account])
-
-			controller.current_account.service_name_list += [service]
-
-			service.insertServiceName(controller.current_account,service)
-			ServiceAccount.insertServiceAccount(controller.current_account,service,service_account)
-			app.update()
-			
-			username_input_form.delete(0, 'end')
-			password_input_form.delete(0, 'end')
-			service_input_form.delete(0, 'end')
-			
-			controller.show_frame(ServicesPage)
-
-		def addServiceChecker():
-			""" This function checks that all the fields on this frame
-			have been filled out. If a field is blank, it creates a popup
-			window alerting the user to the blank field. If all fields
-			are filled out, it proceeds to call addService()
-			"""
-			username = username_input_form.get()
-			password = password_input_form.get()
-			servicename = service_input_form.get()
-			if (servicename) == "":
-				tkMessageBox.showinfo("Error","Please enter a service name.")
-			elif (username) == "":
-				tkMessageBox.showinfo("Error","Please enter a valid username.")
-			elif (password) == "":
-				tkMessageBox.showinfo("Error","Please enter a valid password.")
-			else:
-				addService()
-		
-		add_service_button = Button(self, text ="Add Service", command=addServiceChecker)
+				
+		add_service_button = Button(self, text ="Add Service", command=lambda: Service.addServiceChecker(self.username_input_form.get(),\
+			self.password_input_form.get(),self.service_input_form.get(),self,controller))
 		add_service_button.place(bordermode=OUTSIDE,x=325,y=350)
 		
 		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))

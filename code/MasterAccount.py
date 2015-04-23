@@ -117,8 +117,5 @@ class MasterAccount:
 					encrypted_service_account_username = AESCipher.encryptCredentials(account.key,account.iv,service_account.username)
 					encrypted_service_account_password = AESCipher.encryptCredentials(account.key,account.iv,service_account.password)
 
-					#insert_sa_username_command = 
-					#insert_sa_password_command = 
-
 #	@staticmethod
 #	def changeMasterUsername(account,new_username): 

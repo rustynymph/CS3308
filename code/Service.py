@@ -2,6 +2,7 @@ import MySQLdb as mdb
 from config import *
 from AESCipher import *
 from FireproofProgram import *
+from ServiceAccount import *
 
 class Service:
 	
@@ -104,3 +105,51 @@ class Service:
 		else:
 			print "Returning you to main screen"
 		controller.show_frame(controller.ServicesPage)
+
+	@staticmethod
+	def addService(username,password,servicename,frame,controller):
+		""" This function grabs the information from the provided fields
+		and adds it to the database under the user's main account. It then
+		clears the fields on this frame, and redirects the user to the 
+		main page.			
+		"""
+		print "Service:", servicename
+		print "Username:", username
+		print "Password:", password
+		
+		# ***** WHY DOESN'T THIS WORK *****
+		service_page_frame = controller.getFrame(controller.ServicesPage)
+		service_page_frame.update_CurrentServices(servicename)
+		#add_to_existing.insert(END, servicename)
+		
+		service_account = ServiceAccount(username,password,controller.current_account)
+
+		service = Service(servicename,controller.current_account,[service_account])
+
+		controller.current_account.service_name_list += [service]
+
+		service.insertServiceName(controller.current_account,service)
+		ServiceAccount.insertServiceAccount(controller.current_account,service,service_account)
+		#app.update()
+		
+		frame.username_input_form.delete(0, 'end')
+		frame.password_input_form.delete(0, 'end')
+		frame.service_input_form.delete(0, 'end')
+		
+		controller.show_frame(controller.ServicesPage)		
+
+	@staticmethod
+	def addServiceChecker(username,password,servicename,frame,controller):
+		""" This function checks that all the fields on this frame
+		have been filled out. If a field is blank, it creates a popup
+		window alerting the user to the blank field. If all fields
+		are filled out, it proceeds to call addService()
+		"""
+		if (servicename) == "":
+			tkMessageBox.showinfo("Error","Please enter a service name.")
+		elif (username) == "":
+			tkMessageBox.showinfo("Error","Please enter a valid username.")
+		elif (password) == "":
+			tkMessageBox.showinfo("Error","Please enter a valid password.")
+		else:
+			Service.addService(username,password,servicename,frame,controller)
