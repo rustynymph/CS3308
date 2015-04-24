@@ -41,7 +41,7 @@ class ServiceAccount:
 
 
 	@staticmethod
-	def createServiceAccountsTable():
+	def createServiceAccountsTable(): #createFireproofServicesAccountsTable
 		"""Initializes the FireproofServicesAccounts table in our database"""
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 

@@ -3,12 +3,14 @@
 import config
 from MasterAccount import *
 
+#confusion with the naming in createLoginInfo and createAccount -> names should be more differentiated for clarity?
+
 class LoginFunctions:
 
 	accounts = []
 
 	@staticmethod
-	def Login(master_username,master_password):
+	def Login(master_username,master_password): #checkLogin
 		"""Checks a user's Username and Password against the master account database. The user enters his/her credentials 
 		which are checked against the database to see if a matching Username & Password combination exist. If a username or 
 		password is not provided, an error message appears asking the user to enter one. If the credentials don't match any

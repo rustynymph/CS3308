@@ -1,6 +1,5 @@
 #!/usr/bin/python
 #heart of our database
-
 import MySQLdb as mdb
 import sys
 from config import *
