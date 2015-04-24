@@ -6,6 +6,15 @@ import MySQLdb as mdb
 from config import *
 from Service import *
 
+#To Do:
+#	Add in pulling from database for: ServiceInfoPage, EditPage
+#	Add in functionality for SettingsPage buttons OR remove buttons/page
+#	Enable transition from ViewServicePage -> EditPage
+#	Add in functionality for EditPage buttons (change service username, change service password)
+#	Work on clarifying names of functions and names of variables
+#	Make text consistent
+#	Make button placement consistent
+#	Fix text placement on ViewServicePage
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
@@ -205,7 +214,7 @@ class SettingsPage(tk.Frame):
 		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
 		back_button.place(bordermode=OUTSIDE,x=200,y=280)
 		
-class ServiceInfoPage(tk.Frame):
+class ServiceInfoPage(tk.Frame):	#ViewServicePage
 	def __init__(self, parent, controller):
 		""" This initializes the individual service page frames for the services
 		that are stored on this account. This frame displays the stored username,
