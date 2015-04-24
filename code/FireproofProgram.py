@@ -88,11 +88,11 @@ class LoginPage(tk.Frame):
 		login_button = Button(self, text ="Login", command= lambda: LoginFunctions.checkIfUser(self.username_input_form.get(),self.password_input_form.get(),self,controller))
 		login_button.place(bordermode=OUTSIDE,x=292,y=240)		
 		
-		new_user_label = tk.Label(self, text="New User?", font=TEXT_FONT)
+		new_user_label = tk.Label(self, text="New User?")#, font=TEXT_FONT)
 		new_user_label.place(bordermode=OUTSIDE,x=235,y=300)
 		
-		create_account_label = tk.Label(self, text="Click here to create an account", font=TEXT_FONT)
-		create_account_label.place(bordermode=OUTSIDE,x=190,y=320)
+		create_account_label = tk.Label(self, text="Click here to create an account")#, font=TEXT_FONT)
+		create_account_label.place(bordermode=OUTSIDE,x=170,y=320)
 		
 		sign_up_button = Button(self, text ="Sign Up", command=lambda: controller.show_frame(CreateAccountPage))
 		sign_up_button.place(bordermode=OUTSIDE,x=225,y=340)
@@ -128,7 +128,7 @@ class CreateAccountPage(tk.Frame):
 		
 		create_account_button = Button(self, text ="Create Account", command=lambda: LoginFunctions.createAccount(self.username_input_form.get(),\
 			self.password_input_form.get(),self.confirm_password_input_form.get(),self,controller))
-		create_account_button.place(bordermode=OUTSIDE,x=235,y=290)
+		create_account_button.place(bordermode=OUTSIDE,x=235,y=350)
 		
 		go_back_button = Button(self, text ="Back", command=lambda: controller.show_frame(LoginPage))
 		go_back_button.place(bordermode=OUTSIDE,x=125,y=350)
@@ -145,8 +145,7 @@ class ServicesPage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
+
 		logout_button = Button(self, text="Logout", command=lambda: controller.show_frame(LoginPage))
 		logout_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
@@ -166,20 +165,20 @@ class ServicesPage(tk.Frame):
 		self.CurrentServices.place(bordermode=OUTSIDE,x=20,y=145)
 		scrollbar.place(x=335,y=145, height=230)
 		
-		view_button = Button(self, text="       View Info       ", command=lambda: Service.viewService(self.CurrentServices.curselection()[0],self,controller))
-		view_button.place(bordermode=OUTSIDE,x=355,y=275)
-		
 		change_password_button = Button(self, text="Settings", command=lambda: controller.show_frame(SettingsPage))
 		change_password_button.place(bordermode=OUTSIDE,x=417,y=5)
 		
-		add_new_service_button = Button(self, text="Add a new service", command=lambda: controller.show_frame(AddNewServicePage))
-		add_new_service_button.place(bordermode=OUTSIDE,x=355,y=365)
+		view_button = Button(self, text="      View Info     ", command=lambda: Service.viewService(self.CurrentServices.curselection()[0],self,controller))
+		view_button.place(bordermode=OUTSIDE,x=355,y=260)
+		
+		add_new_service_button = Button(self, text="Add new service", command=lambda: controller.show_frame(AddNewServicePage))
+		add_new_service_button.place(bordermode=OUTSIDE,x=355,y=290)
         
-		edit_service_button = Button(self, text="     Edit service     ", command=lambda: Service.populateEditService(self.CurrentServices.curselection()[0],self,controller))
-		edit_service_button.place(bordermode=OUTSIDE,x=355,y=335)
+		edit_service_button = Button(self, text="   Edit service    ", command=lambda: Service.populateEditService(self.CurrentServices.curselection()[0],self,controller))
+		edit_service_button.place(bordermode=OUTSIDE,x=355,y=320)
 
-		delete_service_button = Button(self, text="    Delete service   ", command=lambda: Service.confirmRemoveService(self,controller))
-		delete_service_button.place(bordermode=OUTSIDE, x=355,y=305)
+		delete_service_button = Button(self, text="  Delete service  ", command=lambda: Service.confirmRemoveService(self,controller))
+		delete_service_button.place(bordermode=OUTSIDE, x=355,y=350)
 	
 	def addToCurrentServicesListBox(self,string):
 		self.CurrentServices.insert(END, string)
@@ -196,15 +195,12 @@ class SettingsPage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="This is page 2", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
-		
-		#changepassword
-		change_password_button = Button(self, text="Change Password", command=lambda: controller.show_frame(AddNewServicePage))
-		change_password_button.place(bordermode=OUTSIDE,x=200,y=220)
-		#changeusername
-		change_password_button = Button(self, text="Change Username", command=lambda: controller.show_frame(AddNewServicePage))
+
+		change_password_button = Button(self, text="Change Account Username", command=lambda: controller.show_frame(AddNewServicePage))
 		change_password_button.place(bordermode=OUTSIDE,x=200,y=250)
+		
+		change_password_button = Button(self, text="Change Account Password", command=lambda: controller.show_frame(AddNewServicePage))
+		change_password_button.place(bordermode=OUTSIDE,x=200,y=220)
 		
 		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
 		back_button.place(bordermode=OUTSIDE,x=200,y=280)
@@ -219,9 +215,6 @@ class ServiceInfoPage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
-
-		label = tk.Label(self, text="YAY!", font=TITLE_FONT)
-		label.pack(side="top", fill="x", pady=10)
 		
 		service_form_label = Label(self,text="Service Name:")
 		service_form_label.place(bordermode=OUTSIDE,x=60,y=120)
@@ -290,9 +283,6 @@ class AddNewServicePage(tk.Frame):
 		"""
 		tk.Frame.__init__(self, parent)
 		
-		existingForm = Label(self, text = "Add new service:")
-		existingForm.place(bordermode=OUTSIDE, x=50, y=100)
-		
 		service_form_label = Label(self, text = "Service Name")
 		service_form_label.place(bordermode=OUTSIDE, x=50, y=140)
 		
@@ -330,8 +320,8 @@ class AddNewServicePage(tk.Frame):
 			self.password_input_form.get(),self.service_input_form.get(),self,controller))
 		add_service_button.place(bordermode=OUTSIDE,x=325,y=350)
 		
-		more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
-		more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
+		#more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
+		#more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
 		
 		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))
 		back_button.place(bordermode=OUTSIDE,x=125,y=350)

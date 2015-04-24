@@ -32,7 +32,7 @@ class Service:
 		return self.__class__.__name__ + "(" + self.service_name + ", " + self.service_accounts + ")"
 	
 	@staticmethod
-	def insertServiceName(account,service):
+	def insertServiceName(account,service): #insertServiceIntoDatabase
 		"""Inserts the encrypted Service into the database by matching it with the master account's primary id
 
 		:param account: The master account who owns this service
@@ -47,7 +47,7 @@ class Service:
 			cur.execute(insert_servicename_command,(service.id_num,account.id_num,service.service_name_enc))
 
 	@staticmethod
-	def retrieveServiceNameId(account,service):
+	def retrieveServiceNameId(account,service): #retrieveServiceId
 		"""Retrieves the primary id of the service from the database
 
 		:param account: The master account who owns this service
@@ -69,7 +69,7 @@ class Service:
 			print service_primary_key		
 
 	@staticmethod
-	def changeService(account,service):
+	def changeService(account,service): #updateService
 		"""Allows the user to update their existing services"""
 		
 		account_id = account.id_num	
@@ -84,7 +84,7 @@ class Service:
 			print service_primary_key			
 
 	@staticmethod
-	def createServiceTable():
+	def createServiceTable(): #createFireproofServicesTable
 		"""Initializes the FireproofServices table in our database"""
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 
@@ -119,7 +119,7 @@ class Service:
 		controller.show_frame(controller.ServicesPage)
 
 	@staticmethod
-	def addService(username,password,servicename,frame,controller):
+	def addService(username,password,servicename,frame,controller): #gatherServiceInformation
 		""" This function grabs the information from the provided fields
 		and adds it to the database under the user's main account. It then
 		clears the fields on this frame, and redirects the user to the 
@@ -129,13 +129,11 @@ class Service:
 		print "Username:", username
 		print "Password:", password
 		
-		# ***** WHY DOESN'T THIS WORK *****
 		service_page_frame = controller.getFrame(controller.ServicesPage)
 		service_page_frame.addToCurrentServicesListBox(servicename)
 
 		service_page_frame = controller.getFrame(controller.AddNewServicePage)
 		service_page_frame.addToExistingServicesListBox(servicename)		
-		#add_to_existing.insert(END, servicename)
 		
 		service_account = ServiceAccount(username,password,controller.current_account)
 
@@ -145,7 +143,6 @@ class Service:
 
 		service.insertServiceName(controller.current_account,service)
 		ServiceAccount.insertServiceAccount(controller.current_account,service,service_account)
-		#app.update()
 		
 		frame.username_input_form.delete(0, 'end')
 		frame.password_input_form.delete(0, 'end')
@@ -154,7 +151,7 @@ class Service:
 		controller.show_frame(controller.ServicesPage)		
 
 	@staticmethod
-	def addServiceChecker(username,password,servicename,frame,controller):
+	def addServiceChecker(username,password,servicename,frame,controller): #checkerForGatherServiceInformation
 		""" This function checks that all the fields on this frame
 		have been filled out. If a field is blank, it creates a popup
 		window alerting the user to the blank field. If all fields
@@ -170,13 +167,7 @@ class Service:
 			Service.addService(username,password,servicename,frame,controller)
 
 	@staticmethod
-	def viewService(service_index,frame,controller):
-		y_coordinate_u = 160
-		x_coordinate_u = 190
-		
-		y_coordinate_p = 190
-		x_coordinate_p = 190
-
+	def viewService(service_index,frame,controller): #populateViewService #populateServiceInfoPage
 		service_info_page_frame = controller.getFrame(controller.ServiceInfoPage)
 
 		service = controller.current_account.service_name_list[service_index]
@@ -184,57 +175,49 @@ class Service:
 		label.place(bordermode=OUTSIDE,x=160,y=110)		
 		for account in service.service_accounts:
 			username_label = tk.Label(service_info_page_frame, text=account.username)
-			username_label.place(bordermode=OUTSIDE,x=x_coordinate_u,y=y_coordinate_u)
-			y_coordinate_u += 20
+			username_label.place(bordermode=OUTSIDE,x=190,y=160)
 
 			password_label = tk.Label(service_info_page_frame, text=account.password)
-			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p,y=y_coordinate_p)
-			y_coordinate_p += 20
+			password_label.place(bordermode=OUTSIDE,x=190,y=190)
 
 		controller.show_frame(controller.ServiceInfoPage)
 		
 	@staticmethod
 	def populateEditService(service_index, frame, controller):
-		y_coordinate_u = 160
-		x_coordinate_u = 210
-		y_coordinate_p = 190
-		x_coordinate_p = 210
-		
-		service_info_page_frame = controller.getFrame(controller.EditPage)
+		edit_page_frame = controller.getFrame(controller.EditPage)
 		
 		service = controller.current_account.service_name_list[service_index]
-		label = tk.Label(service_info_page_frame, text=service.service_name)
+		label = tk.Label(edit_page_frame, text=service.service_name)
 		label.place(bordermode=OUTSIDE, x=210, y=120)
 		for account in service.service_accounts:
-			username_label = tk.Label(service_info_page_frame, text=account.username)
-			username_label.place(bordermode=OUTSIDE,x=x_coordinate_u, y=y_coordinate_u)
-			y_coordinate_u += 20
+			username_label = tk.Label(edit_page_frame, text=account.username)
+			username_label.place(bordermode=OUTSIDE,x=210, y=160)
 			
-			password_label = tk.Label(service_info_page_frame, text=account.password)
-			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p, y=y_coordinate_p)
-			y_coordinate_p += 20
+			password_label = tk.Label(edit_page_frame, text=account.password)
+			password_label.place(bordermode=OUTSIDE,x=210, y=190)
 		controller.show_frame(controller.EditPage)
 
-	#we need this, though it has to populate from the database for information, so most of this won't work
+	#we need this, though it has to populate from the database for information
 	@staticmethod
-	def transitionFromInfoToEdit(service_index, frame, controller):
-		service_info_page_frame = controller.getFrame(controller.EditPage)
-		service = controller.current_account.service_name_list[service_index]
+	def transitionFromInfoToEdit(service_index, frame, controller): #populateEditServiceFromServiceInfo
+		# grab service ID or object from somewhere
 		
+		# set page frame
+		edit_page_frame = controller.getFrame(controller.EditPage)
+		# pull out servicename, place into label
 		label = tk.Label(service_info_page_frame, text=service.servicename)
 		label.place(bordermode=OUTSIDE, x=210, y=120)
-		for account in service.service_accounts:
-			username_label = tk.Label(service_info_page_frame, text=account.username)
-			username_label.place(bordermode=OUTSIDE,x=x_coordinate_u, y=y_coordinate_u)
-			y_coordinate_u += 20
-			
-			password_label = tk.Label(service_info_page_frame, text=account.password)
-			password_label.place(bordermode=OUTSIDE,x=x_coordinate_p, y=y_coordinate_p)
-			y_coordinate_p += 20
+		# pull out username, place in username_label
+		username_label = tk.Label(service_info_page_frame, text=account.username)
+		username_label.place(bordermode=OUTSIDE,x=x_coordinate_u, y=y_coordinate_u)
+		# pull out password, place in password_label
+		password_label = tk.Label(service_info_page_frame, text=account.password)
+		password_label.place(bordermode=OUTSIDE,x=x_coordinate_p, y=y_coordinate_p)
+		# show frame
 		controller.show_frame(controller.EditPage)
 		
 	@staticmethod
-	def hideFields(self, controller):
+	def hideFields(self, controller): #clearFieldsInServicesPage
 		hide_service_label = Label(self,text="                           ", font = TITLE_FONT)
 		hide_service_label.place(bordermode=OUTSIDE,x=160,y=110)	
 	
@@ -247,7 +230,7 @@ class Service:
 		controller.show_frame(controller.ServicesPage)	
 
 	@staticmethod
-	def hideFieldsFromEdit(self, controller):
+	def hideFieldsFromEdit(self, controller): #clearFieldsInEditPage
 		hide_service_label = Label(self,text="                           ", font = TITLE_FONT)
 		hide_service_label.place(bordermode=OUTSIDE,x=160,y=110)	
 	
