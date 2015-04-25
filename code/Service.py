@@ -10,6 +10,7 @@ TEXT_FONT = ("Helvetica", 8, "bold")
 class Service:
 	
 	ServiceCount = 1
+	stored_index = None
 	
 	def __init__(self,service_name,account_owner,service_accounts=[]):
 		"""Constructor that initializes a Service object
@@ -169,7 +170,9 @@ class Service:
 	@staticmethod
 	def viewService(service_index,frame,controller): #populateViewService #populateServiceInfoPage
 		service_info_page_frame = controller.getFrame(controller.ServiceInfoPage)
-
+		
+		#for populateEditServiceFromServiceInfo
+		Service.stored_index = service_index
 		service = controller.current_account.service_name_list[service_index]
 		label = tk.Label(service_info_page_frame, text=service.service_name, font=TITLE_FONT)
 		label.place(bordermode=OUTSIDE,x=160,y=110)		
@@ -181,6 +184,23 @@ class Service:
 			password_label.place(bordermode=OUTSIDE,x=190,y=190)
 
 		controller.show_frame(controller.ServiceInfoPage)
+		
+	@staticmethod
+	def populateEditServiceFromServiceInfo(frame, controller):
+		service = controller.current_account.service_name_list[Service.stored_index]
+
+		edit_page_frame = controller.getFrame(controller.EditPage)
+
+		label = tk.Label(edit_page_frame, text=service.service_name)
+		label.place(bordermode=OUTSIDE, x=210, y=120)
+
+		for account in service.service_accounts:
+			username_label = tk.Label(edit_page_frame, text=account.username)
+			username_label.place(bordermode=OUTSIDE,x=210, y=160)
+
+			password_label = tk.Label(edit_page_frame, text=account.password)
+			password_label.place(bordermode=OUTSIDE,x=210, y=190)
+		controller.show_frame(controller.EditPage)
 		
 	@staticmethod
 	def populateEditService(service_index, frame, controller):
@@ -195,25 +215,6 @@ class Service:
 			
 			password_label = tk.Label(edit_page_frame, text=account.password)
 			password_label.place(bordermode=OUTSIDE,x=210, y=190)
-		controller.show_frame(controller.EditPage)
-
-	#we need this, though it has to populate from the database for information
-	@staticmethod
-	def transitionFromInfoToEdit(service_index, frame, controller): #populateEditServiceFromServiceInfo
-		# grab service ID or object from somewhere
-		
-		# set page frame
-		edit_page_frame = controller.getFrame(controller.EditPage)
-		# pull out servicename, place into label
-		label = tk.Label(service_info_page_frame, text=service.servicename)
-		label.place(bordermode=OUTSIDE, x=210, y=120)
-		# pull out username, place in username_label
-		username_label = tk.Label(service_info_page_frame, text=account.username)
-		username_label.place(bordermode=OUTSIDE,x=x_coordinate_u, y=y_coordinate_u)
-		# pull out password, place in password_label
-		password_label = tk.Label(service_info_page_frame, text=account.password)
-		password_label.place(bordermode=OUTSIDE,x=x_coordinate_p, y=y_coordinate_p)
-		# show frame
 		controller.show_frame(controller.EditPage)
 		
 	@staticmethod

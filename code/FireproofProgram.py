@@ -15,6 +15,7 @@ from Service import *
 #	Make text consistent
 #	Make button placement consistent
 #	Fix text placement on ViewServicePage
+#	Fix delete -> still displays deleted information?
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 TEXT_FONT = ("Helvetica", 8, "bold")
@@ -234,7 +235,7 @@ class ServiceInfoPage(tk.Frame):	#ViewServicePage
 		curr_password_form_label = Label(self,text="Current Password:")
 		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
         
-		edit_service_button = Button(self, text="     Edit service     ", command=lambda: Service.hideFieldsFromEdit(self,controller))#has to populate from the database#Service.populateEditService(self.label,self,controller))
+		edit_service_button = Button(self, text="     Edit service     ", command=lambda: Service.populateEditServiceFromServiceInfo(self,controller))
 		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
 		
 		back_button = Button(self, text="Back", command=lambda: Service.hideFields(self,controller))
