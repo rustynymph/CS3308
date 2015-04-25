@@ -174,11 +174,11 @@ class Service:
 		#for populateEditServiceFromServiceInfo
 		Service.stored_index = service_index
 		service = controller.current_account.service_name_list[service_index]
-		label = tk.Label(service_info_page_frame, text=service.service_name, font=TITLE_FONT)
-		label.place(bordermode=OUTSIDE,x=160,y=110)		
+		label = tk.Label(service_info_page_frame, text=service.service_name)
+		label.place(bordermode=OUTSIDE,x=190,y=140)		
 		for account in service.service_accounts:
 			username_label = tk.Label(service_info_page_frame, text=account.username)
-			username_label.place(bordermode=OUTSIDE,x=190,y=160)
+			username_label.place(bordermode=OUTSIDE,x=190,y=165)
 
 			password_label = tk.Label(service_info_page_frame, text=account.password)
 			password_label.place(bordermode=OUTSIDE,x=190,y=190)
@@ -192,11 +192,11 @@ class Service:
 		edit_page_frame = controller.getFrame(controller.EditPage)
 
 		label = tk.Label(edit_page_frame, text=service.service_name)
-		label.place(bordermode=OUTSIDE, x=210, y=120)
+		label.place(bordermode=OUTSIDE, x=210, y=140)
 
 		for account in service.service_accounts:
 			username_label = tk.Label(edit_page_frame, text=account.username)
-			username_label.place(bordermode=OUTSIDE,x=210, y=160)
+			username_label.place(bordermode=OUTSIDE,x=210, y=165)
 
 			password_label = tk.Label(edit_page_frame, text=account.password)
 			password_label.place(bordermode=OUTSIDE,x=210, y=190)
@@ -208,10 +208,10 @@ class Service:
 		
 		service = controller.current_account.service_name_list[service_index]
 		label = tk.Label(edit_page_frame, text=service.service_name)
-		label.place(bordermode=OUTSIDE, x=210, y=120)
+		label.place(bordermode=OUTSIDE, x=210, y=140)
 		for account in service.service_accounts:
 			username_label = tk.Label(edit_page_frame, text=account.username)
-			username_label.place(bordermode=OUTSIDE,x=210, y=160)
+			username_label.place(bordermode=OUTSIDE,x=210, y=165)
 			
 			password_label = tk.Label(edit_page_frame, text=account.password)
 			password_label.place(bordermode=OUTSIDE,x=210, y=190)
@@ -219,11 +219,11 @@ class Service:
 		
 	@staticmethod
 	def hideFields(self, controller): #clearFieldsInServicesPage
-		hide_service_label = Label(self,text="                           ", font = TITLE_FONT)
-		hide_service_label.place(bordermode=OUTSIDE,x=160,y=110)	
+		hide_service_label = Label(self,text="                           ",)
+		hide_service_label.place(bordermode=OUTSIDE,x=190,y=140)	
 	
 		hide_username_label = Label(self, text="                         ")
-		hide_username_label.place(bordermode=OUTSIDE,x=190,y=160)
+		hide_username_label.place(bordermode=OUTSIDE,x=190,y=165)
 	
 		hide_password_label = Label(self, text="                         ")
 		hide_password_label.place(bordermode=OUTSIDE,x=190,y=190)
@@ -232,11 +232,11 @@ class Service:
 
 	@staticmethod
 	def hideFieldsFromEdit(self, controller): #clearFieldsInEditPage
-		hide_service_label = Label(self,text="                           ", font = TITLE_FONT)
-		hide_service_label.place(bordermode=OUTSIDE,x=160,y=110)	
+		hide_service_label = Label(self,text="                           ")
+		hide_service_label.place(bordermode=OUTSIDE,x=190,y=140)	
 	
 		hide_username_label = Label(self, text="                         ")
-		hide_username_label.place(bordermode=OUTSIDE,x=190,y=160)
+		hide_username_label.place(bordermode=OUTSIDE,x=190,y=165)
 	
 		hide_password_label = Label(self, text="                         ")
 		hide_password_label.place(bordermode=OUTSIDE,x=190,y=190)

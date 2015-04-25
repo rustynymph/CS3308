@@ -17,6 +17,8 @@ from Service import *
 #	Fix delete -> still displays deleted information?
 
 TITLE_FONT = ("Helvetica", 18, "bold")
+TITLE_X = 20
+TITLE_Y = 100
 TEXT_FONT = ("Helvetica", 8, "bold")
 class Fireproof(tk.Tk):
 	
@@ -159,8 +161,8 @@ class ServicesPage(tk.Frame):
 		logout_button.place(bordermode=OUTSIDE,x=5,y=5)
 		
 		text_label = "Welcome! Here are your stored services:"
-		ListboxLabel = Label(self, text = text_label)
-		ListboxLabel.place(x=20, y=120)
+		ListboxLabel = Label(self, text = text_label, font=TITLE_FONT)
+		ListboxLabel.place(x=TITLE_X, y=TITLE_Y)
 		
 		scrollbar = Scrollbar(self, orient=VERTICAL)
 		scrollbar.pack(side=RIGHT, fill=Y)
@@ -205,6 +207,10 @@ class SettingsPage(tk.Frame):
 		"""
 		tk.Frame.__init__(self, parent)
 
+		text_label = "Change Fireproof Account Settings:"
+		PageLabel = Label(self, text = text_label, font=TITLE_FONT)
+		PageLabel.place(x=TITLE_X, y=TITLE_Y)
+
 		change_password_button = Button(self, text="Change Account Username", command=lambda: controller.show_frame(AddNewServicePage))
 		change_password_button.place(bordermode=OUTSIDE,x=200,y=250)
 		
@@ -225,11 +231,15 @@ class ServiceInfoPage(tk.Frame):	#ViewServicePage
 		"""
 		tk.Frame.__init__(self, parent)
 		
+		text_label = "Service Information:"
+		PageLabel = Label(self, text = text_label, font=TITLE_FONT)
+		PageLabel.place(x=TITLE_X, y=TITLE_Y)
+		
 		service_form_label = Label(self,text="Service Name:")
-		service_form_label.place(bordermode=OUTSIDE,x=60,y=120)
+		service_form_label.place(bordermode=OUTSIDE,x=60,y=140)
 		
 		curr_username_form_label = Label(self,text="Current Username:")
-		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=160)
+		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=165)
 		
 		curr_password_form_label = Label(self,text="Current Password:")
 		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
@@ -251,11 +261,15 @@ class EditPage(tk.Frame):
 		"""
 		tk.Frame.__init__(self, parent)
 
+		text_label = "Edit this service:"
+		PageLabel = Label(self, text = text_label, font=TITLE_FONT)
+		PageLabel.place(x=TITLE_X, y=TITLE_Y)
+
 		service_form_label = Label(self,text="Service Name:")
-		service_form_label.place(bordermode=OUTSIDE,x=60,y =120)
+		service_form_label.place(bordermode=OUTSIDE,x=60,y =140)
 		
 		curr_username_form_label = Label(self,text="Current Username:")
-		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=160)
+		curr_username_form_label.place(bordermode=OUTSIDE,x=60,y=165)
 		
 		curr_password_form_label = Label(self,text="Current Password:")
 		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
@@ -291,6 +305,10 @@ class AddNewServicePage(tk.Frame):
         :param tk.Frame: Tkinter frame widget
 		"""
 		tk.Frame.__init__(self, parent)
+		
+		text_label = "Add information for a new service:"
+		PageLabel = Label(self, text = text_label, font=TITLE_FONT)
+		PageLabel.place(x=TITLE_X, y=TITLE_Y)
 		
 		service_form_label = Label(self, text = "Service Name")
 		service_form_label.place(bordermode=OUTSIDE, x=50, y=140)
