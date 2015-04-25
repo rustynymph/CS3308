@@ -9,7 +9,6 @@ from Service import *
 #To Do:
 #	Add in pulling from database for: ServiceInfoPage, EditPage
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
-#	Enable transition from ViewServicePage -> EditPage
 #	Add in functionality for EditPage buttons (change service username, change service password)
 #	Work on clarifying names of functions and names of variables
 #	Make text consistent
