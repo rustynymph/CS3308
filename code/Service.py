@@ -103,18 +103,16 @@ class Service:
 		the account is untouched and the user is returned to the Remove
 		Service page frame.
 		"""
+		print "SELECTION #:", frame.CurrentServices.curselection()[0]
 		result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
 		if result == 'yes':
-			print "Deleted!"
 			index_to_delete = frame.CurrentServices.curselection()[0]
-
 			service_page_frame = controller.getFrame(controller.ServicesPage)
 			service_page_frame.removeFromCurrentServicesListBox(index_to_delete)
 
 			service_page_frame = controller.getFrame(controller.AddNewServicePage)
 			service_page_frame.removeFromExistingServicesListBox(index_to_delete)			
-
-
+			print "Deleted!"
 		else:
 			print "Returning you to main screen"
 		controller.show_frame(controller.ServicesPage)
@@ -179,8 +177,9 @@ class Service:
 		:param frame: Tkinter frame widget
 		:param service_index: Listbox index for the service
 		"""
+		frame.CurrentServices.update()
 		service_info_page_frame = controller.getFrame(controller.ServiceInfoPage)
-		
+		print "SELECTION #:", frame.CurrentServices.curselection()[0]
 		#for populateEditServiceFromServiceInfo
 		Service.stored_index = service_index
 		service = controller.current_account.service_name_list[service_index]
@@ -192,7 +191,7 @@ class Service:
 
 			password_label = tk.Label(service_info_page_frame, text=account.password)
 			password_label.place(bordermode=OUTSIDE,x=190,y=190)
-
+		frame.CurrentServices.update()
 		controller.show_frame(controller.ServiceInfoPage)
 		
 	@staticmethod
