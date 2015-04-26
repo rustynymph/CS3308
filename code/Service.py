@@ -46,7 +46,21 @@ class Service:
 			insert_servicename_command = "INSERT INTO FireproofServices (id,masterid,ServiceName) VALUES (%s,%s,%s)"
 			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
 			cur.execute(insert_servicename_command,(service.id_num,account.id_num,service.service_name_enc))
-
+	
+	#WORK IN PROGRESS
+	@staticmethod
+	def removeServiceFromDatabase(account,service):
+		"""Deletes the specified Service from the database by matching its
+		service id and master account's primary id
+		
+		:param account: The master account who owns this service
+		"""
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		with con:
+			cur = con.cursor()
+			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s", service.id_num, account.id_num
+			cur.execute(delete_service_command)
+	
 	@staticmethod
 	def retrieveServiceNameId(account,service): #retrieveServiceId
 		"""Retrieves the primary id of the service from the database
