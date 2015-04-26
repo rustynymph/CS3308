@@ -11,15 +11,17 @@ from Service import *
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
 #	Add in functionality for EditPage buttons (change service username, change service password)
 #	Work on clarifying names of functions and names of variables
-#	Make text consistent
-#	Make button placement consistent
 #	Fix text placement on ViewServicePage
 #	Fix delete -> still displays deleted information?
 
-TITLE_FONT = ("Helvetica", 18, "bold")
+TITLE_FONT = ("Helvetica", 16, "bold")
 TITLE_X = 20
 TITLE_Y = 100
-TEXT_FONT = ("Helvetica", 8, "bold")
+BACK_X = 150
+BACK_Y = 350
+SECONDARY_X = 300
+SECONDARY_Y = 350
+
 class Fireproof(tk.Tk):
 	
 	def __init__(self, *args, **kwargs):
@@ -97,16 +99,16 @@ class LoginPage(tk.Frame):
 		self.password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
 		
 		login_button = Button(self, text ="Login", command= lambda: LoginFunctions.checkIfUser(self.username_input_form.get(),self.password_input_form.get(),self,controller))
-		login_button.place(bordermode=OUTSIDE,x=292,y=240)		
+		login_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)		
 		
-		new_user_label = tk.Label(self, text="New User?")#, font=TEXT_FONT)
-		new_user_label.place(bordermode=OUTSIDE,x=235,y=300)
+		new_user_label = tk.Label(self, text="New User?")
+		new_user_label.place(bordermode=OUTSIDE,x=155,y=310)
 		
-		create_account_label = tk.Label(self, text="Click here to create an account")#, font=TEXT_FONT)
-		create_account_label.place(bordermode=OUTSIDE,x=170,y=320)
+		create_account_label = tk.Label(self, text="Click here to create an account")
+		create_account_label.place(bordermode=OUTSIDE,x=90,y=330)
 		
 		sign_up_button = Button(self, text ="Sign Up", command=lambda: controller.show_frame(CreateAccountPage))
-		sign_up_button.place(bordermode=OUTSIDE,x=225,y=340)
+		sign_up_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 				
 
 class CreateAccountPage(tk.Frame):
@@ -139,10 +141,10 @@ class CreateAccountPage(tk.Frame):
 		
 		create_account_button = Button(self, text ="Create Account", command=lambda: LoginFunctions.createAccount(self.username_input_form.get(),\
 			self.password_input_form.get(),self.confirm_password_input_form.get(),self,controller))
-		create_account_button.place(bordermode=OUTSIDE,x=235,y=350)
+		create_account_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)
 		
 		go_back_button = Button(self, text ="Back", command=lambda: controller.show_frame(LoginPage))
-		go_back_button.place(bordermode=OUTSIDE,x=125,y=350)
+		go_back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 		
 		#tips = Label(self,text="Passwords should be at least 8 characters")
 		#tips.place(bordermode=OUTSIDE,x=60,y=140)								
@@ -211,14 +213,14 @@ class SettingsPage(tk.Frame):
 		PageLabel = Label(self, text = text_label, font=TITLE_FONT)
 		PageLabel.place(x=TITLE_X, y=TITLE_Y)
 
-		change_password_button = Button(self, text="Change Account Username", command=lambda: controller.show_frame(AddNewServicePage))
-		change_password_button.place(bordermode=OUTSIDE,x=200,y=250)
+		change_password_button = Button(self, text="Change Account Username ", command=lambda: controller.show_frame(AddNewServicePage))
+		change_password_button.place(bordermode=OUTSIDE,x=150,y=220)
 		
 		change_password_button = Button(self, text="Change Account Password", command=lambda: controller.show_frame(AddNewServicePage))
-		change_password_button.place(bordermode=OUTSIDE,x=200,y=220)
+		change_password_button.place(bordermode=OUTSIDE,x=150,y=250)
 		
 		back_button = Button(self, text="Back", command=lambda: controller.show_frame(ServicesPage))
-		back_button.place(bordermode=OUTSIDE,x=200,y=280)
+		back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 		
 class ServiceInfoPage(tk.Frame):	#ViewServicePage
 	def __init__(self, parent, controller):
@@ -245,10 +247,10 @@ class ServiceInfoPage(tk.Frame):	#ViewServicePage
 		curr_password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
         
 		edit_service_button = Button(self, text="     Edit service     ", command=lambda: Service.populateEditServiceFromServiceInfo(self,controller))
-		edit_service_button.place(bordermode=OUTSIDE,x=355,y=365)
+		edit_service_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)
 		
 		back_button = Button(self, text="Back", command=lambda: Service.hideFields(self,controller))
-		back_button.place(bordermode=OUTSIDE,x=10,y=10)
+		back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 
 class EditPage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -290,10 +292,10 @@ class EditPage(tk.Frame):
 		confirm_password_input_form.place(bordermode=OUTSIDE,x=210,y=300)
 		
 		back_button = Button(self, text="Cancel", command=lambda: Service.hideFields(self,controller))
-		back_button.place(bordermode=OUTSIDE,x=150,y=350)
+		back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 		
 		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
-		save_button.place(bordermode=OUTSIDE,x=250,y=350)
+		save_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)
 
 class AddNewServicePage(tk.Frame):
 	def __init__(self, parent, controller):
@@ -345,13 +347,13 @@ class AddNewServicePage(tk.Frame):
 				
 		add_service_button = Button(self, text ="Add Service", command=lambda: Service.addServiceChecker(self.username_input_form.get(),\
 			self.password_input_form.get(),self.service_input_form.get(),self,controller))
-		add_service_button.place(bordermode=OUTSIDE,x=325,y=350)
+		add_service_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)
 		
 		#more_options_button = Button(self, text ="More Options", command=lambda: controller.show_frame(ServicesPage))
 		#more_options_button.place(bordermode=OUTSIDE,x=200,y=350)
 		
 		back_button = Button(self, text ="Back", command=lambda: controller.show_frame(ServicesPage))
-		back_button.place(bordermode=OUTSIDE,x=125,y=350)
+		back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 
 	def addToExistingServicesListBox(self,string):
 		self.add_to_existing.insert(END, string)
