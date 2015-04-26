@@ -169,6 +169,16 @@ class Service:
 
 	@staticmethod
 	def viewService(service_index,frame,controller): #populateViewService #populateServiceInfoPage
+		"""
+		This function takes the Listbox index from the ServicesPage and
+		uses it to display the service's name, username and password for
+		the user. The username and password are unencrypted before being
+		displayed.
+		
+		:param controller: Tkinter GUI manager
+		:param frame: Tkinter frame widget
+		:param service_index: Listbox index for the service
+		"""
 		service_info_page_frame = controller.getFrame(controller.ServiceInfoPage)
 		
 		#for populateEditServiceFromServiceInfo
@@ -187,6 +197,16 @@ class Service:
 		
 	@staticmethod
 	def populateEditServiceFromServiceInfo(frame, controller):
+		"""
+		This function takes the stored Listbox index from the viewService
+		function call and uses it to display the service's name, username 
+		and password for the user so the user can decide which field(s), 
+		if any, they would like to change. The username and password are 
+		unencrypted before being displayed.
+		
+		:param controller: Tkinter GUI manager
+		:param frame: Tkinter frame widget
+		"""
 		service = controller.current_account.service_name_list[Service.stored_index]
 
 		edit_page_frame = controller.getFrame(controller.EditPage)
@@ -204,6 +224,17 @@ class Service:
 		
 	@staticmethod
 	def populateEditService(service_index, frame, controller):
+		"""
+		This function takes the Listbox index from the ServicesPage and
+		uses it to display the service's name, username and password for
+		the user so the user can decide which field(s), if any, they would
+		like to change. The username and password are unencrypted before 
+		being displayed.
+		
+		:param controller: Tkinter GUI manager
+		:param frame: Tkinter frame widget
+		:param service_index: Listbox index for the service
+		"""
 		edit_page_frame = controller.getFrame(controller.EditPage)
 		
 		service = controller.current_account.service_name_list[service_index]
@@ -219,6 +250,12 @@ class Service:
 		
 	@staticmethod
 	def hideFields(self, controller): #clearFieldsInServicesPage
+		"""
+		This function clears the fields in the ViewService page.
+		
+		:param self: the frame calling hideFields
+		:param controller: Tkinter GUI manager
+		"""
 		hide_service_label = Label(self,text="                           ",)
 		hide_service_label.place(bordermode=OUTSIDE,x=190,y=140)	
 	
@@ -232,6 +269,12 @@ class Service:
 
 	@staticmethod
 	def hideFieldsFromEdit(self, controller): #clearFieldsInEditPage
+		"""
+		This function clears the fields in the EditService page.
+		
+		:param self: the frame calling hideFields
+		:param controller: Tkinter GUI manager
+		"""
 		hide_service_label = Label(self,text="                           ")
 		hide_service_label.place(bordermode=OUTSIDE,x=190,y=140)	
 	

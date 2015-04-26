@@ -11,7 +11,6 @@ from Service import *
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
 #	Add in functionality for EditPage buttons (change service username, change service password)
 #	Work on clarifying names of functions and names of variables
-#	Fix text placement on ViewServicePage
 #	Fix delete -> still displays deleted information?
 
 TITLE_FONT = ("Helvetica", 16, "bold")
