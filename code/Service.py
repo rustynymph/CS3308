@@ -47,7 +47,7 @@ class Service:
 			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
 			cur.execute(insert_servicename_command,(service.id_num,account.id_num,service.service_name_enc))
 	
-	#WORK IN PROGRESS
+	#WORK IN PROGRESS; also needs to delete from other table(fireproofserviceaccounts?) as well
 	@staticmethod
 	def removeServiceFromDatabase(account,service):
 		"""Deletes the specified Service from the database by matching its
@@ -58,8 +58,34 @@ class Service:
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 		with con:
 			cur = con.cursor()
-			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s", service.id_num, account.id_num
+			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s", (service.id_num, account.id_num)
 			cur.execute(delete_service_command)
+	
+	#this needs to access other table
+	@staticmethod
+	def changeServiceUsername(account, service, new_username):
+	"""Updates the specified service's stored username to be the newly provided username.
+	
+	:param account: The master account that owns this service
+	"""
+	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+	with con:
+		cur = con.cursor()
+		change_username_command=("UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
+		cur.execute(change_username_command)
+	
+	#this makes no sense; needs to access other table
+	@staticmethod
+	def changeServicePassword(account, service, new_password):
+	"""Updates the specified service's stored password to be the newly provided password.
+	
+	:param account: The master account that owns this service
+	"""
+	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+	with con:
+		cur = con.cursor()
+		change_password_command=("UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
+		cur.execute(change_password_command)
 	
 	@staticmethod
 	def retrieveServiceNameId(account,service): #retrieveServiceId
