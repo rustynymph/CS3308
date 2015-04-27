@@ -12,6 +12,7 @@ from Service import *
 #	Add in functionality for EditPage buttons (change service username, change service password)
 #	Work on clarifying names of functions and names of variables (not needed?)
 #	Fix delete -> still displays deleted information?
+#	Generate a random password -> SSL
 
 TITLE_FONT = ("Helvetica", 16, "bold")
 TITLE_X = 20

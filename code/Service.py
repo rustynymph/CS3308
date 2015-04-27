@@ -71,7 +71,8 @@ class Service:
 	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 	with con:
 		cur = con.cursor()
-		change_username_command=("UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
+		#also has to access FireproofServices to get servicename
+		change_username_command=("UPDATE FireproofServicesAccounts SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
 		cur.execute(change_username_command)
 	
 	#this makes no sense; needs to access other table
@@ -84,6 +85,7 @@ class Service:
 	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 	with con:
 		cur = con.cursor()
+		#also has to access FireproofServices to get servicename
 		change_password_command=("UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
 		cur.execute(change_password_command)
 	
