@@ -49,3 +49,17 @@ class ServiceAccount:
 			cur = con.cursor()
 			cur.execute("CREATE TABLE FireproofServicesAccounts (id INT(6) PRIMARY KEY AUTO_INCREMENT,serviceid INT(6),\
 				masterid INT(6),ServiceUsername VARCHAR(30) NOT NULL,ServicePassword VARCHAR(30) NOT NULL)")	
+
+	@staticmethod
+	def removeServiceAccountFromDatabase(account,service):
+		"""Deletes the specified Service from the database by matching its
+		service id and master account's primary id
+		
+		:param account: The master account who owns this service
+		"""
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		with con:
+			cur = con.cursor()
+			delete_service_command = "DELETE FROM FireproofServicesAccounts WHERE serviceid=%s AND masterid=%s"
+			cur.execute(delete_service_command, (service.id_num, account.id_num))
+	

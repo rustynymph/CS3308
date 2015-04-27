@@ -58,36 +58,36 @@ class Service:
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 		with con:
 			cur = con.cursor()
-			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s", (service.id_num, account.id_num)
-			cur.execute(delete_service_command)
+			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s"
+			cur.execute(delete_service_command, (service.id_num, account.id_num))
 	
 	#this needs to access other table
 	@staticmethod
 	def changeServiceUsername(account, service, new_username):
-	"""Updates the specified service's stored username to be the newly provided username.
-	
-	:param account: The master account that owns this service
-	"""
-	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-	with con:
-		cur = con.cursor()
-		#also has to access FireproofServices to get servicename
-		change_username_command=("UPDATE FireproofServicesAccounts SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
-		cur.execute(change_username_command)
+		"""Updates the specified service's stored username to be the newly provided username.
+		
+		:param account: The master account that owns this service
+		"""
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		with con:
+			cur = con.cursor()
+			#also has to access FireproofServices to get servicename
+			change_username_command= "UPDATE FireproofServicesAccounts SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
+			cur.execute(change_username_command)
 	
 	#this makes no sense; needs to access other table
 	@staticmethod
 	def changeServicePassword(account, service, new_password):
-	"""Updates the specified service's stored password to be the newly provided password.
-	
-	:param account: The master account that owns this service
-	"""
-	con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-	with con:
-		cur = con.cursor()
-		#also has to access FireproofServices to get servicename
-		change_password_command=("UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
-		cur.execute(change_password_command)
+		"""Updates the specified service's stored password to be the newly provided password.
+		
+		:param account: The master account that owns this service
+		"""
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		with con:
+			cur = con.cursor()
+			#also has to access FireproofServices to get servicename
+			change_password_command="UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
+			cur.execute(change_password_command)
 	
 	@staticmethod
 	def retrieveServiceNameId(account,service): #retrieveServiceId
@@ -149,6 +149,12 @@ class Service:
 		result = tkMessageBox.askquestion("Delete", "Are you sure?", icon='warning')
 		if result == 'yes':
 			index_to_delete = frame.CurrentServices.curselection()[0]
+			service = controller.current_account.service_name_list[index_to_delete]
+			controller.current_account.service_name_list.remove(service)
+
+			Service.removeServiceFromDatabase(controller.current_account,service)
+			ServiceAccount.removeServiceAccountFromDatabase(controller.current_account,service)
+
 			service_page_frame = controller.getFrame(controller.ServicesPage)
 			service_page_frame.removeFromCurrentServicesListBox(index_to_delete)
 
