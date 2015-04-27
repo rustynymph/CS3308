@@ -39,6 +39,10 @@ class ServiceAccount:
 			#cur.execute(insert_servicename_command,(self.id_num,service.service_name))
 			cur.execute(insert_serviceaccount_command,(service.id_num,account.id_num,serviceaccount.username_enc,serviceaccount.password_enc))
 
+			get_serviceaccountid_command = "SELECT id FROM FireproofServicesAccounts WHERE ServiceUsername=%s AND ServicePassword=%s"
+			cur.execute(get_serviceaccountid_command,(serviceaccount.username_enc,serviceaccount.password_enc))
+			serviceaccount.id_num = cur.fetchone()
+
 
 	@staticmethod
 	def createServiceAccountsTable(): #createFireproofServicesAccountsTable
