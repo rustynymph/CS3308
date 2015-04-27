@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import config
+import re #regex
 from MasterAccount import *
 
 #confusion with the naming in createLoginInfo and createAccount -> names should be more differentiated for clarity?
@@ -54,6 +55,22 @@ class LoginFunctions:
 		"""
 		username_characters = set(master_username)
 		password_characters = set(master_password)
+		regex_letters = re.compile(r'\d.*?[A-Z].*?[a-z]')
+		
+		number_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+		number_present = False
+		for number in number_list:
+			if number in password_characters:
+				number_present = True
+		
+		symbol_list = ["$",".","|","?","*","+","~","!","%","&","_","=","`"]
+		symbol_present = False
+		for symbol in symbol_list:
+			if symbol in password_characters:
+				symbol_present = True
+		
+		print "Password:", master_password
+		
 		if((not(master_username) or not(master_password)) or not(confirm_master_password)):
 			tkMessageBox.showinfo("Error","Please enter required fields.")
 		elif((' ' in username_characters) or (' ' in password_characters)):
@@ -64,9 +81,12 @@ class LoginFunctions:
 			tkMessageBox.showinfo("Error","Password must be at least 8 characters.")
 		elif (len(master_password) > 16):
 			tkMessageBox.showinfo("Error", "Passwords must be less than 16 characters.")
-		#!@#$%^&*-
-		#a-z
-		#A-Z
+		elif (regex_letters.match(''.join(sorted(master_password)))):
+			tkMessageBox.showinfo("Error", "Passwords must contain one uppercase and one lowercase letter.")
+		elif symbol_present == False:
+			tkMessageBox.showinfo("Error", "Passwords must include one of the following special characters: $ . | ? * + ~ ! % & _ = `")
+		elif number_present == False:
+			tkMessageBox.showinfo("Error", "Passwords must contain at least one number.")
 		else:
 			account = MasterAccount(master_username,master_password)
 			LoginFunctions.accounts += [account]
