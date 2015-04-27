@@ -62,6 +62,11 @@ class LoginFunctions:
 			tkMessageBox.showinfo("Error","Passwords entered do not match.")
 		elif(len(master_password) < 8):
 			tkMessageBox.showinfo("Error","Password must be at least 8 characters.")
+		elif (len(master_password) > 16):
+			tkMessageBox.showinfo("Error", "Passwords must be less than 16 characters.")
+		#!@#$%^&*-
+		#a-z
+		#A-Z
 		else:
 			account = MasterAccount(master_username,master_password)
 			LoginFunctions.accounts += [account]

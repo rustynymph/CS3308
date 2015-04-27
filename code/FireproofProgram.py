@@ -9,8 +9,7 @@ from Service import *
 #To Do:
 #	Add in pulling from database for: ServiceInfoPage, EditPage
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
-#	Add in functionality for EditPage buttons (change service username, change service password)
-#	Generate a random password -> SSL
+#	More secure passwords capital letter, lowercase letter, number and special character)
 
 TITLE_FONT = ("Helvetica", 16, "bold")
 TITLE_X = 20
@@ -291,7 +290,7 @@ class EditPage(tk.Frame):
 		
 		back_button = Button(self, text="Cancel", command=lambda: Service.hideFields(self,controller))
 		back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
-		
+	
 		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
 		save_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)
 
