@@ -182,7 +182,7 @@ class Service:
 		controller.show_frame(controller.ServicesPage)		
 
 	@staticmethod
-	def addServiceChecker(username,password,confirmpassword,servicename,frame,controller): #checkerForGatherServiceInformation
+	def editServiceChecker(username,password,confirmpassword,servicename,frame,controller): #checkerForGatherServiceInformation
 		""" This function checks that all the fields on this frame
 		have been filled out. If a field is blank, it creates a popup
 		window alerting the user to the blank field. If all fields
@@ -198,7 +198,7 @@ class Service:
 			Service.addService(username,password,servicename,frame,controller)
 
 	@staticmethod
-	def editServiceChecker(username,password,servicename,frame,controller): #checkerForGatherServiceInformation
+	def addServiceChecker(username,password,servicename,frame,controller): #checkerForGatherServiceInformation
 		""" This function checks that the fields on this frame
 		have been filled out. If a field is blank, it creates a popup
 		window alerting the user to the blank field. If all fields
