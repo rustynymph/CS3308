@@ -61,7 +61,6 @@ class Service:
 			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s"
 			cur.execute(delete_service_command, (service.id_num, account.id_num))
 	
-	#this needs to access other table
 	@staticmethod
 	def changeServiceUsername(account, service, new_username):
 		"""Updates the specified service's stored username to be the newly provided username.
@@ -71,23 +70,8 @@ class Service:
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 		with con:
 			cur = con.cursor()
-			#also has to access FireproofServices to get servicename
-			change_username_command= "UPDATE FireproofServicesAccounts SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
-			cur.execute(change_username_command)
-	
-	#this makes no sense; needs to access other table
-	@staticmethod
-	def changeServicePassword(account, service, new_password):
-		"""Updates the specified service's stored password to be the newly provided password.
-		
-		:param account: The master account that owns this service
-		"""
-		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
-		with con:
-			cur = con.cursor()
-			#also has to access FireproofServices to get servicename
-			change_password_command="UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s", (new_username, service.id_num, account.id_num)
-			cur.execute(change_password_command)
+			change_username_command= "UPDATE FireproofServices SET ServiceName=%s WHERE id=%s AND masterid=%s"
+			cur.execute(change_username_command, (new_username, service.id_num, account.id_num))
 	
 	@staticmethod
 	def retrieveServiceNameId(account,service): #retrieveServiceId
@@ -198,8 +182,24 @@ class Service:
 		controller.show_frame(controller.ServicesPage)		
 
 	@staticmethod
-	def addServiceChecker(username,password,servicename,frame,controller): #checkerForGatherServiceInformation
+	def editServiceChecker(username,password,confirmpassword,servicename,frame,controller): #checkerForGatherServiceInformation
 		""" This function checks that all the fields on this frame
+		have been filled out. If a field is blank, it creates a popup
+		window alerting the user to the blank field. If all fields
+		are filled out, it proceeds to call addService()
+		"""
+		if (username) == "" and (password) == "" and (confirmpassword) == "":
+			tkMessageBox.showinfo("Error","Please enter a valid username or password.")
+		elif (password) != "" and (confirmpassword) == "":
+			tkMessageBox.showinfo("Error","Please enter a valid confirmed password.")
+		elif (password) == "" and (confirmpassword) != "":
+			tkMessageBox.showinfo("Error","Please enter a valid password.")
+		else:
+			Service.addService(username,password,servicename,frame,controller)
+
+	@staticmethod
+	def addServiceChecker(username,password,servicename,frame,controller): #checkerForGatherServiceInformation
+		""" This function checks that the fields on this frame
 		have been filled out. If a field is blank, it creates a popup
 		window alerting the user to the blank field. If all fields
 		are filled out, it proceeds to call addService()

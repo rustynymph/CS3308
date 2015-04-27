@@ -67,3 +67,26 @@ class ServiceAccount:
 			delete_service_command = "DELETE FROM FireproofServicesAccounts WHERE serviceid=%s AND masterid=%s"
 			cur.execute(delete_service_command, (service.id_num, account.id_num))
 	
+	@staticmethod
+	def changeServiceAccountUsername(account, service, new_username):
+		"""Updates the specified service's stored username to be the newly provided username.
+		
+		:param account: The master account that owns this service
+		"""
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		with con:
+			cur = con.cursor()
+			change_username_command= "UPDATE FireproofServicesAccounts SET ServiceUsername=%s WHERE id=%s AND serviceid=%s AND masterid=%s"
+			cur.execute(change_username_command, (new_username, serviceaccount.id_num, service.id_num, account.id_num))
+	
+	@staticmethod
+	def changeServicePassword(account, service, new_password):
+		"""Updates the specified service's stored password to be the newly provided password.
+		
+		:param account: The master account that owns this service
+		"""
+		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
+		with con:
+			cur = con.cursor()
+			change_password_command="UPDATE FireproofServices SET ServicePassword=%s WHERE id=%s AND serviceid=%s AND masterid=%s"
+			cur.execute(change_password_command, (new_password, serviceaccount.id_num, service.id_num, account.id_num))
