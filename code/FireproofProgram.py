@@ -9,8 +9,7 @@ from Service import *
 #To Do:
 #	Add in pulling from database for: ServiceInfoPage, EditPage
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
-#	Add in functionality for EditPage buttons (change service username, change service password)
-#	Generate a random password -> SSL
+
 
 TITLE_FONT = ("Helvetica", 16, "bold")
 TITLE_X = 20
