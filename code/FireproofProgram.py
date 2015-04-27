@@ -292,7 +292,7 @@ class EditPage(tk.Frame):
 		back_button = Button(self, text="Cancel", command=lambda: Service.hideFields(self,controller))
 		back_button.place(bordermode=OUTSIDE,x=BACK_X,y=BACK_Y)
 		
-		save_button = Button(self, text="Save", command=lambda: controller.show_frame(ServicesPage))
+		save_button = Button(self, text="Save", command=lambda: Service.saveNewServiceInfo(self,controller,username_input_form.get(),password_input_form.get(),confirm_password_input_form.get()))
 		save_button.place(bordermode=OUTSIDE,x=SECONDARY_X,y=SECONDARY_Y)
 
 class AddNewServicePage(tk.Frame):

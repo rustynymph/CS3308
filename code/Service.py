@@ -255,6 +255,7 @@ class Service:
 		:param frame: Tkinter frame widget
 		"""
 		service = controller.current_account.service_name_list[Service.stored_index]
+		Service.current_service = service
 
 		edit_page_frame = controller.getFrame(controller.EditPage)
 
@@ -285,6 +286,7 @@ class Service:
 		edit_page_frame = controller.getFrame(controller.EditPage)
 		
 		service = controller.current_account.service_name_list[service_index]
+		Service.current_service = service
 		label = tk.Label(edit_page_frame, text=service.service_name)
 		label.place(bordermode=OUTSIDE, x=210, y=140)
 		for account in service.service_accounts:
@@ -332,3 +334,9 @@ class Service:
 		hide_password_label.place(bordermode=OUTSIDE,x=190,y=190)
 	
 		controller.show_frame(controller.EditPage)	
+
+	@staticmethod
+	def saveNewServiceInfo(frame,controller,service,new_username,new_password,confirm_password):
+		ServiceAccount.changeServiceAccountUsername(controller.current_account,Service.current_service,new_username)
+		Service.changeServicePassword(controller.current_account,Service.current_service,new_password)
+		controller.show_frame(controller.ServicesPage)
