@@ -336,7 +336,7 @@ class Service:
 		controller.show_frame(controller.EditPage)	
 
 	@staticmethod
-	def saveNewServiceInfo(frame,controller,service,new_username,new_password,confirm_password):
+	def saveNewServiceInfo(frame,controller,new_username,new_password,confirm_password):
 		ServiceAccount.changeServiceAccountUsername(controller.current_account,Service.current_service,new_username)
-		Service.changeServicePassword(controller.current_account,Service.current_service,new_password)
+		ServiceAccount.changeServicePassword(controller.current_account,Service.current_service,new_password)
 		controller.show_frame(controller.ServicesPage)
