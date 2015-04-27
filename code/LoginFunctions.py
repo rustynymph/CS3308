@@ -55,7 +55,18 @@ class LoginFunctions:
 		"""
 		username_characters = set(master_username)
 		password_characters = set(master_password)
-		regex_letters = re.compile(r'\d.*?[A-Z].*?[a-z]')
+		
+		capital_letter_list = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+		capital_letter_present = False
+		for letter in capital_letter_list:
+			if letter in password_characters:
+				capital_letter_present = True
+		
+		lowercase_letter_list = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+		lowercase_letter_present = False
+		for letter in lowercase_letter_list:
+			if letter in password_characters:
+				lowercase_letter_present = True
 		
 		number_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 		number_present = False
@@ -81,7 +92,7 @@ class LoginFunctions:
 			tkMessageBox.showinfo("Error","Password must be at least 8 characters.")
 		elif (len(master_password) > 16):
 			tkMessageBox.showinfo("Error", "Passwords must be less than 16 characters.")
-		elif (regex_letters.match(''.join(sorted(master_password)))):
+		elif (lowercase_letter_present == False) or (capital_letter_present == False):
 			tkMessageBox.showinfo("Error", "Passwords must contain one uppercase and one lowercase letter.")
 		elif symbol_present == False:
 			tkMessageBox.showinfo("Error", "Passwords must include one of the following special characters: $ . | ? * + ~ ! % & _ = `")

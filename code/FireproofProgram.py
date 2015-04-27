@@ -6,10 +6,6 @@ import MySQLdb as mdb
 from config import *
 from Service import *
 
-#To Do:
-#	Add in functionality for SettingsPage buttons OR remove buttons/page
-#	More secure passwords capital letter, lowercase letter, number and special character
-
 TITLE_FONT = ("Helvetica", 16, "bold")
 TITLE_X = 20
 TITLE_Y = 100
@@ -117,23 +113,29 @@ class CreateAccountPage(tk.Frame):
 		"""
 		tk.Frame.__init__(self, parent)
 		
+		information_form_label_1 = Label(self, text="Passwords must contain an uppercase letter,")
+		information_form_label_1.place(bordermode=OUTSIDE, x=TITLE_X, y=TITLE_Y)
+		
+		information_form_label_2 = Label(self, text="a lowercase letter, a number and a symbol.")
+		information_form_label_2.place(bordermode=OUTSIDE, x=20, y=120)
+		
 		username_form_label = Label(self,text="Username")
-		username_form_label.place(bordermode=OUTSIDE,x=60,y=140)
+		username_form_label.place(bordermode=OUTSIDE,x=60,y=160) #140
 
 		password_form_label = Label(self,text="Password")
-		password_form_label.place(bordermode=OUTSIDE,x=60,y=190)
+		password_form_label.place(bordermode=OUTSIDE,x=60,y=210)
 		
 		confirm_password_form_label = Label(self,text="Confirm Password")
-		confirm_password_form_label.place(bordermode=OUTSIDE,x=60,y=240)
+		confirm_password_form_label.place(bordermode=OUTSIDE,x=60,y=260)
 
 		self.username_input_form = Entry(self,bd=5)
-		self.username_input_form.place(bordermode=OUTSIDE,x=180,y=140)
+		self.username_input_form.place(bordermode=OUTSIDE,x=180,y=160)
 
 		self.password_input_form = Entry(self,bd=5,show="*")
-		self.password_input_form.place(bordermode=OUTSIDE,x=180,y=190)
+		self.password_input_form.place(bordermode=OUTSIDE,x=180,y=210)
 		
 		self.confirm_password_input_form = Entry(self,bd=5,show="*")
-		self.confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=240)
+		self.confirm_password_input_form.place(bordermode=OUTSIDE,x=180,y=260)
 		
 		create_account_button = Button(self, text ="Create Account", command=lambda: LoginFunctions.createAccount(self.username_input_form.get(),\
 			self.password_input_form.get(),self.confirm_password_input_form.get(),self,controller))
