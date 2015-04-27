@@ -10,7 +10,7 @@ from Service import *
 #	Add in pulling from database for: ServiceInfoPage, EditPage
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
 #	Add in functionality for EditPage buttons (change service username, change service password)
-#	Work on clarifying names of functions and names of variables
+#	Work on clarifying names of functions and names of variables (not needed?)
 #	Fix delete -> still displays deleted information?
 
 TITLE_FONT = ("Helvetica", 16, "bold")
