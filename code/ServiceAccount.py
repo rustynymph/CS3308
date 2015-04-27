@@ -73,20 +73,31 @@ class ServiceAccount:
 		
 		:param account: The master account that owns this service
 		"""
+		enc_new_username = AESCipher.encryptCredentials(account.key,account.iv,new_username)
+		serviceaccountlist = service.service_accounts
+		serviceaccount = serviceaccountlist[0]
+		serviceaccount.username = new_username
+		serviceaccount.username_enc = enc_new_username		
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 		with con:
 			cur = con.cursor()
-			change_username_command= "UPDATE FireproofServicesAccounts SET ServiceUsername=%s WHERE id=%s AND serviceid=%s AND masterid=%s"
-			cur.execute(change_username_command, (new_username, serviceaccount.id_num, service.id_num, account.id_num))
-	
+			change_username_command= "UPDATE FireproofServicesAccounts SET ServiceUsername=%s WHERE serviceid=%s AND masterid=%s"
+			cur.execute(change_username_command, (enc_new_username, service.id_num, account.id_num))
+		con.close()
+
 	@staticmethod
 	def changeServicePassword(account, service, new_password):
 		"""Updates the specified service's stored password to be the newly provided password.
-		
 		:param account: The master account that owns this service
 		"""
+		enc_new_password = AESCipher.encryptCredentials(account.key,account.iv,new_password)
+		serviceaccountlist = service.service_accounts
+		serviceaccount = serviceaccountlist[0]
+		serviceaccount.password = new_password
+		serviceaccount.password_enc = enc_new_password		
 		con = mdb.connect(MYSQL_LOC,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DBNAME);
 		with con:
 			cur = con.cursor()
-			change_password_command="UPDATE FireproofServices SET ServicePassword=%s WHERE id=%s AND serviceid=%s AND masterid=%s"
-			cur.execute(change_password_command, (new_password, serviceaccount.id_num, service.id_num, account.id_num))
+			change_password_command = "UPDATE FireproofServicesAccounts SET ServicePassword=%s WHERE serviceid=%s AND masterid=%s"
+			cur.execute(change_password_command, (enc_new_password, service.id_num, account.id_num))
+		con.close()
