@@ -59,6 +59,7 @@ class Service:
 		with con:
 			cur = con.cursor()
 			delete_service_command = "DELETE FROM FireproofServices WHERE id=%s AND masterid=%s", (service.id_num, account.id_num)
+			# also has to delete from FireproofServciceAccounts
 			cur.execute(delete_service_command)
 	
 	#this needs to access other table
