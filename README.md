@@ -1,5 +1,6 @@
-# CS3308 -- Fireproof
-Software Engineering Methods and Tools
+# Fireproof
+Team Members: Annie Kelly, Tyler Tafoya, Kara James, Tori Augustine
+Developed for CSCI 3308: Software Engineering Methods and Tools
 
 ##Organization of Repository:
 We sorted our files into the following folders:
