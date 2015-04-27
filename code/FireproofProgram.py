@@ -7,9 +7,8 @@ from config import *
 from Service import *
 
 #To Do:
-#	Add in pulling from database for: ServiceInfoPage, EditPage
 #	Add in functionality for SettingsPage buttons OR remove buttons/page
-#	More secure passwords capital letter, lowercase letter, number and special character)
+#	More secure passwords capital letter, lowercase letter, number and special character
 
 TITLE_FONT = ("Helvetica", 16, "bold")
 TITLE_X = 20
